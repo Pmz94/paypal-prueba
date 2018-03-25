@@ -38,14 +38,15 @@ try {
     <meta charset = "UTF-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+    <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
     <title>Exito</title>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
-    <link rel = "stylesheet" href = "css/style.css">
+    <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
 <body>
     <div class = "container text-center">
-        <h1>Pago realizado</h1>
+        <h1><strong>Pago realizado</strong></h1>
         <table class = "table table-striped table-bordered">
             <thead>
                 <tr>
