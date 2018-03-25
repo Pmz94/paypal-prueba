@@ -11,27 +11,6 @@ body {
     width: 300px;
 }
 
-/*.box-inside {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}*/
-
-.btn-paypal {
-    color: #000000;
-    background-color: #FFC439;
-    font-weight: bold;
-    font-style: italic;
-}
-
-.btn-paypal:hover {
-    box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.05);
-}
-
-.btn-paypal:focus {
-    box-shadow: -1px -1px 18px 1px rgba(0, 0, 0, 0.25) inset;
-}
-
 .form-control {
     display: block;
     height: 44px;
@@ -64,6 +43,51 @@ body {
     font-family: 'PayPal Sans Small', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.btn.btn-paypal {
+    color: #111111;
+    background-color: #FFC439;
+    border-color: transparent;
+    font-family: Verdana;
+    font-weight: bold;
+    font-style: italic;
+    width: 120px;
+    border-radius: 18px;
+}
+
+.btn.btn-paypal:hover {
+    box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.05);
+}
+
+.btn.btn-paypal:focus {
+    box-shadow: -1px -1px 18px 1px rgba(0, 0, 0, 0.25) inset;
+}
+
 pre {
     background: whitesmoke;
+}
+
+.btn.btn-paypal-2 {
+    color: #ffffff;
+    background-color: #0070ba;
+    border-color: transparent;
+    font-family: 'PayPal Sans Small', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: .8125rem;
+    border-radius: 1.5rem;
+    line-height: 1.38461538;
+    min-width: 4rem;
+    padding: .5625rem 1.125rem;
+    box-shadow: none;
+}
+
+.btn.btn-paypal-2:hover {
+    color: #ffffff;
+    background-color: #003087;
+}
+
+.btn.btn-paypal-2:focus {
+    color: #ffffff;
+    background-color: #003087;
+    text-decoration: underline;
+    box-shadow: none;
 }
