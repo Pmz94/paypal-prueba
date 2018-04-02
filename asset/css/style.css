@@ -68,6 +68,7 @@ body {
 
 pre {
     background: whitesmoke;
+    max-height: 440px !important;
 }
 
 .btn.btn-paypal-2 {

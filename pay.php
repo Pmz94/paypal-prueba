@@ -16,6 +16,10 @@ if((bool)$_GET['success'] == false) {
 $paymentId = $_GET['paymentId'];
 $payerID = $_GET['PayerID'];
 
+date_default_timezone_set('America/Hermosillo');
+$fecha = date('d/m/Y');
+$hora = date('h:ia');
+
 $payment = Payment::get($paymentId, $paypal);
 
 $execute = new PaymentExecution();
@@ -29,6 +33,23 @@ try {
     echo $data->message;
     die();
 }
+
+// Create connection
+$conexion = mysqli_connect('localhost', 'root', '', 'paypalprueba');
+
+// Check connection
+if(!$conexion) {
+    die('Fallo la conexion: ' . mysqli_connect_error());
+}
+
+$query = "INSERT INTO transacciones (paymentId, payerID, fecha, hora) VALUES ('$paymentId', '$payerID', '$fecha', '$hora')";
+
+if(mysqli_query($conexion, $query)) {
+    //echo "New record created successfully";
+} else {
+    die('Error: ' . $query . '<br>' . mysqli_error($conexion));
+}
+mysqli_close($conexion);
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +81,16 @@ try {
                     <td><?php echo $paymentId ?></td>
                 </tr>
                 <tr>
-                    <td>ID de payer</td>
+                    <td>ID de pagador:</td>
                     <td><?php echo $payerID ?></td>
+                </tr>
+                <tr>
+                    <td>Fecha:</td>
+                    <td><?php echo $fecha ?></td>
+                </tr>
+                <tr>
+                    <td>Hora:</td>
+                    <td><?php echo $hora ?></td>
                 </tr>
             </tbody>
         </table>

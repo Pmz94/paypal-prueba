@@ -69,8 +69,7 @@ try {
 }
 
 $approvalUrl = $payment->getApprovalLink();
-$token = $payment->getToken();
-
+//$token = $payment->getToken();
 //echo '<a href="'. $approvalUrl . '">' . $approvalUrl . '</a><br>';
 //echo $token . '<br>';
 header("Location: " . $approvalUrl);
