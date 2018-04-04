@@ -9,6 +9,8 @@ use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Payment;
 
+session_start();
+
 require 'app/credentials.php';
 
 if(!isset($_POST['product'], $_POST['price'])) {
@@ -45,6 +47,7 @@ $amount->setCurrency('MXN')
        ->setDetails($details);
 
 $uniqid = uniqid();
+$_SESSION['invoiceNumber'] = $uniqid;
 
 $transaction = new Transaction();
 $transaction->setAmount($amount)

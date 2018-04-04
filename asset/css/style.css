@@ -6,12 +6,18 @@ body {
     line-height: 1.8;
 }
 
+img.paypallogo {
+    width: 250px;
+    filter: saturate(120%);
+    margin-bottom: 20px;
+    margin-top: 40%;
+}
+
 .box {
     background: whitesmoke;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 5px 20px -5px #555555;
-    margin-top: 50%;
     width: 360px;
 }
 
@@ -95,10 +101,4 @@ pre {
     background-color: #003087;
     text-decoration: underline;
     box-shadow: none;
-}
-
-.badge-paypal {
-    color: #ffffff;
-    background-color: #0070ba;
-    border-radius: 0.3rem;
 }

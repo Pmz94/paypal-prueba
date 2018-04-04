@@ -31,12 +31,12 @@
                     <td><?php echo $paymentId ?></td>
                 </tr>
                 <tr>
-                    <td>ID de pagador:</td>
+                    <td>ID de comprador:</td>
                     <td><?php echo $payerID ?></td>
                 </tr>
                 <tr>
-                    <td>Invoice Number ($uniqid):</td>
-                    <td><?php echo $uniqid ?></td>
+                    <td>Invoice Number:</td>
+                    <td><?php echo $invoiceNumber ?></td>
                 </tr>
                 <tr>
                     <td>Fecha:</td>

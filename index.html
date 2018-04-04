@@ -15,54 +15,33 @@
     <div class = "container text-center">
         <div class = "row justify-content-center">
             <div class = "col-auto">
+                <img class = "paypallogo" src = "https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt = "PayPalLogo">
                 <div class = "box">
                     <h2><strong>Compra algo</strong></h2>
                     <hr>
                     <form id = "form" action = "checkout.php" method = "POST" autocomplete = "off">
                         <div class = "form-group">
-                            <input class = "form-control" type = "text" name = "product" placeholder = "Producto">
+                            <input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" v-model = "precio">
+                            <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" required>
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "10" v-model = "cantidad">
+                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" value = "1" min = "1" max = "10" required>
                         </div>
-                        <div class = "form-group">
-                            <h5><span class = "badge badge-paypal" name="subtotal" v-model = "subtotal">Subtotal: ${{ subtotal }}</span></h5>
-                        </div>
+                        <p>
+                            <span>Subtotal: <span name="subtotal">0</span></span><br>
+                            <span>Envío: $1</span><br>
+                            <strong>Total: $<span name = "total">0</span></strong>
+                        </p>
                         <input class = "btn btn-paypal" type = "submit" value = "Comprar">
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type = "text/javascript">
-        //VUEjs
-        new Vue({
-            el: '#form',
-            data: {
-                precio: '',
-                cantidad: ''
-            },
-            computed: {
-                subtotal: function() {
-                    return this.precio * this.cantidad;
-                }
-            }
-        });
-        //jQuery
-        $(function() {
-            var precio = $('[name="price"]');
-            var cantidad = $('[name="quantity"]');
-            cantidad.keyup(function() {
-                var subtotal = isNaN(parseInt(precio.val() * cantidad.val())) ? 0 : (precio.val() * cantidad.val());
-                $('[name="subtotal"]').val(subtotal);
-            });
-        });
-    </script>
+    <script type = "text/javascript" src = "asset/js/script.js"></script>
 </body>
 
 </html>
