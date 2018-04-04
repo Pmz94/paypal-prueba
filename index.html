@@ -6,7 +6,7 @@
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
     <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
-    <title>Paga algo</title>
+    <title>Compra algo</title>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
     <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
@@ -18,23 +18,51 @@
                 <div class = "box">
                     <h2><strong>Compra algo</strong></h2>
                     <hr>
-                    <form action = "checkout.php" method = "POST" autocomplete = "off">
+                    <form id = "form" action = "checkout.php" method = "POST" autocomplete = "off">
                         <div class = "form-group">
                             <input class = "form-control" type = "text" name = "product" placeholder = "Producto">
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" min = "1" name = "price" placeholder = "Precio">
+                            <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" v-model = "precio">
                         </div>
-                        <!--<div class = "form-group">
-                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "10">
-                        </div>-->
+                        <div class = "form-group">
+                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "10" v-model = "cantidad">
+                        </div>
+                        <div class = "form-group">
+                            <h5><span class = "badge badge-paypal" name="subtotal" v-model = "subtotal">Subtotal: ${{ subtotal }}</span></h5>
+                        </div>
                         <input class = "btn btn-paypal" type = "submit" value = "Comprar">
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type = "text/javascript">
+        //VUEjs
+        new Vue({
+            el: '#form',
+            data: {
+                precio: '',
+                cantidad: ''
+            },
+            computed: {
+                subtotal: function() {
+                    return this.precio * this.cantidad;
+                }
+            }
+        });
+        //jQuery
+        $(function() {
+            var precio = $('[name="price"]');
+            var cantidad = $('[name="quantity"]');
+            cantidad.keyup(function() {
+                var subtotal = isNaN(parseInt(precio.val() * cantidad.val())) ? 0 : (precio.val() * cantidad.val());
+                $('[name="subtotal"]').val(subtotal);
+            });
+        });
+    </script>
 </body>
 
 </html>

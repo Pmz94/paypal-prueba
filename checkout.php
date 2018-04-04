@@ -16,11 +16,12 @@ if(!isset($_POST['product'], $_POST['price'])) {
 }
 
 $product = $_POST['product'];
-//$quantity = number_format($_POST['quantity']);
+$quantity = $_POST['quantity'];
 $price = $_POST['price'];
 $shipping = 1.00;
 
-$total = $price + $shipping;
+$subtotal = $price * $quantity;
+$total = $subtotal + $shipping;
 
 $payer = new Payer();
 $payer->setPaymentMethod('paypal');
@@ -28,7 +29,7 @@ $payer->setPaymentMethod('paypal');
 $item = new Item();
 $item->setName($product)
      ->setCurrency('MXN')
-     ->setQuantity(1)
+     ->setQuantity($quantity)
      ->setPrice($price);
 
 $itemlist = new ItemList();
@@ -36,7 +37,7 @@ $itemlist->setItems([$item]);
 
 $details = new Details();
 $details->setShipping($shipping)
-        ->setSubtotal($price);
+        ->setSubtotal($subtotal);
 
 $amount = new Amount();
 $amount->setCurrency('MXN')
@@ -61,6 +62,8 @@ $payment->setIntent('sale')
         ->setRedirectUrls($redirectUrls)
         ->setTransactions([$transaction]);
 
+$request = clone $payment;
+
 try {
     $payment->create($paypal);
 } catch(Exception $e) {
@@ -70,6 +73,8 @@ try {
 
 $approvalUrl = $payment->getApprovalLink();
 //$token = $payment->getToken();
+
 //echo '<a href="'. $approvalUrl . '">' . $approvalUrl . '</a><br>';
 //echo $token . '<br>';
-header("Location: " . $approvalUrl);
+//echo $uniqid; //invoice number
+header('Location: ' . $approvalUrl);

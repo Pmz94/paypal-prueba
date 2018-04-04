@@ -96,3 +96,9 @@ pre {
     text-decoration: underline;
     box-shadow: none;
 }
+
+.badge-paypal {
+    color: #ffffff;
+    background-color: #0070ba;
+    border-radius: 0.3rem;
+}
