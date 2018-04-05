@@ -6,7 +6,7 @@
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
     <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
-    <title>Compra algo</title>
+    <title>PayPalPrueba</title>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
     <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
@@ -27,21 +27,26 @@
                             <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" required>
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" value = "1" min = "1" max = "10" required>
+                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "10" required>
                         </div>
                         <p>
-                            <span>Subtotal: <span name="subtotal">0</span></span><br>
-                            <span>Envío: $1</span><br>
-                            <strong>Total: $<span name = "total">0</span></strong>
+                            <span>Subtotal: $<span id = "subtotal">0</span></span><br>
+                            <span>Envío: $1</span>
                         </p>
-                        <input class = "btn btn-paypal" type = "submit" value = "Comprar">
+                        <hr>
+                        <p>
+                            <strong>Total: $<strong id = "total">0</strong></strong>
+                        </p>
+                        <div>
+                            <input class = "btn btn-paypal" type = "submit" value = "Comprar">
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type = "text/javascript" src = "asset/js/script.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src = "asset/js/script.js"></script>
 </body>
 
 </html>
