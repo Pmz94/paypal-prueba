@@ -1,9 +1,8 @@
 $(function() {
-    var precio = $('[name="price"]');
-    var cantidad = $('[name="quantity"]');
-
     function calcular() {
-        var subtotal = isNaN(parseInt(precio.val() * cantidad.val())) ? 0 : (precio.val() * cantidad.val());
+        var precio = $('[name="price"]');
+        var cantidad = $('[name="quantity"]');
+        var subtotal = isNaN(parseFloat(precio.val() * cantidad.val())) ? 0 : (precio.val() * cantidad.val());
         var total = subtotal + 1;
         if(precio === 0 && cantidad === 0 || subtotal === 0) {
             subtotal = 0;
@@ -13,12 +12,11 @@ $(function() {
         $('#total').text(total);
     }
 
-    cantidad.keyup(function() {
+    $('[name="price"]').keyup(function() {
         calcular();
-
     });
 
-    precio.keyup(function() {
+    $('[name="quantity"]').keyup(function() {
         calcular();
     });
 });

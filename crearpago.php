@@ -46,18 +46,18 @@ $amount->setCurrency('MXN')
        ->setTotal($total)
        ->setDetails($details);
 
-$uniqid = uniqid();
-$_SESSION['invoiceNumber'] = $uniqid;
+$invoiceNumber = uniqid();
+$_SESSION['invoiceNumber'] = $invoiceNumber;
 
 $transaction = new Transaction();
 $transaction->setAmount($amount)
             ->setItemList($itemlist)
             ->setDescription('Pagando algo')
-            ->setInvoiceNumber($uniqid);
+            ->setInvoiceNumber($invoiceNumber);
 
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl(APP_PATH . '/pay.php?success=true')
-             ->setCancelUrl(APP_PATH . '/pay.php?success=false');
+$redirectUrls->setReturnUrl(APP_PATH . '/pagorealizado.php?success=true')
+             ->setCancelUrl(APP_PATH . '/pagorealizado.php?success=false');
 
 $payment = new Payment();
 $payment->setIntent('sale')
@@ -65,19 +65,22 @@ $payment->setIntent('sale')
         ->setRedirectUrls($redirectUrls)
         ->setTransactions([$transaction]);
 
-$request = clone $payment;
-
 try {
     $payment->create($paypal);
-} catch(Exception $e) {
+} catch(Exception $ex) {
     echo '<h1>Algo malio sal</h1><hr>';
-    die($e);
+    die($ex);
 }
 
 $approvalUrl = $payment->getApprovalLink();
-//$token = $payment->getToken();
-
-//echo '<a href="'. $approvalUrl . '">' . $approvalUrl . '</a><br>';
-//echo $token . '<br>';
-//echo $uniqid; //invoice number
+/*
+var_dump($payment->getPayer());
+var_dump($payment->getLinks());
+echo '<a href="'. $approvalUrl . '">' . $approvalUrl . '</a><br>';
+echo $payment->getId() . '<br>';
+echo $payment->getToken() . '<br>';
+echo $payment->getPayer() . '<br>';
+echo $payment->getPayee() . '<br>';
+echo $payment->getCreateTime() . '<br>';
+*/
 header('Location: ' . $approvalUrl);

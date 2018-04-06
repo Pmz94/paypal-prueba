@@ -19,7 +19,7 @@
                 <div class = "box">
                     <h2><strong>Compra algo</strong></h2>
                     <hr>
-                    <form id = "form" action = "checkout.php" method = "POST" autocomplete = "off">
+                    <form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
                         <div class = "form-group">
                             <input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
                         </div>
@@ -27,7 +27,7 @@
                             <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" required>
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "10" required>
+                            <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "50" required>
                         </div>
                         <p>
                             <span>Subtotal: $<span id = "subtotal">0</span></span><br>
@@ -46,6 +46,7 @@
         </div>
     </div>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.js"></script>
     <script src = "asset/js/script.js"></script>
 </body>
 

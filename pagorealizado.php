@@ -12,13 +12,13 @@
 </head>
 
 <div class = "container">
-    <?php require 'payexec.php'; ?>
+    <?php require 'cargarpago.php'; ?>
 </div>
 
 <body>
     <div class = "container text-center">
         <h1><strong>Pago realizado</strong></h1>
-        <table class = "table table-striped table-bordered">
+        <table class = "table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <th>Variable</th>
@@ -27,32 +27,36 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>ID de pago:</td>
-                    <td><?php echo $paymentId ?></td>
+                    <td>ID de transaccion:</td>
+                    <td><?php echo $paymentId; ?></td>
+                </tr>
+                <tr>
+                    <td>ID de carrito:</td>
+                    <td><?php echo $token; ?></td>
                 </tr>
                 <tr>
                     <td>ID de comprador:</td>
-                    <td><?php echo $payerID ?></td>
+                    <td><?php echo $payerID; ?></td>
                 </tr>
                 <tr>
                     <td>Invoice Number:</td>
-                    <td><?php echo $invoiceNumber ?></td>
+                    <td><?php echo $invoiceNumber; ?></td>
                 </tr>
                 <tr>
                     <td>Fecha:</td>
-                    <td><?php echo $fecha ?></td>
+                    <td><?php echo $fecha; ?></td>
                 </tr>
                 <tr>
                     <td>Hora:</td>
-                    <td><?php echo $hora ?></td>
+                    <td><?php echo $hora; ?></td>
                 </tr>
             </tbody>
         </table>
         <hr>
         <h3>$payment =</h3>
-        <pre class = "pre-scrollable text-left"><?php echo $payment ?></pre>
+        <pre class = "pre-scrollable text-left"><?php echo $payment; ?></pre>
         <hr>
-        <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+        <a href = "<?php echo APP_PATH; ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
         <br>
         <br>
     </div>
