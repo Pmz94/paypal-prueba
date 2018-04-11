@@ -3,8 +3,8 @@
 
 <head>
     <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
     <title>PayPalPrueba</title>
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
@@ -17,11 +17,21 @@
             <div class = "col-auto">
                 <img class = "paypallogo" src = "https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt = "PayPalLogo">
                 <div class = "box">
-                    <h2><strong>Compra algo</strong></h2>
+                    <h2><strong>Paga algo</strong></h2>
                     <hr>
                     <form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
-                        <div class = "form-group">
+                        <!--<div class = "form-group">
                             <input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
+                        </div>-->
+                        <div class = "form-group">
+                            <select class = "form-control" name = "product">
+                                <option>Inscripcion</option>
+                                <option>Materia</option>
+                                <option>Colegiatura</option>
+                                <option>Examen Extraordinario</option>
+                                <option>Curso de verano</option>
+                                <option>Idioma</option>
+                            </select>
                         </div>
                         <div class = "form-group">
                             <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" required>

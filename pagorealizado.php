@@ -56,6 +56,7 @@
         <h3>$payment =</h3>
         <pre class = "pre-scrollable text-left"><?php echo $payment; ?></pre>
         <hr>
+        <a href = "<?php echo APP_PATH . '/pagos.php'; ?>" class = "btn btn-paypal-2">Ver otros movimientos</a>
         <a href = "<?php echo APP_PATH; ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
         <br>
         <br>

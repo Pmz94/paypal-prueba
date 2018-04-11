@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="mermaid">
+        graph TD
+        A((Inicio)) --> B(El usuario pide producto, ofrece precio y cuanto paga por c/u)
+        B --> C(PayPal crea el pago mas no el cargo aun)
+        C -- Redireccion --> D(PayPal pide datos de cuenta)
+        D --> E{El usuario elige}
+        E -- Iniciar sesion --> F(El usuario inicia sesion)
+        E -- Crear cuenta/Pagar como invitado --> G(Meter datos de tarjeta)
+        G --> H{Guardar datos y registrarse}
+        H -- Si --> F
+        F --> I
+        H -- No --> I(Verificar todo)
+        I --> J{Pagar}
+        J -- Si --> K(PayPal hace el cargo al usuario)
+        K --> L(El programa agrega el movimiento a la BD)
+        L --> M(pagorealizado.php?sucess=true)
+        M --> N(Se muestran los datos del movimiento)
+        J -- No --> O(pagorealizado.php?success=false)
+        N --> P((Fin))
+        O --> P
+        style A fill:#ddd,stroke:#000,stroke-width:2px
+        style B fill:#ddd,stroke:#000
+        style C fill:#ddd,stroke:#000
+        style D fill:#ddd,stroke:#000
+        style E fill:#ddd,stroke:#000
+        style F fill:#ddd,stroke:#000
+        style G fill:#ddd,stroke:#000
+        style H fill:#ddd,stroke:#000
+        style I fill:#ddd,stroke:#000
+        style J fill:#ddd,stroke:#000
+        style K fill:#ddd,stroke:#000
+        style L fill:#ddd,stroke:#000
+        style M fill:#ddd,stroke:#000
+        style N fill:#ddd,stroke:#000
+        style O fill:#ddd,stroke:#000
+        style P fill:#ddd,stroke:#000,stroke-width:2px
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true
+        });
+    </script>
+</body>
+
+</html>

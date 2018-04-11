@@ -50,9 +50,12 @@ try {
     ]);
     //var_dump($payment);
 } catch(Exception $ex) {
+    echo '<br>';
     $data = json_decode($ex->getData());
     var_dump($data);
     echo $data->message;
     echo '<br><a href = ' . APP_PATH . ' class = "btn btn-paypal-2">Regresar al inicio</a>';
+    echo ' ';
+    echo '<a href = ' . APP_PATH . "/pagos.php" . ' class = "btn btn-paypal-2">Ver movimientos</a>';
     die();
 }
