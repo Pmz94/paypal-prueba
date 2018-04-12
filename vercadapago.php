@@ -24,7 +24,7 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
         'idTransaccion' => $idTransaccion
     ]);
 
-    $pago = $query->fetchAll(\PDO::FETCH_ASSOC);
+    $pago = $query->fetch(\PDO::FETCH_ASSOC);
 
     //var_dump($pago);
     //print_r($pago[0]['idTransaccion']);
@@ -36,24 +36,24 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
         <tbody>
             <tr>
                 <td>Transaccion</td>
-                <td><?php echo $pago[0]['idTransaccion'] ?></td>
+                <td><?php echo $pago['idTransaccion'] ?></td>
             </tr>
             <tr>
                 <td>Carrito</td>
-                <td><?php echo $pago[0]['idCarrito'] ?></td>
+                <td><?php echo $pago['idCarrito'] ?></td>
             </tr>
             <tr>
                 <td>Comprador</td>
-                <td><?php echo $pago[0]['correo'] ?></td>
+                <td><?php echo $pago['correo'] ?></td>
             </tr>
             <tr>
                 <td>Fecha y Hora</td>
-                <td><?php echo $pago[0]['fechahora'] ?></td>
+                <td><?php echo $pago['fechahora'] ?></td>
             </tr>
         </tbody>
     </table>
     <pre class="pre-scrollable text-left">
-        <?php echo $pago[0]['data']; ?>
+        <?php echo $pago['data']; ?>
     </pre>
     <?php
 }

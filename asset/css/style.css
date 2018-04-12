@@ -6,6 +6,10 @@ body {
     line-height: 1.8;
 }
 
+table > tbody {
+    font-size: 0.95rem;
+}
+
 img.paypallogo {
     width: 250px;
     filter: saturate(120%);

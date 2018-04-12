@@ -12,7 +12,7 @@ try {
     $db = new PDO('mysql:host=localhost;dbname=paypalprueba', 'root', '');
 
     $payments = $db->prepare('
-        SELECT t.idTransaccion, t.idCarrito, idComprador, c.correo, t.invoiceNumber, t.fechahora
+        SELECT t.idTransaccion, t.idCarrito, idComprador, c.correo, t.fechahora
             FROM transacciones t
             JOIN compradores c USING (idComprador)
         ORDER BY t.fechahora DESC
