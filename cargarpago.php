@@ -12,7 +12,7 @@ if(!isset($_GET['success'], $_GET['paymentId'], $_GET['token'], $_GET['PayerID']
 }
 
 if((bool)$_GET['success'] == false) {
-    echo 'El pago no se hizo <br>';
+    echo 'El pago no se hizo o ya estaba hecho <br>';
     var_dump($payment);
     die();
 }
