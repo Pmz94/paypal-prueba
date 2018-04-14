@@ -59,6 +59,7 @@ img.paypallogo {
 pre {
     background: whitesmoke;
     max-height: 440px !important;
+    font-size: 80%;
 }
 
 .btn.btn-paypal {

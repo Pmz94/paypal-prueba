@@ -19,4 +19,5 @@ $(function() {
     $('[name="quantity"]').keyup(function() {
         calcular();
     });
+
 });

@@ -18,7 +18,7 @@
 <body>
     <div class = "container text-center">
         <h1><strong>Pagos realizados</strong></h1>
-        <table class = "table table-striped table-bordered table-sm">
+        <table id = "tablatransacc" class = "table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <td>Transaccion</td>
@@ -46,10 +46,12 @@
         <hr>
         <?php include 'vercadapago.php'; ?>
         <hr>
-        <a href = "<?php echo APP_PATH; ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+        <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
         <br>
         <br>
     </div>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src = "asset/js/script.js"></script>
 </body>
 
 </html>

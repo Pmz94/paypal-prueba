@@ -21,19 +21,21 @@ $paymentId = $_GET['paymentId'];
 $token = $_GET['token'];
 $payerID = $_GET['PayerID'];
 $invoiceNumber = $_SESSION['invoiceNumber'];
+
+$idCarrito = str_replace('EC-', '', $token);
 date_default_timezone_set('America/Hermosillo');
 $fecha = date('d/m/Y');
 $hora = date('h:i:sa');
 
-$payment = Payment::get($paymentId, $paypal);
+$payment = Payment::get($paymentId, $apiContext);
 
 $execute = new PaymentExecution();
 $execute->setPayerId($payerID);
 
 try {
-    $result = $payment->execute($execute, $paypal);
+    $result = $payment->execute($execute, $apiContext);
 
-    $db = new PDO('mysql:host=localhost;dbname=paypalprueba', 'root', '');
+    include 'app/conexion.php';
 
     $query = $db->prepare('
         INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, invoiceNumber, fechahora, data)
@@ -42,7 +44,7 @@ try {
 
     $query->execute([
         'idTransaccion' => $paymentId,
-        'idCarrito' => $token,
+        'idCarrito' => $idCarrito,
         'idComprador' => $payerID,
         'invoiceNumber' => $invoiceNumber,
         'fechahora' => date('Y-m-d H:i:s'),

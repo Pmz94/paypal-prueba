@@ -66,7 +66,7 @@ $payment->setIntent('sale')
         ->setTransactions([$transaction]);
 
 try {
-    $payment->create($paypal);
+    $payment->create($apiContext);
 } catch(Exception $ex) {
     echo '<h1>Algo malio sal</h1><hr>';
     die($ex);

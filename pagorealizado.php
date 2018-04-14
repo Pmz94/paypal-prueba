@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td>ID de carrito:</td>
-                    <td><?php echo $token; ?></td>
+                    <td><?php echo $idCarrito; ?></td>
                 </tr>
                 <tr>
                     <td>ID de comprador:</td>

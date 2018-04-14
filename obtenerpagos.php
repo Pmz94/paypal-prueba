@@ -1,15 +1,9 @@
 <?php
 
-use PayPal\Api\Payment;
-
-require 'app/credentials.php';
-//require 'crearpago.php';
+include 'app/credentials.php';
 
 try {
-    //$params = array('count' => 10, 'start_index' => 5);
-    //$payments = Payment::all($params, $paypal);
-
-    $db = new PDO('mysql:host=localhost;dbname=paypalprueba', 'root', '');
+    include 'app/conexion.php';
 
     $payments = $db->prepare('
         SELECT t.idTransaccion, t.idCarrito, idComprador, c.correo, t.fechahora
