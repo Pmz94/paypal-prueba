@@ -7,7 +7,7 @@
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
     <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
     <title>Exito</title>
-    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
     <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
@@ -27,20 +27,40 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>ID de transaccion:</td>
+                    <td>ID de transaccion</td>
                     <td><?php echo $paymentId; ?></td>
                 </tr>
                 <tr>
-                    <td>ID de carrito:</td>
-                    <td><?php echo $idCarrito; ?></td>
-                </tr>
-                <tr>
-                    <td>ID de comprador:</td>
+                    <td>ID de comprador</td>
                     <td><?php echo $payerID; ?></td>
                 </tr>
                 <tr>
-                    <td>Invoice Number:</td>
-                    <td><?php echo $invoiceNumber; ?></td>
+                    <td>ID de venta</td>
+                    <td><?php echo $payment->transactions[0]->related_resources[0]->sale->id ?></td>
+                </tr>
+                <tr>
+                    <td>Producto</td>
+                    <td><?php echo $payment->transactions[0]->item_list->items[0]->name ?></td>
+                </tr>
+                <tr>
+                    <td>Precio/Unidad</td>
+                    <td><?php echo '$' . $payment->transactions[0]->item_list->items[0]->price ?></td>
+                </tr>
+                <tr>
+                    <td>Cantidad</td>
+                    <td><?php echo $payment->transactions[0]->item_list->items[0]->quantity ?></td>
+                </tr>
+                <tr>
+                    <td>Subtotal</td>
+                    <td><?php echo '$' . $payment->transactions[0]->amount->details->subtotal ?></td>
+                </tr>
+                <tr>
+                    <td>Envio</td>
+                    <td><?php echo '$' . $payment->transactions[0]->amount->details->shipping ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td><?php echo '$' . $payment->transactions[0]->amount->total ?></td>
                 </tr>
                 <tr>
                     <td>Fecha:</td>

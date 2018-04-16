@@ -7,7 +7,7 @@
     <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
     <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
     <title>Pagos</title>
-    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
     <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
@@ -22,8 +22,8 @@
             <thead>
                 <tr>
                     <td>Transaccion</td>
-                    <td>Carrito</td>
                     <td>Comprador</td>
+                    <td>Venta</td>
                     <td>Fecha</td>
                     <td colspan = "2">Opciones</td>
                 </tr>
@@ -31,14 +31,16 @@
             <tbody>
                 <?php foreach($transacciones as $row) { ?>
                     <tr>
-                        <td><?php echo $row['idTransaccion']; ?></td>
-                        <td><?php echo $row['idCarrito']; ?></td>
-                        <td><?php echo $row['correo']; ?></td>
-                        <td><?php echo $row['fechahora']; ?></td>
+                        <td><?php echo $row['idTransaccion'] ?></td>
+                        <td><?php echo $row['correo'] ?></td>
+                        <td><?php echo $row['idVenta'] ?></td>
+                        <td><?php echo $row['fechahora'] ?></td>
                         <td>
-                            <a href = "pagos.php?idTransaccion=<?php echo $row['idTransaccion'] ?>&idCarrito=<?php echo $row['idCarrito'] ?>&idComprador=<?php echo $row['idComprador'] ?>" class = "btn btn-paypal-2">Ver</a>
+                            <a href = "pagos.php?&idTransaccion=<?php echo $row['idTransaccion'] ?>&idComprador=<?php echo $row['idComprador'] ?>" class = "btn btn-paypal-2">Ver</a>
                         </td>
-                        <td><a href = "#" class = "btn btn-paypal-2">Cancelar</a></td>
+                        <td>
+                            <a href = "reembolsarpago.php?idVenta=<?php echo $row['idVenta'] ?>" class = "btn btn-paypal-2">Devolucion</a>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>

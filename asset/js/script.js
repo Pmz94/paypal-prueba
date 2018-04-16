@@ -1,4 +1,5 @@
 $(function() {
+    //index
     function calcular() {
         var precio = $('[name="price"]');
         var cantidad = $('[name="quantity"]');
@@ -19,5 +20,7 @@ $(function() {
     $('[name="quantity"]').keyup(function() {
         calcular();
     });
+
+    //pagos
 
 });

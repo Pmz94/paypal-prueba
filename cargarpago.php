@@ -38,14 +38,15 @@ try {
     include 'app/conexion.php';
 
     $query = $db->prepare('
-        INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, invoiceNumber, fechahora, data)
-        VALUES (:idTransaccion, :idCarrito, :idComprador, :invoiceNumber, :fechahora, :data)
+        INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, idVenta, invoiceNumber, fechahora, data)
+        VALUES (:idTransaccion, :idCarrito, :idComprador, :idVenta, :invoiceNumber, :fechahora, :data)
     ');
 
     $query->execute([
         'idTransaccion' => $paymentId,
         'idCarrito' => $idCarrito,
         'idComprador' => $payerID,
+        'idVenta' => $payment->transactions[0]->related_resources[0]->sale->id,
         'invoiceNumber' => $invoiceNumber,
         'fechahora' => date('Y-m-d H:i:s'),
         'data' => $payment
