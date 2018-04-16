@@ -63,11 +63,11 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
     <?php
     $data = $pago['data'];
 
-    //no asociativo
+    //array no asociativo
     $manage = json_decode($data);
     echo $manage->transactions[0]->related_resources[0]->sale->id . '<br>';
 
-    //asociativo
+    //array asociativo
     $manage = json_decode($data, true);
     echo $manage['transactions'][0]['related_resources'][0]['sale']['id'] . '<br>';
 
