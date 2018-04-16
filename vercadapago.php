@@ -26,8 +26,6 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
     $fecha = $fechahora->format('d/m/Y');
     $hora = $fechahora->format('h:i:sa');
 
-    //var_dump($pago);
-    //print_r($pago[0]['idTransaccion']);
 
     //$payment = Payment::get($idTransaccion, $apiContext);
     ?>
@@ -61,7 +59,7 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
     </pre>
 
     <?php
-    $data = $pago['data'];
+    /*$data = $pago['data'];
 
     //no asociativo
     $manage = json_decode($data);
@@ -92,6 +90,6 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
                 }
             }
         }
-    }
+    }*/
 
 }
