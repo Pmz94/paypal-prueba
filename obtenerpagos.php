@@ -1,7 +1,5 @@
 <?php
 
-use PayPal\Api\Payment;
-
 include 'app/credentials.php';
 
 try {
