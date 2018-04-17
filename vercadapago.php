@@ -1,10 +1,11 @@
 <?php
 
-if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
+use PayPal\Api\Payment;
+
+if(!isset($_GET['idTransaccion'], $_GET['idComprador'])) {
     echo '<h5>Selecciona un pago para verlo</h5>';
 } else {
     $idTransaccion = $_GET['idTransaccion'];
-    $idCarrito = $_GET['idCarrito'];
     $idComprador = $_GET['idComprador'];
 
     include 'app/conexion.php';
@@ -26,11 +27,20 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
     $fecha = $fechahora->format('d/m/Y');
     $hora = $fechahora->format('h:i:sa');
 
-
-    //$payment = Payment::get($idTransaccion, $apiContext);
+    try {
+        $payment = Payment::get($idTransaccion, $apiContext);
+    } catch(Exception $ex) {
+        echo '<h1>Algo malio sal</h1><hr>';
+        die($ex);
+    }
     ?>
 
     <table class = "table table-bordered table-striped table-sm">
+        <thead>
+            <tr>
+                <td colspan="2">Recibo</td>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td>Transaccion</td>
@@ -45,6 +55,26 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
                 <td><?php echo $pago['correo'] ?></td>
             </tr>
             <tr>
+                <td>Venta</td>
+                <td><?php echo $payment->transactions[0]->related_resources[0]->sale->id ?></td>
+            </tr>
+            <tr>
+                <td>Producto</td>
+                <td><?php echo $payment->transactions[0]->item_list->items[0]->name ?></td>
+            </tr>
+            <tr>
+                <td>Precio/Unitario</td>
+                <td><?php echo '$' . $payment->transactions[0]->item_list->items[0]->price ?></td>
+            </tr>
+            <tr>
+                <td>Cantidad</td>
+                <td><?php echo $payment->transactions[0]->item_list->items[0]->quantity ?></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td><?php echo '$' . $payment->transactions[0]->amount->total ?></td>
+            </tr>
+            <tr>
                 <td>Fecha</td>
                 <td><?php echo $fecha ?></td>
             </tr>
@@ -52,10 +82,14 @@ if(!isset($_GET['idTransaccion'], $_GET['idCarrito'], $_GET['idComprador'])) {
                 <td>Hora</td>
                 <td><?php echo $hora ?></td>
             </tr>
+            <tr>
+                <td>Venta</td>
+                <td><?php echo $payment->transactions[0]->related_resources[0]->sale->state ?></td>
+            </tr>
         </tbody>
     </table>
     <pre class = "pre-scrollable text-left">
-        <?php echo $pago['data']; ?>
+        <?php echo $payment ?>
     </pre>
 
     <?php
