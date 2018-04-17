@@ -18,3 +18,5 @@ try {
     echo '<h1>Algo malio sal</h1><hr>';
     die($ex);
 }
+
+echo json_encode($transacciones);

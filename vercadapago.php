@@ -35,55 +35,55 @@ if(!isset($_GET['idTransaccion'], $_GET['idComprador'])) {
     }
     ?>
 
-    <table class = "table table-bordered table-striped table-sm">
+    <table id = "tablarecibo" class = "table table-bordered table-striped table-sm" style = "width: auto;">
         <thead>
             <tr>
-                <td colspan="2">Recibo</td>
+                <th colspan = "2">Recibo</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Transaccion</td>
+                <th>Transaccion</th>
                 <td><?php echo $pago['idTransaccion'] ?></td>
             </tr>
             <tr>
-                <td>Carrito</td>
+                <th>Carrito</th>
                 <td><?php echo $pago['idCarrito'] ?></td>
             </tr>
             <tr>
-                <td>Comprador</td>
+                <th>Comprador</th>
                 <td><?php echo $pago['correo'] ?></td>
             </tr>
             <tr>
-                <td>Venta</td>
+                <th>Venta</th>
                 <td><?php echo $payment->transactions[0]->related_resources[0]->sale->id ?></td>
             </tr>
             <tr>
-                <td>Producto</td>
+                <th>Producto</th>
                 <td><?php echo $payment->transactions[0]->item_list->items[0]->name ?></td>
             </tr>
             <tr>
-                <td>Precio/Unitario</td>
+                <th>Precio/Unitario</th>
                 <td><?php echo '$' . $payment->transactions[0]->item_list->items[0]->price ?></td>
             </tr>
             <tr>
-                <td>Cantidad</td>
+                <th>Cantidad</th>
                 <td><?php echo $payment->transactions[0]->item_list->items[0]->quantity ?></td>
             </tr>
             <tr>
-                <td>Total</td>
+                <th>Total</th>
                 <td><?php echo '$' . $payment->transactions[0]->amount->total ?></td>
             </tr>
             <tr>
-                <td>Fecha</td>
+                <th>Fecha</th>
                 <td><?php echo $fecha ?></td>
             </tr>
             <tr>
-                <td>Hora</td>
+                <th>Hora</th>
                 <td><?php echo $hora ?></td>
             </tr>
             <tr>
-                <td>Venta</td>
+                <th>Estado</th>
                 <td><?php echo $payment->transactions[0]->related_resources[0]->sale->state ?></td>
             </tr>
         </tbody>
@@ -93,7 +93,7 @@ if(!isset($_GET['idTransaccion'], $_GET['idComprador'])) {
     </pre>
 
     <?php
-    /*$data = $pago['data'];
+    /*$data = $payment;
 
     //no asociativo
     $manage = json_decode($data);
