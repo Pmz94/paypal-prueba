@@ -19,4 +19,4 @@ try {
     die($ex);
 }
 
-echo json_encode($transacciones);
+//echo json_encode($transacciones);

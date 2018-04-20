@@ -22,5 +22,6 @@ $(function() {
     });
 
     //pagos
+    $('#tablatransacc').DataTable();
 
 });
