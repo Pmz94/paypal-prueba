@@ -24,37 +24,34 @@
                             <input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
                         </div>-->
                         <div class = "form-group">
-                            <select class = "form-control" name = "product">
-                                <option>Inscripcion</option>
-                                <option>Materia</option>
-                                <option>Colegiatura</option>
-                                <option>Idioma</option>
-                                <option>Credencial</option>
-                                <option>Examen de Regularización</option>
-                                <option>Materias Sueltas</option>
-                                <option>Certificado Parcial</option>
-                                <option>Examen de Pasantía</option>
-                                <option>Duplicado de Certificado</option>
-                                <option>Cursos de Verano</option>
-                                <option>Constancias</option>
-                                <option>Kárdex</option>
-                                <option>Folletos Sueltos</option>
-                                <option>Resello de Credencial</option>
+                            <select id = "product" class = "form-control" name = "product">
+                                <option disabled = "disabled" selected = "selected">Servicio</option>
+                                <option data-price = "440">Inscripcion</option>
+                                <option data-price = "350">Materia</option>
+                                <option data-price = "440">Colegiatura</option>
+                                <option data-price = "350">Idioma</option>
+                                <option data-price = "120">Credencial</option>
+                                <option data-price = "200">Examen de Regularización</option>
+                                <option data-price = "350">Materias Sueltas</option>
+                                <option data-price = "270">Certificado Parcial</option>
+                                <option data-price = "270">Examen de Pasantía</option>
+                                <option data-price = "290">Duplicado de Certificado</option>
+                                <option data-price = "650">Cursos de Verano</option>
+                                <option data-price = "70">Constancias</option>
+                                <option data-price = "70">Kárdex</option>
+                                <option data-price = "60">Folletos Sueltos</option>
+                                <option data-price = "20">Resello de Credencial</option>
                             </select>
                         </div>
                         <div class = "form-group">
-                            <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" required>
+                            <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" readonly required>
                         </div>
                         <div class = "form-group">
                             <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "50" required>
                         </div>
-                        <p>
-                            <span>Subtotal: $<span id = "subtotal">0</span></span><br>
-                            <span>Envío: $1</span>
-                        </p>
                         <hr>
                         <p>
-                            <strong>Total: $<strong id = "total">0</strong></strong>
+                            <h6>Total: $<span id = "total">0</span></h6>
                         </p>
                         <div>
                             <input class = "btn btn-paypal" type = "submit" value = "Comprar">

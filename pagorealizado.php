@@ -51,14 +51,6 @@
                     <td><?php echo $payment->transactions[0]->item_list->items[0]->quantity ?></td>
                 </tr>
                 <tr>
-                    <td>Subtotal</td>
-                    <td><?php echo '$' . $payment->transactions[0]->amount->details->subtotal ?></td>
-                </tr>
-                <tr>
-                    <td>Envio</td>
-                    <td><?php echo '$' . $payment->transactions[0]->amount->details->shipping ?></td>
-                </tr>
-                <tr>
                     <td>Total</td>
                     <td><?php echo '$' . $payment->transactions[0]->amount->total ?></td>
                 </tr>

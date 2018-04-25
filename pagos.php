@@ -13,7 +13,6 @@
 </head>
 
 <div class = "container">
-    <?php //require 'obtenerpagos.php'; ?>
     <?php include 'app/credentials.php'; ?>
 </div>
 
@@ -28,34 +27,17 @@
                         <th>Comprador</th>
                         <th>Venta</th>
                         <th>Fecha</th>
+                        <th>Hora</th>
                         <th>Ver</th>
                         <th>Devolucion</th>
                     </tr>
                 </thead>
-                <!--<tbody>
-                    <?php foreach($transacciones as $row) { ?>
-                        <tr>
-                            <td><?php echo $row['idTransaccion'] ?></td>
-                            <td><?php echo $row['correo'] ?></td>
-                            <td><?php echo $row['idVenta'] ?></td>
-                            <td><?php echo $row['fechahora'] ?></td>
-                            <td>
-                                <a href = "pagos.php?&idTransaccion=<?php echo $row['idTransaccion'] ?>&idComprador=<?php echo $row['idComprador'] ?>" class = "btn btn-paypal-2">Ver</a>
-                            </td>
-                            <td>
-                                <a href = "reembolsarpago.php?idVenta=<?php echo $row['idVenta'] ?>" class = "btn btn-paypal-2">Devolucion</a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>-->
                 <tbody></tbody>
             </table>
             <hr>
             <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
         </div>
-        <br>
-        <?php //include 'vercadapago.php' ?>
-        <br>
+
         <!--Modal de detalles de pago-->
         <div class = "modal fade" id = "pagosModal" tabindex = "-1" role = "dialog" aria-labelledby = "exampleModalLabel" aria-hidden = "true">
             <div class = "modal-dialog" role = "document">

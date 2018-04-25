@@ -1,19 +1,18 @@
 $(function() {
     //index
     function calcular() {
-        var precio = $('[name="price"]');
-        var cantidad = $('[name="quantity"]');
-        var subtotal = isNaN(parseFloat(precio.val() * cantidad.val())) ? 0 : (precio.val() * cantidad.val());
-        var total = subtotal + 1;
-        if(precio === 0 && cantidad === 0 || subtotal === 0) {
-            subtotal = 0;
-            total = 0;
+        var price = $('#product option:selected').data('price');
+        $('[name="price"]').val(price);
+        var quantity = $('[name="quantity"]').val();
+        var total = price * quantity;
+        if(isNaN(total) === true) {
+            $('#total').text(0);
+        } else {
+            $('#total').text(total);
         }
-        $('#subtotal').text(subtotal);
-        $('#total').text(total);
     }
 
-    $('[name="price"]').keyup(function() {
+    $('#product').change(function() {
         calcular();
     });
 
@@ -26,7 +25,7 @@ $(function() {
         searching: false,
         processing: true,
         serverSide: true,
-        order: [],
+        ordering: false,
         pagingType: "full",
         lengthMenu: [[10, 15, 20], [10, 15, 20]],
         ajax: {
@@ -37,12 +36,13 @@ $(function() {
             {
                 targets: [0, 2, 4, 5],
                 orderable: false
+
             }
         ],
         language: {
             info: 'Pag. _PAGE_ de _PAGES_',
             infoEmpty: 'No hay datos',
-            infoFiltered: '(filtrado de los _MAX_ renglones)',
+            infoFiltered: '(de los _MAX_ renglones)',
             lengthMenu: 'Mostrar _MENU_ renglones por pagina',
             loadingRecords: 'Cargando datos...',
             processing: 'Procesando...',
@@ -57,14 +57,14 @@ $(function() {
         }
     });
 
-    $(document).on('click', '.view', function () {
+    $(document).on('click', '.view', function() {
         var idTransaccion = $(this).attr('id');
         $.ajax({
             url: 'vercadapago.php',
             method: 'POST',
-            data: { idTransaccion: idTransaccion },
+            data: {idTransaccion: idTransaccion},
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 $('#pagosModal').modal('show');
 
                 /*$('#model').val(data.model);

@@ -20,10 +20,8 @@ if(!isset($_POST['product'], $_POST['price'])) {
 $product = $_POST['product'];
 $quantity = $_POST['quantity'];
 $price = $_POST['price'];
-$shipping = 1.00;
 
-$subtotal = $price * $quantity;
-$total = $subtotal + $shipping;
+$total = $price * $quantity;
 
 $payer = new Payer();
 $payer->setPaymentMethod('paypal');
@@ -37,14 +35,9 @@ $item->setName($product)
 $itemlist = new ItemList();
 $itemlist->setItems([$item]);
 
-$details = new Details();
-$details->setShipping($shipping)
-        ->setSubtotal($subtotal);
-
 $amount = new Amount();
 $amount->setCurrency('MXN')
-       ->setTotal($total)
-       ->setDetails($details);
+       ->setTotal($total);
 
 $invoiceNumber = uniqid();
 $_SESSION['invoiceNumber'] = $invoiceNumber;
