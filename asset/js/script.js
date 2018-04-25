@@ -67,15 +67,37 @@ $(function() {
             success: function(data) {
                 $('#pagosModal').modal('show');
 
-                /*$('#model').val(data.model);
-                $('#speed').val(data.speed);
-                $('#ram').val(data.memory);
-                $('#hdd').val(data.hdd);
-                $('#price').val(data.price);*/
+                $('#idTransaccion').text(idTransaccion);
+                $('#idCarrito').text(data.idCarrito);
+                $('#correo').text(data.correo);
+                $('#idVenta').text(data.idVenta);
+                $('#producto').text(data.producto);
+                $('#precio').text('$' + data.precio);
+                $('#cantidad').text(data.cantidad);
+                $('#total').text('$' + data.total);
+                $('#fecha').text(data.fecha);
+                $('#hora').text(data.hora);
+                $('#estado').text(data.estado);
 
-                $('.modal-title').text('Detalles de pago');
+                $('#payment').text(data.data);
             }
         })
     });
 
+    /*$(document).on('click', '.refund', function () {
+            var idVenta = $(this).attr('id');
+            if (confirm('Seguro que quieres devolver este producto?')) {
+                $.ajax({
+                    url: 'reembolsarpago.php',
+                    method: 'POST',
+                    data: { idVenta: idVenta },
+                    success: function (data) {
+                        alert(data);
+                        dataTable.ajax.reload();
+                    }
+                });
+            } else {
+                return false;
+            }
+        });*/
 });

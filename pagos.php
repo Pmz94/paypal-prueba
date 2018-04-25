@@ -49,7 +49,7 @@
                         </button>
                     </div>
                     <div class = "modal-body">
-                        <table>
+                        <table class = "table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
                                     <th colspan = "2">Recibo</th>
@@ -57,51 +57,53 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>Transaccion</th>
-                                    <td></td>
+                                    <th>ID de Transaccion</th>
+                                    <td id = "idTransaccion"></td>
                                 </tr>
                                 <tr>
                                     <th>Carrito</th>
-                                    <td></td>
+                                    <td id = "idCarrito"></td>
                                 </tr>
                                 <tr>
                                     <th>Comprador</th>
-                                    <td></td>
+                                    <td id = "correo"></td>
                                 </tr>
                                 <tr>
-                                    <th>Venta</th>
-                                    <td></td>
+                                    <th>ID de Venta</th>
+                                    <td id = "idVenta"></td>
                                 </tr>
                                 <tr>
                                     <th>Producto</th>
-                                    <td></td>
+                                    <td id = "producto"></td>
                                 </tr>
                                 <tr>
                                     <th>Precio/Unitario</th>
-                                    <td></td>
+                                    <td id = "precio"></td>
                                 </tr>
                                 <tr>
                                     <th>Cantidad</th>
-                                    <td></td>
+                                    <td id = "cantidad"></td>
                                 </tr>
                                 <tr>
                                     <th>Total</th>
-                                    <td></td>
+                                    <td id = "total"></td>
                                 </tr>
                                 <tr>
                                     <th>Fecha</th>
-                                    <td></td>
+                                    <td id = "fecha"></td>
                                 </tr>
                                 <tr>
                                     <th>Hora</th>
-                                    <td></td>
+                                    <td id = "hora"></td>
                                 </tr>
                                 <tr>
                                     <th>Estado</th>
-                                    <td></td>
+                                    <td id = "estado"></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <hr>
+                        <pre id = "payment" class = "pre-scrollable text-left"></pre>
                     </div>
                     <div class = "modal-footer">
                         <button type = "button" class = "btn btn-secondary" data-dismiss = "modal">Cerrar</button>

@@ -85,7 +85,7 @@ pre {
     border-radius: 1.5rem;
 }
 
-.btn-paypal-2 {
+.btn.btn-paypal-2 {
     color: #ffffff;
     background-color: #0070ba;
     border-color: transparent;
@@ -114,7 +114,7 @@ pre {
 .btn-paypal-2.btn-sm, .btn-group-sm > .btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.7672rem;
-    line-height: 1.3;
+    line-height: 1.2;
     border-radius: 1.5rem;
 }
 
