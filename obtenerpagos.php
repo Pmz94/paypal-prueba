@@ -60,14 +60,19 @@ $filtered_rows = $payments->rowCount();
 
 foreach($transacciones as $row) {
     $sub_array = [];
-    $sub_array[] = $row['idTransaccion'];
+    $sub_array[] = '$' . $row['pagoTotal'];
     $sub_array[] = $row['correo'];
     $sub_array[] = $row['idVenta'];
     $sub_array[] = date_format(date_create($row['fechahora']), 'd/m/Y');
     $sub_array[] = date_format(date_create($row['fechahora']), 'h:i:sa');
     //$sub_array[] = $row['fechahora'];
+    $sub_array[] = $row['devuelto'];
     $sub_array[] = '<button name = "view" id = "' . $row['idTransaccion'] . '" class = "btn btn-paypal-2 btn-sm view">Ver</button>';
-    $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm refund">Devolucion</button>';
+    if($row['devuelto'] == 1) {
+        $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm refund" disabled>Devuelto</button>';
+    } else {
+        $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm refund">Devolucion</button>';
+    }
     $data[] = $sub_array;
 }
 

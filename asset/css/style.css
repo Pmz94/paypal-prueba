@@ -24,6 +24,13 @@ img.paypallogo {
     width: 360px;
 }
 
+.box-pagos {
+    background: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px -5px #555555;
+    padding: 10px;
+}
+
 .form-control {
     display: block;
     height: 44px;
@@ -118,6 +125,7 @@ pre {
     border-radius: 1.5rem;
 }
 
-table.dataTable {
+#tablaPagos {
+    background-color: white;
     border-collapse: collapse !important;
 }

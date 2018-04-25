@@ -36,26 +36,27 @@ if(isset($_POST['idVenta'])) {
     $sale = new Sale();
     $sale->setId($saleId);
 
-    /*try {
+    try {
         $refundedSale = $sale->refundSale($refundRequest, $apiContext);
     } catch(Exception $ex) {
         echo '<h1>Algo malio sal</h1><hr>';
         die($ex);
     }
-
+    /*
     //conservar la transaccion y cambiar el estado a 'devuelta'
-    // o simplemente borrarla de la tabla de transacciones
 
     $query = $db->prepare('
-        DELETE FROM transacciones
+        UPDATE transacciones
+        SET devuelto = 1, fechahoraDev = :fechahoraDev
         WHERE idVenta = :idVenta
     ');
 
     $result = $query->execute([
+        'fechahoraDev' => date('Y-m-d H:i:s'),
         'idVenta' => $saleId,
     ]);
 
     if (!empty($result)) {
-        echo 'Data Deleted';
+        echo 'Data Refunded';
     }*/
 }

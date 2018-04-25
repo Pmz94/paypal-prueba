@@ -18,16 +18,18 @@
 
 <body>
     <div class = "container text-center">
-        <div class = "">
+        <div class = "box-pagos">
             <h1><strong>Pagos realizados</strong></h1>
-            <table id = "tablaPagos" class = "table table-striped table-bordered table-sm table-hover display">
+            <hr>
+            <table id = "tablaPagos" class = "table table-striped table-bordered table-sm table-hover">
                 <thead>
                     <tr>
-                        <th>Transaccion</th>
+                        <th>Total</th>
                         <th>Comprador</th>
                         <th>Venta</th>
                         <th>Fecha</th>
                         <th>Hora</th>
+                        <th>Devuelto</th>
                         <th>Ver</th>
                         <th>Devolucion</th>
                     </tr>
@@ -36,6 +38,7 @@
             </table>
             <hr>
             <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+            <br>
         </div>
 
         <!--Modal de detalles de pago-->
@@ -56,50 +59,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>ID de Transaccion</th>
-                                    <td id = "idTransaccion"></td>
-                                </tr>
-                                <tr>
-                                    <th>Carrito</th>
-                                    <td id = "idCarrito"></td>
-                                </tr>
-                                <tr>
-                                    <th>Comprador</th>
-                                    <td id = "correo"></td>
-                                </tr>
-                                <tr>
-                                    <th>ID de Venta</th>
-                                    <td id = "idVenta"></td>
-                                </tr>
-                                <tr>
-                                    <th>Producto</th>
-                                    <td id = "producto"></td>
-                                </tr>
-                                <tr>
-                                    <th>Precio/Unitario</th>
-                                    <td id = "precio"></td>
-                                </tr>
-                                <tr>
-                                    <th>Cantidad</th>
-                                    <td id = "cantidad"></td>
-                                </tr>
-                                <tr>
-                                    <th>Total</th>
-                                    <td id = "total"></td>
-                                </tr>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <td id = "fecha"></td>
-                                </tr>
-                                <tr>
-                                    <th>Hora</th>
-                                    <td id = "hora"></td>
-                                </tr>
-                                <tr>
-                                    <th>Estado</th>
-                                    <td id = "estado"></td>
-                                </tr>
+                                <tr id = "idTransaccion"></tr>
+                                <tr id = "idCarrito"></tr>
+                                <tr id = "correo"></tr>
+                                <tr id = "idVenta"></tr>
+                                <tr id = "producto"></tr>
+                                <tr id = "precio"></tr>
+                                <tr id = "cantidad"></tr>
+                                <tr id = "total"></tr>
+                                <tr id = "fecha"></tr>
+                                <tr id = "hora"></tr>
+                                <tr id = "estado"></tr>
                             </tbody>
                         </table>
                         <hr>

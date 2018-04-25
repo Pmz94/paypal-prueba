@@ -67,37 +67,42 @@ $(function() {
             success: function(data) {
                 $('#pagosModal').modal('show');
 
-                $('#idTransaccion').text(idTransaccion);
-                $('#idCarrito').text(data.idCarrito);
-                $('#correo').text(data.correo);
-                $('#idVenta').text(data.idVenta);
-                $('#producto').text(data.producto);
-                $('#precio').text('$' + data.precio);
-                $('#cantidad').text(data.cantidad);
-                $('#total').text('$' + data.total);
-                $('#fecha').text(data.fecha);
-                $('#hora').text(data.hora);
-                $('#estado').text(data.estado);
+                $('#idTransaccion').html('<th>ID de Transaccion:</th><td>' + idTransaccion + '</td>');
+                $('#idCarrito').html('<th>ID de Carrito:</th><td>' + data.idCarrito + '</td>');
+                $('#correo').html('<th>Comprador:</th><td>' + data.correo + '</td>');
+                $('#idVenta').html('<th>ID de Venta:</th><td>' + data.idVenta + '</td>');
+                $('#producto').html('<th>Producto:</th><td>' + data.producto + '</td>');
+                $('#precio').html('<th>Precio/Unidad:</th><td>$' + data.precio + '</td>');
+                $('#cantidad').html('<th>Cantidad:</th><td>' + data.cantidad + '</td>');
+                $('#total').html('<th>Total:</th><td>$' + data.total + '</td>');
+                $('#fecha').html('<th>Fecha:</th><td>' + data.fecha + '</td>');
+                $('#hora').html('<th>Hora:</th><td>' + data.hora + '</td>');
+
+                if(data.estado === 'refunded') {
+                    $('#estado').html('<th style="background-color:red;color:white;">Estado:</th><td style="background-color:red;color:white;">' + data.estado + '</td>');
+                } else {
+                    $('#estado').html('<th>Estado:</th><td>' + data.estado + '</td>');
+                }
 
                 $('#payment').text(data.data);
             }
         })
     });
 
-    /*$(document).on('click', '.refund', function () {
-            var idVenta = $(this).attr('id');
-            if (confirm('Seguro que quieres devolver este producto?')) {
-                $.ajax({
-                    url: 'reembolsarpago.php',
-                    method: 'POST',
-                    data: { idVenta: idVenta },
-                    success: function (data) {
-                        alert(data);
-                        dataTable.ajax.reload();
-                    }
-                });
-            } else {
-                return false;
-            }
-        });*/
+    /*$(document).on('click', '.refund', function() {
+        var idVenta = $(this).attr('id');
+        if(confirm('Seguro que quieres devolver este producto?')) {
+            $.ajax({
+                url: 'reembolsarpago.php',
+                method: 'POST',
+                data: {idVenta: idVenta},
+                success: function(data) {
+                    alert(data);
+                    dataTable.ajax.reload();
+                }
+            });
+        } else {
+            return false;
+        }
+    });*/
 });
