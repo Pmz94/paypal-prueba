@@ -69,7 +69,7 @@ foreach($transacciones as $row) {
     $sub_array[] = $row['devuelto'];
     $sub_array[] = '<button name = "view" id = "' . $row['idTransaccion'] . '" class = "btn btn-paypal-2 btn-sm view">Ver</button>';
     if($row['devuelto'] == 1) {
-        $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm refund" disabled>Devuelto</button>';
+        $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm" disabled>Devuelto</button>';
     } else {
         $sub_array[] = '<button name = "refund" id = "' . $row['idVenta'] . '" class = "btn btn-paypal-2 btn-sm refund">Devolucion</button>';
     }

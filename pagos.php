@@ -70,13 +70,15 @@
                                 <tr id = "fecha"></tr>
                                 <tr id = "hora"></tr>
                                 <tr id = "estado"></tr>
+                                <tr id = "fechaDev"></tr>
+                                <tr id = "horaDev"></tr>
                             </tbody>
                         </table>
                         <hr>
                         <pre id = "payment" class = "pre-scrollable text-left"></pre>
                     </div>
                     <div class = "modal-footer">
-                        <button type = "button" class = "btn btn-secondary" data-dismiss = "modal">Cerrar</button>
+                        <button type = "button" class = "btn btn-paypal-2" data-dismiss = "modal">Cerrar</button>
                     </div>
                 </div>
             </div>

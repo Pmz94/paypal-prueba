@@ -172,6 +172,8 @@ if(isset($_POST['idTransaccion'])) {
         $output['fecha'] = date_format(date_create($row['fechahora']), 'd/m/Y');
         $output['hora'] = date_format(date_create($row['fechahora']), 'h:i:sa');
         $output['estado'] = $payment->transactions[0]->related_resources[0]->sale->state;
+        $output['fechaDev'] = date_format(date_create($row['fechahoraDev']), 'd/m/Y');
+        $output['horaDev'] = date_format(date_create($row['fechahoraDev']), 'h:i:sa');
         $output['data'] = '' . $payment;
     }
     echo json_encode($output);

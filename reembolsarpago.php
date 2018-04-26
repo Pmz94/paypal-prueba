@@ -22,9 +22,9 @@ if(isset($_POST['idVenta'])) {
     $currency = $sale->amount->currency;
     $total = $sale->amount->total;
 
-    echo $saleId;
-    echo '<br>';
-    echo $sale;
+    //echo $saleId;
+    //echo '<br>';
+    //echo $sale;
 
     $amt = new Amount();
     $amt->setCurrency($currency)
@@ -42,8 +42,9 @@ if(isset($_POST['idVenta'])) {
         echo '<h1>Algo malio sal</h1><hr>';
         die($ex);
     }
-    /*
+
     //conservar la transaccion y cambiar el estado a 'devuelta'
+    date_default_timezone_set('America/Hermosillo');
 
     $query = $db->prepare('
         UPDATE transacciones
@@ -56,7 +57,7 @@ if(isset($_POST['idVenta'])) {
         'idVenta' => $saleId,
     ]);
 
-    if (!empty($result)) {
+    if(!empty($result)) {
         echo 'Data Refunded';
-    }*/
+    }
 }

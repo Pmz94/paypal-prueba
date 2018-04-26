@@ -80,8 +80,12 @@ $(function() {
 
                 if(data.estado === 'refunded') {
                     $('#estado').html('<th style="background-color:red;color:white;">Estado:</th><td style="background-color:red;color:white;">' + data.estado + '</td>');
+                    $('#fechaDev').html('<th style="background-color:red;color:white;">Fecha:</th><td style="background-color:red;color:white;">' + data.fechaDev + '</td>');
+                    $('#horaDev').html('<th style="background-color:red;color:white;">Hora:</th><td style="background-color:red;color:white;">' + data.horaDev + '</td>');
                 } else {
                     $('#estado').html('<th>Estado:</th><td>' + data.estado + '</td>');
+                    $('#fechaDev').html('');
+                    $('#horaDev').html('');
                 }
 
                 $('#payment').text(data.data);
@@ -89,7 +93,7 @@ $(function() {
         })
     });
 
-    /*$(document).on('click', '.refund', function() {
+    $(document).on('click', '.refund', function() {
         var idVenta = $(this).attr('id');
         if(confirm('Seguro que quieres devolver este producto?')) {
             $.ajax({
@@ -104,5 +108,5 @@ $(function() {
         } else {
             return false;
         }
-    });*/
+    });
 });

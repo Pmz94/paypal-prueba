@@ -21,8 +21,7 @@
         <table class = "table table-striped table-bordered table-sm">
             <thead>
                 <tr>
-                    <th>Variable</th>
-                    <th>Valor</th>
+                    <th colspan="2">Recibo</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +30,8 @@
                     <td><?php echo $paymentId; ?></td>
                 </tr>
                 <tr>
-                    <td>ID de comprador</td>
-                    <td><?php echo $payerID; ?></td>
+                    <td>Comprador</td>
+                    <td><?php echo $payment->payer->payer_info->email ?></td>
                 </tr>
                 <tr>
                     <td>ID de venta</td>

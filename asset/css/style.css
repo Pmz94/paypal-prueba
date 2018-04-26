@@ -31,6 +31,10 @@ img.paypallogo {
     padding: 10px;
 }
 
+#product {
+    height: 44px;
+}
+
 .form-control {
     display: block;
     height: 44px;
