@@ -18,27 +18,31 @@
 
 <body>
     <div class = "container text-center">
-        <div class = "box-pagos">
-            <h1><strong>Pagos realizados</strong></h1>
-            <hr>
-            <table id = "tablaPagos" class = "table table-striped table-bordered table-sm table-hover">
-                <thead>
-                    <tr>
-                        <th>Total</th>
-                        <th>Comprador</th>
-                        <th>Venta</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Devuelto</th>
-                        <th>Ver</th>
-                        <th>Devolucion</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <hr>
-            <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
-            <br>
+        <div class = "UIpagos">
+            <div class = "box-pagos">
+                <h1><strong>Pagos realizados</strong></h1>
+                <hr>
+                <div class = "table-responsive">
+                    <table id = "tablaPagos" class = "table table-striped table-bordered table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>Comprador</th>
+                                <th>Venta</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Devuelto</th>
+                                <th>Ver</th>
+                                <th>Devolucion</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <hr>
+                <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+                <br>
+            </div>
         </div>
 
         <!--Modal de detalles de pago-->

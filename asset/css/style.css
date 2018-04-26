@@ -10,6 +10,28 @@ table > tbody {
     font-size: 0.90rem;
 }
 
+/* 637px */
+@media only screen and (max-height: 1024px) {
+    .UI {
+        padding-top: 10%;
+    }
+
+    .UIpagos {
+        padding: 2% 0 2% 0;
+    }
+}
+
+/* 949px */
+@media only screen and (min-height: 840px) {
+    .UI {
+        padding-top: 30%;
+    }
+
+    .UIpagos {
+        padding: 5% 0 0 0;
+    }
+}
+
 img.paypallogo {
     width: 250px;
     filter: saturate(120%);
