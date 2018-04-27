@@ -1,27 +1,6 @@
 <?php
 
 include 'app/credentials.php';
-/*
-try {
-    include 'app/conexion.php';
-
-    $payments = $db->prepare('
-        SELECT t.idTransaccion, idComprador, idVenta, c.correo, t.fechahora
-            FROM transacciones t
-            JOIN compradores c USING (idComprador)
-        ORDER BY t.fechahora DESC
-    ');
-    $payments->execute();
-    $transacciones = $payments->fetchAll(\PDO::FETCH_ASSOC);
-
-} catch(Exception $ex) {
-    echo '<h1>Algo malio sal</h1><hr>';
-    die($ex);
-}
-
-//echo json_encode($transacciones);
-*/
-
 include 'app/conexion.php';
 
 $allpayments = $db->prepare('
@@ -76,11 +55,11 @@ foreach($transacciones as $row) {
     $data[] = $sub_array;
 }
 
-$output = array(
+$output = [
     'draw' => intval($_POST['draw']),
     'recordsTotal' => $filtered_rows,
     'recordsFiltered' => $todastransacciones,
     'data' => $data,
-);
+];
 
 echo json_encode($output);

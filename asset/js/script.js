@@ -23,11 +23,11 @@ $(function() {
     //pagos
     var dataTable = $('#tablaPagos').DataTable({
         searching: false,
-        processing: true,
-        serverSide: true,
         ordering: false,
+        processing: true,
         pagingType: "full",
         lengthMenu: [[10, 15, 20], [10, 15, 20]],
+        serverSide: true,
         ajax: {
             url: 'obtenerpagos.php',
             type: 'POST'
@@ -62,7 +62,7 @@ $(function() {
         $.ajax({
             url: 'vercadapago.php',
             method: 'POST',
-            data: {idTransaccion: idTransaccion},
+            data: { idTransaccion: idTransaccion },
             dataType: 'json',
             success: function(data) {
                 $('#pagosModal').modal('show');
@@ -99,7 +99,7 @@ $(function() {
             $.ajax({
                 url: 'reembolsarpago.php',
                 method: 'POST',
-                data: {idVenta: idVenta},
+                data: { idVenta: idVenta },
                 success: function(data) {
                     alert(data);
                     dataTable.ajax.reload();

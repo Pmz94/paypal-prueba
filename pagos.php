@@ -12,10 +12,6 @@
     <link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
-<div class = "container">
-    <?php include 'app/credentials.php'; ?>
-</div>
-
 <body>
     <div class = "container text-center">
         <div class = "UIpagos">
@@ -36,11 +32,12 @@
                                 <th>Devolucion</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
                     </table>
                 </div>
                 <hr>
-                <a href = "<?php echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+                <a href = "<?php include 'app/credentials.php'; echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
+                <br>
+                <a href = "paymenthistory.php" class="btn btn-paypal-2">API historial</a>
                 <br>
             </div>
         </div>
