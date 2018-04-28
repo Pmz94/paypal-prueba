@@ -35,9 +35,7 @@
                     </table>
                 </div>
                 <hr>
-                <a href = "<?php include 'app/credentials.php'; echo APP_PATH ?>" class = "btn btn-paypal-2">Regresar al inicio</a>
-                <br>
-                <a href = "paymenthistory.php" class="btn btn-paypal-2">API historial</a>
+                <a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>
                 <br>
             </div>
         </div>
