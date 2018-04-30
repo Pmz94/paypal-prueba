@@ -22,11 +22,11 @@
                     <table id = "tablaPagos" class = "table table-striped table-bordered table-sm table-hover">
                         <thead>
                             <tr>
-                                <th>Total</th>
-                                <th>Comprador</th>
-                                <th>Venta</th>
                                 <th>Fecha</th>
                                 <th>Hora</th>
+                                <th>Comprador</th>
+                                <th>Total</th>
+                                <th>Venta</th>
                                 <th>Devuelto</th>
                                 <th>Ver</th>
                                 <th>Devolucion</th>
@@ -86,7 +86,7 @@
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.js"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap4.js"></script>
     <script src = "asset/js/script.js"></script>
 </body>
 

@@ -22,6 +22,7 @@ $(function() {
 
     //pagos
     var dataTable = $('#tablaPagos').DataTable({
+        autoWidth: true,
         searching: false,
         ordering: false,
         processing: true,
@@ -34,7 +35,7 @@ $(function() {
         },
         columnDefs: [
             {
-                targets: [0, 2, 4, 5],
+                targets: [1, 4, 5, 6, 7],
                 orderable: false
 
             }
