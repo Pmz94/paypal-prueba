@@ -2,80 +2,80 @@
 <html lang = "es">
 
 <head>
-    <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-    <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
-    <link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
-    <title>PayPalPrueba</title>
-    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
-    <link rel = "stylesheet" href = "asset/css/style.css">
+	<meta charset = "UTF-8">
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
+	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
+	<title>PayPalPrueba</title>
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
+	<link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
 <body>
-    <div class = "container text-center">
-        <div class = "row justify-content-center">
-            <div class = "col-auto">
-                <div class = "UI">
-                    <img class = "paypallogo" src = "https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt = "PayPalLogo">
-                    <div class = "box">
-                        <h2><strong>Paga algo</strong></h2>
-                        <hr>
-                        <form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
-                            <!--<div class = "form-group">
-                                <input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
-                            </div>-->
-                            <div class = "form-group">
-                                <select id = "product" class = "form-control" name = "product">
-                                    <option disabled = "disabled" selected = "selected">Servicio</option>
-                                    <option data-price = "440">Inscripcion</option>
-                                    <option data-price = "350">Materia</option>
-                                    <option data-price = "440">Colegiatura</option>
-                                    <option data-price = "350">Idioma</option>
-                                    <option data-price = "120">Credencial</option>
-                                    <option data-price = "200">Examen de Regularización</option>
-                                    <option data-price = "350">Materias Sueltas</option>
-                                    <option data-price = "270">Certificado Parcial</option>
-                                    <option data-price = "270">Examen de Pasantía</option>
-                                    <option data-price = "290">Duplicado de Certificado</option>
-                                    <option data-price = "650">Cursos de Verano</option>
-                                    <option data-price = "70">Constancias</option>
-                                    <option data-price = "70">Kárdex</option>
-                                    <option data-price = "60">Folletos Sueltos</option>
-                                    <option data-price = "20">Resello de Credencial</option>
-                                </select>
-                            </div>
-                            <div class = "form-group">
-                                <input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" readonly required>
-                            </div>
-                            <div class = "form-group">
-                                <input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "50" required>
-                            </div>
-                            <hr>
-                            <h6>Total: $<span id = "total">0</span></h6>
-                            <div>
-                                <input class = "btn btn-paypal" type = "submit" value = "Comprar">
-                            </div>
-                            <div class = "row">
-                                <div class = "col">
-                                    <hr>
-                                </div>
-                                <div>o</div>
-                                <div class = "col">
-                                    <hr>
-                                </div>
-                            </div>
-                            <div>
-                                <a href = "pagos.php" class = "btn btn-paypal-2">Ver movimientos</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.js"></script>
-    <script src = "asset/js/script.js"></script>
+	<div class = "container text-center">
+		<div class = "row justify-content-center">
+			<div class = "col-auto">
+				<div class = "UI">
+					<img class = "paypallogo" src = "https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt = "PayPalLogo">
+					<div class = "box">
+						<h2><strong>Paga algo</strong></h2>
+						<hr>
+						<form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
+							<!--<div class = "form-group">
+								<input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
+							</div>-->
+							<div class = "form-group">
+								<select id = "product" class = "form-control" name = "product">
+									<option disabled = "disabled" selected = "selected">Servicio</option>
+									<option data-price = "440">Inscripcion</option>
+									<option data-price = "350">Materia</option>
+									<option data-price = "440">Colegiatura</option>
+									<option data-price = "350">Idioma</option>
+									<option data-price = "120">Credencial</option>
+									<option data-price = "200">Examen de Regularización</option>
+									<option data-price = "350">Materias Sueltas</option>
+									<option data-price = "270">Certificado Parcial</option>
+									<option data-price = "270">Examen de Pasantía</option>
+									<option data-price = "290">Duplicado de Certificado</option>
+									<option data-price = "650">Cursos de Verano</option>
+									<option data-price = "70">Constancias</option>
+									<option data-price = "70">Kárdex</option>
+									<option data-price = "60">Folletos Sueltos</option>
+									<option data-price = "20">Resello de Credencial</option>
+								</select>
+							</div>
+							<div class = "form-group">
+								<input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" readonly required>
+							</div>
+							<div class = "form-group">
+								<input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "50" required>
+							</div>
+							<hr>
+							<h6>Total: $<span id = "total">0</span></h6>
+							<div>
+								<input class = "btn btn-paypal" type = "submit" value = "Comprar">
+							</div>
+							<div class = "row">
+								<div class = "col">
+									<hr>
+								</div>
+								<div>o</div>
+								<div class = "col">
+									<hr>
+								</div>
+							</div>
+							<div>
+								<a href = "pagos.php" class = "btn btn-paypal-2">Ver movimientos</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.js"></script>
+	<script src = "asset/js/script.js"></script>
 </body>
 
 </html>

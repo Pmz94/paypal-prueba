@@ -14,7 +14,7 @@ session_start();
 require 'app/credentials.php';
 
 if(!isset($_POST['product'], $_POST['price'])) {
-    die();
+	die();
 }
 
 $product = $_POST['product'];
@@ -28,41 +28,41 @@ $payer->setPaymentMethod('paypal');
 
 $item = new Item();
 $item->setName($product)
-     ->setCurrency('MXN')
-     ->setQuantity($quantity)
-     ->setPrice($price);
+	 ->setCurrency('MXN')
+	 ->setQuantity($quantity)
+	 ->setPrice($price);
 
 $itemlist = new ItemList();
 $itemlist->setItems([$item]);
 
 $amount = new Amount();
 $amount->setCurrency('MXN')
-       ->setTotal($total);
+	   ->setTotal($total);
 
 $invoiceNumber = uniqid();
 $_SESSION['invoiceNumber'] = $invoiceNumber;
 
 $transaction = new Transaction();
 $transaction->setAmount($amount)
-            ->setItemList($itemlist)
-            ->setDescription('Pagando algo')
-            ->setInvoiceNumber($invoiceNumber);
+			->setItemList($itemlist)
+			->setDescription('Pagando algo')
+			->setInvoiceNumber($invoiceNumber);
 
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl(APP_PATH . '/pagorealizado.php?success=true')
-             ->setCancelUrl(APP_PATH . '/pagorealizado.php?success=false');
+			 ->setCancelUrl(APP_PATH . '/pagorealizado.php?success=false');
 
 $payment = new Payment();
 $payment->setIntent('sale')
-        ->setPayer($payer)
-        ->setRedirectUrls($redirectUrls)
-        ->setTransactions([$transaction]);
+		->setPayer($payer)
+		->setRedirectUrls($redirectUrls)
+		->setTransactions([$transaction]);
 
 try {
-    $payment->create($apiContext);
+	$payment->create($apiContext);
 } catch(Exception $ex) {
-    echo '<h1>Algo malio sal</h1><hr>';
-    die($ex);
+	echo '<h1>Algo malio sal</h1><hr>';
+	die($ex);
 }
 
 $approvalUrl = $payment->getApprovalLink();
