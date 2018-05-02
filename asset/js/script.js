@@ -112,19 +112,18 @@ $(function() {
 		} else {
 			return false;
 		}
-	});*/
-
+	});
+	*/
 
 	$(document).on('click', '.refund', function() {
 		var idVenta = $(this).attr('id');
-		if(confirm('Seguro que quieres devolver este producto?')) {
+		if(confirm('Seguro que quieres reembolsar este cargo?')) {
 			$.ajax({
 				url: 'reembolsarpago.php',
 				method: 'POST',
 				data: { idVenta: idVenta },
 				success: function(data) {
 					alert(data);
-					$('#devolucionModal').modal('hide');
 					dataTable.ajax.reload();
 				}
 			});
