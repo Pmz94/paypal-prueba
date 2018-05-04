@@ -45,7 +45,7 @@ $_SESSION['invoiceNumber'] = $invoiceNumber;
 $transaction = new Transaction();
 $transaction->setAmount($amount)
 			->setItemList($itemlist)
-			->setDescription('Pagando algo')
+			->setDescription('Pagando servicio estudiantil')
 			->setInvoiceNumber($invoiceNumber);
 
 $redirectUrls = new RedirectUrls();

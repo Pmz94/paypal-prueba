@@ -27,6 +27,7 @@
 								<th>Comprador</th>
 								<th>Total</th>
 								<th>Venta</th>
+								<th>Estado</th>
 								<th>Devuelto</th>
 								<th>Ver</th>
 								<th>Devolucion</th>
