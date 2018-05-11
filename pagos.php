@@ -28,7 +28,6 @@
 								<th>Total</th>
 								<th>Venta</th>
 								<th>Estado</th>
-								<th>Devuelto</th>
 								<th>Ver</th>
 								<th>Devolucion</th>
 							</tr>
@@ -39,6 +38,43 @@
 				<a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>
 				<br>
 			</div>
+			<br>
+			<hr>
+			<br>
+			<div class = "box-pagos">
+				<h3><strong>Mejores Compradores</strong></h3>
+				<hr>
+				<table id = "tablaStats" class = "table table-striped table-bordered table-sm table-hover">
+					<thead>
+						<tr>
+							<th>Comprador</th>
+							<th>Fecha</th>
+							<th>Hora</th>
+							<th>Completos</th>
+							<th>Pendientes</th>
+							<th>Devueltos</th>
+							<th>Total Pagos</th>
+						</tr>
+					</thead>
+					<?php include 'estadisticas.php' ?>
+					<tbody>
+						<?php foreach($estadisticas as $row) { ?>
+							<tr>
+								<td><?php echo $row['mejorComprador'] ?></td>
+								<td><?php echo date_format(date_create($row['ultimoPago']), 'd/m/Y') ?></td>
+								<td><?php echo date_format(date_create($row['ultimoPago']), 'h:ia') ?></td>
+								<td><?php echo $row['completos'] ?></td>
+								<td><?php echo $row['pendientes'] ?></td>
+								<td><?php echo $row['devueltos'] ?></td>
+								<td><?php echo $row['totalPagos'] ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+				<hr>
+				<a id = "stats" href = "estadisticas.php" class = "btn btn-paypal-2">Mas estadisticas</a>
+			</div>
+			<br>
 		</div>
 
 		<!--Modal de detalles de pago-->

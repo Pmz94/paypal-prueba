@@ -7,7 +7,7 @@ body {
 }
 
 table > tbody {
-	font-size: 0.90rem;
+	font-size: 0.85rem;
 }
 
 /* 637px */
@@ -154,4 +154,8 @@ pre {
 #tablaPagos {
 	background-color: white;
 	border-collapse: collapse !important;
+}
+
+table.table {
+	background-color: #FFFFFF;
 }

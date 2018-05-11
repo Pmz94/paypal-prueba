@@ -14,8 +14,9 @@ $output = [];
 $query = '
     SELECT *
     FROM transacciones t
-    JOIN compradores c USING (idComprador)
-    JOIN estadosdepago e ON t.estado = e.id 
+    	JOIN compradores c USING (idComprador)
+    	JOIN servicios s ON t.servicio = s.idServicio
+    	JOIN estadosdepago e ON t.estado = e.id 
 ';
 
 if(isset($_POST['order'])) {
@@ -46,7 +47,6 @@ foreach($transacciones as $row) {
 	$sub_array[] = '$' . $row['pagoTotal'];
 	$sub_array[] = $row['idVenta'];
 	$sub_array[] = $row['estado'];
-	$sub_array[] = $row['devuelto'];
 	$sub_array[] = '<button name = "view" id = "' . $row['idTransaccion'] . '" class = "btn btn-paypal-2 btn-sm view">Ver</button>';
 
 	if($row['devuelto'] == 1) {

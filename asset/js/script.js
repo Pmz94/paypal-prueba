@@ -35,7 +35,7 @@ $(function() {
 		},
 		columnDefs: [
 			{
-				targets: [1, 4, 5, 6, 7],
+				targets: [1, 3, 5, 6],
 				orderable: false
 
 			}
@@ -57,6 +57,12 @@ $(function() {
 			}
 		}
 	});
+
+	/*var tablaStats = $('#tablaStats').dataTable({
+		ordering: false,
+		searching: false,
+		ajax: { url: 'estadisticas.php', type: 'POST' }
+	});*/
 
 	$(document).on('click', '.view', function() {
 		var idTransaccion = $(this).attr('id');
@@ -125,10 +131,21 @@ $(function() {
 				success: function(data) {
 					alert(data);
 					dataTable.ajax.reload();
+					//tablaStats.ajax.reload();
 				}
 			});
 		} else {
 			return false;
 		}
 	});
+
+	/*$('#stats').on('click', function() {
+		$.ajax({
+			type: 'GET',
+			url: 'estadisticas.php',
+			success: function(data) {
+				$('#div1').html(data);
+			}
+		});
+	});*/
 });

@@ -22,10 +22,6 @@ if(isset($_POST['idVenta'])) {
 	$currency = $sale->amount->currency;
 	$total = $sale->amount->total;
 
-	//echo $saleId;
-	//echo '<br>';
-	//echo $sale;
-
 	$amt = new Amount();
 	$amt->setCurrency($currency)
 		->setTotal($total);
@@ -48,7 +44,7 @@ if(isset($_POST['idVenta'])) {
 
 	$query = $db->prepare('
         UPDATE transacciones
-        SET devuelto = 1, fechahoraDev = :fechahoraDev
+        SET estado = 4, fechahoraAct = :fechahoraDev, devuelto = 1, fechahoraDev = :fechahoraDev
         WHERE idVenta = :idVenta
     ');
 
