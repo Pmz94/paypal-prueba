@@ -53,8 +53,7 @@ $data = [];
 foreach($estadisticas as $row) {
 	$sub_array = [];
 	$sub_array['mejorComprador'] = $row['mejorComprador'];
-	$sub_array['fechaUltimoPago'] = date_format(date_create($row['ultimoPago']), 'd/m/Y');
-	$sub_array['horaUltimoPago'] = date_format(date_create($row['ultimoPago']), 'h:ia');
+	$sub_array['fechaUltimoPago'] = date_format(date_create($row['ultimoPago']), 'd/m/Y h:ia');
 	$sub_array['completos'] = $row['completos'];
 	$sub_array['pendientes'] = $row['pendientes'];
 	$sub_array['devueltos'] = $row['devueltos'];

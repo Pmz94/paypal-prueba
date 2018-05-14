@@ -48,8 +48,7 @@
 					<thead>
 						<tr>
 							<th>Comprador</th>
-							<th>Fecha</th>
-							<th>Hora</th>
+							<th>Ultimo pago</th>
 							<th>Completos</th>
 							<th>Pendientes</th>
 							<th>Devueltos</th>
@@ -61,8 +60,7 @@
 						<?php foreach($estadisticas as $row) { ?>
 							<tr>
 								<td><?php echo $row['mejorComprador'] ?></td>
-								<td><?php echo date_format(date_create($row['ultimoPago']), 'd/m/Y') ?></td>
-								<td><?php echo date_format(date_create($row['ultimoPago']), 'h:ia') ?></td>
+								<td><?php echo date_format(date_create($row['ultimoPago']), 'd/m/Y h:ia') ?></td>
 								<td><?php echo $row['completos'] ?></td>
 								<td><?php echo $row['pendientes'] ?></td>
 								<td><?php echo $row['devueltos'] ?></td>
