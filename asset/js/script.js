@@ -59,9 +59,18 @@ $(function() {
 	});
 
 	/*var tablaStats = $('#tablaStats').dataTable({
-		ordering: false,
-		searching: false,
-		ajax: { url: 'estadisticas.php', type: 'POST' }
+		ajax: {
+			url: 'estadisticas.php',
+			type: 'POST'
+		},
+		columns: [
+			{ data: 'mejorComprador' },
+			{ data: 'fechaUltimoPago' },
+			{ data: 'completos' },
+			{ data: 'pendientes' },
+			{ data: 'devueltos' },
+			{ data: 'totalPagos' }
+		]
 	});*/
 
 	$(document).on('click', '.view', function() {

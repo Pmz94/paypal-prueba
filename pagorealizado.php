@@ -64,7 +64,7 @@
 			</tbody>
 		</table>
 		<hr>
-		<h3>$payment =</h3>
+		<h3>Archivo JSON =</h3>
 		<pre class = "pre-scrollable text-left"><?php echo $payment; ?></pre>
 		<hr>
 		<a href = "pagos.php" class = "btn btn-paypal-2">Ver otros movimientos</a>

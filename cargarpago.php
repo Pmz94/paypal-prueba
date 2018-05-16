@@ -34,6 +34,7 @@ $execute->setPayerId($payerID);
 
 try {
 	$result = $payment->execute($execute, $apiContext);
+	$servicio = 0;
 
 	switch($payment->transactions[0]->item_list->items[0]->name) {
 		case 'Inscripcion':

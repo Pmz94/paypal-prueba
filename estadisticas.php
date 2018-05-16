@@ -42,7 +42,7 @@ $query = $db->prepare('
 		USING (idComprador)
 	GROUP BY mejorComprador
 	HAVING totalPagos >= 1
-	ORDER BY totalGastado DESC, totalPagos DESC;
+	ORDER BY totalPagos DESC, totalGastado DESC;
 ');
 
 $query->execute();
