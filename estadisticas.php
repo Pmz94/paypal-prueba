@@ -6,16 +6,16 @@ $query = $db->prepare('
 	SELECT
 		c.correo mejorComprador,
 		MAX(t.fechahora) ultimoPago,
-		CASE WHEN comp.completos IS NULL THEN 0 ELSE comp.completos END completos,
-		CASE WHEN pend.pendientes IS NULL THEN 0 ELSE pend.pendientes END pendientes,
-		CASE WHEN dev.devoluciones IS NULL THEN 0 ELSE dev.devoluciones END devueltos,
+		IFNULL(comp.completos, 0) completos,
+		IFNULL(pend.pendientes, 0) pendientes,
+		IFNULL(dev.devoluciones, 0) devueltos,
 		COUNT(t.pagoTotal) totalPagos,
 		MIN(t.pagoTotal) pagoMin,
 		MAX(t.pagoTotal) pagoMax,
 		ROUND(AVG(t.pagoTotal), 2) gastosProm,
-		ROUND(STD(t.pagoTotal), 4) devEstGastos,
-		CASE WHEN (SUM(t.pagoTotal) - totalDevuelto) IS NULL THEN SUM(t.pagoTotal) ELSE (SUM(t.pagoTotal) - totalDevuelto) END totalGastado,
-		CASE WHEN dev.totalDevuelto IS NULL THEN 0 ELSE dev.totalDevuelto END totalDevuelto
+		ROUND(STD(t.pagoTotal), 2) desvEstGastos,
+		COALESCE((SUM(t.pagoTotal) - totalDevuelto), SUM(t.pagoTotal)) totalGastado,
+		IFNULL(dev.totalDevuelto, 0) totalDevuelto
 	FROM transacciones t
 		LEFT JOIN compradores c
 		USING (idComprador)
@@ -42,7 +42,7 @@ $query = $db->prepare('
 		USING (idComprador)
 	GROUP BY mejorComprador
 	HAVING totalPagos >= 1
-	ORDER BY totalPagos DESC, totalGastado DESC;
+	ORDER BY totalPagos DESC, totalGastado DESC 
 ');
 
 $query->execute();
@@ -61,7 +61,7 @@ foreach($estadisticas as $row) {
 	$sub_array['pagoMin'] = $row['pagoMin'];
 	$sub_array['pagoMax'] = $row['pagoMax'];
 	$sub_array['promGastos'] = $row['gastosProm'];
-	$sub_array['devEstGastos'] = $row['devEstGastos'];
+	$sub_array['desvEstGastos'] = $row['desvEstGastos'];
 	$sub_array['totalGastado'] = $row['totalGastado'];
 	$sub_array['totalDevuelto'] = $row['totalDevuelto'];
 	$data[] = $sub_array;

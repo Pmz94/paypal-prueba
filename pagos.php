@@ -69,8 +69,33 @@
 						<?php } ?>
 					</tbody>
 				</table>
+				<table class = "table table-striped table-bordered table-sm table-hover">
+					<thead>
+						<tr>
+							<th>Comprador</th>
+							<th>Pago min</th>
+							<th>Pago max</th>
+							<th>x&#x0304;</th>
+							<th>&sigma;</th>
+							<th>Total Gastado</th>
+							<th>Total Devuelto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($estadisticas as $row) { ?>
+							<tr>
+								<td><?php echo $row['mejorComprador'] ?></td>
+								<td><?php echo '$' . $row['pagoMin'] ?></td>
+								<td><?php echo '$' . $row['pagoMax'] ?></td>
+								<td><?php echo '$' . $row['gastosProm'] ?></td>
+								<td><?php echo '$' . $row['desvEstGastos'] ?></td>
+								<td><?php echo '$' . $row['totalGastado'] ?></td>
+								<td><?php echo '$' . $row['totalDevuelto'] ?></td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
 				<hr>
-				<a id = "stats" href = "estadisticas.php" class = "btn btn-paypal-2">Mas estadisticas</a>
 			</div>
 			<br>
 		</div>
