@@ -35,67 +35,9 @@
 					</table>
 				</div>
 				<hr>
+				<a href = "estadisticas.php" class = "btn btn-paypal-2">Estadisticas</a>
 				<a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>
 				<br>
-			</div>
-			<br>
-			<hr>
-			<br>
-			<div class = "box-pagos">
-				<h3><strong>Mejores Compradores</strong></h3>
-				<hr>
-				<table id = "tablaStats" class = "table table-striped table-bordered table-sm table-hover">
-					<thead>
-						<tr>
-							<th>Comprador</th>
-							<th>Ultimo pago</th>
-							<th>Completos</th>
-							<th>Pendientes</th>
-							<th>Devueltos</th>
-							<th>Total Pagos</th>
-						</tr>
-					</thead>
-					<?php include 'estadisticas.php' ?>
-					<tbody>
-						<?php foreach($estadisticas as $row) { ?>
-							<tr>
-								<td><?php echo $row['mejorComprador'] ?></td>
-								<td><?php echo date_format(date_create($row['ultimoPago']), 'd/m/Y h:ia') ?></td>
-								<td><?php echo $row['completos'] ?></td>
-								<td><?php echo $row['pendientes'] ?></td>
-								<td><?php echo $row['devueltos'] ?></td>
-								<td><?php echo $row['totalPagos'] ?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-				<table class = "table table-striped table-bordered table-sm table-hover">
-					<thead>
-						<tr>
-							<th>Comprador</th>
-							<th>Pago min</th>
-							<th>Pago max</th>
-							<th>x&#x0304;</th>
-							<th>&sigma;</th>
-							<th>Total Gastado</th>
-							<th>Total Devuelto</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach($estadisticas as $row) { ?>
-							<tr>
-								<td><?php echo $row['mejorComprador'] ?></td>
-								<td><?php echo '$' . $row['pagoMin'] ?></td>
-								<td><?php echo '$' . $row['pagoMax'] ?></td>
-								<td><?php echo '$' . $row['gastosProm'] ?></td>
-								<td><?php echo '$' . $row['desvEstGastos'] ?></td>
-								<td><?php echo '$' . $row['totalGastado'] ?></td>
-								<td><?php echo '$' . $row['totalDevuelto'] ?></td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-				<hr>
 			</div>
 			<br>
 		</div>
