@@ -32,12 +32,6 @@ table > tbody {
 	}
 }
 
-img.paypallogo {
-	width: 250px;
-	filter: saturate(120%);
-	margin-bottom: 20px;
-}
-
 .box {
 	background: whitesmoke;
 	padding: 30px;
@@ -149,11 +143,6 @@ pre {
 	font-size: 0.7672rem;
 	line-height: 1.2;
 	border-radius: 1.5rem;
-}
-
-#tablaPagos {
-	background-color: white;
-	border-collapse: collapse !important;
 }
 
 table.table {

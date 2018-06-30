@@ -3,8 +3,6 @@
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
-session_start();
-
 require 'app/credentials.php';
 
 if(!isset($_GET['success'], $_GET['paymentId'], $_GET['token'], $_GET['PayerID'])) {
@@ -20,7 +18,6 @@ if((bool)$_GET['success'] == false) {
 $paymentId = $_GET['paymentId'];
 $token = $_GET['token'];
 $payerID = $_GET['PayerID'];
-$invoiceNumber = $_SESSION['invoiceNumber'];
 
 $idCarrito = str_replace('EC-', '', $token);
 date_default_timezone_set('America/Hermosillo');
@@ -36,7 +33,7 @@ try {
 	$result = $payment->execute($execute, $apiContext);
 	$servicio = 0;
 
-	switch($payment->transactions[0]->item_list->items[0]->name) {
+	switch($result->transactions[0]->item_list->items[0]->name) {
 		case 'Inscripcion':
 			$servicio = 1;
 			break;
@@ -84,7 +81,7 @@ try {
 			break;
 	}
 
-	switch($payment->transactions[0]->related_resources[0]->sale->state) {
+	switch($result->transactions[0]->related_resources[0]->sale->state) {
 		case 'completed':
 			$estado = 1;
 			break;
@@ -104,27 +101,26 @@ try {
 	');
 	$query2->execute([
 		'idComprador' => $payerID,
-		'correo' => $payment->payer->payer_info->email,
-		'nombre' => $payment->payer->payer_info->first_name,
-		'apellido' => $payment->payer->payer_info->last_name,
-		'telefono' => strval($payment->payer->payer_info->phone)
+		'correo' => $result->payer->payer_info->email,
+		'nombre' => $result->payer->payer_info->first_name,
+		'apellido' => $result->payer->payer_info->last_name,
+		'telefono' => strval($result->payer->payer_info->phone)
 	]);
 
 	$query = $db->prepare('
-        INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, idVenta, servicio, pagoTotal, invoiceNumber, fechahora, estado, data)
-        VALUES (:idTransaccion, :idCarrito, :idComprador, :idVenta, :servicio, :pagoTotal, :invoiceNumber, :fechahora, :estado, :data)
+        INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, idVenta, servicio, pagoTotal, fechahora, estado, data)
+        VALUES (:idTransaccion, :idCarrito, :idComprador, :idVenta, :servicio, :pagoTotal, :fechahora, :estado, :data)
     ');
 	$query->execute([
 		'idTransaccion' => $paymentId,
 		'idCarrito' => $idCarrito,
 		'idComprador' => $payerID,
-		'idVenta' => $payment->transactions[0]->related_resources[0]->sale->id,
+		'idVenta' => $result->transactions[0]->related_resources[0]->sale->id,
 		'servicio' => $servicio,
-		'pagoTotal' => $payment->transactions[0]->amount->total,
-		'invoiceNumber' => $invoiceNumber,
+		'pagoTotal' => $result->transactions[0]->amount->total,
 		'fechahora' => date('Y-m-d H:i:s'),
 		'estado' => $estado,
-		'data' => $payment
+		'data' => $result
 	]);
 } catch(Exception $ex) {
 	echo '<br>';

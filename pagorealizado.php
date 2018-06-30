@@ -7,7 +7,7 @@
 	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
 	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
 	<title>Exito</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
 	<link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 
@@ -31,27 +31,27 @@
 				</tr>
 				<tr>
 					<td>Comprador</td>
-					<td><?php echo $payment->payer->payer_info->email ?></td>
+					<td><?php echo $result->payer->payer_info->email ?></td>
 				</tr>
 				<tr>
 					<td>ID de venta</td>
-					<td><?php echo $payment->transactions[0]->related_resources[0]->sale->id ?></td>
+					<td><?php echo $result->transactions[0]->related_resources[0]->sale->id ?></td>
 				</tr>
 				<tr>
 					<td>Producto</td>
-					<td><?php echo $payment->transactions[0]->item_list->items[0]->name ?></td>
+					<td><?php echo $result->transactions[0]->item_list->items[0]->name ?></td>
 				</tr>
 				<tr>
 					<td>Precio/Unidad</td>
-					<td><?php echo '$' . $payment->transactions[0]->item_list->items[0]->price ?></td>
+					<td><?php echo '$' . $result->transactions[0]->item_list->items[0]->price ?></td>
 				</tr>
 				<tr>
 					<td>Cantidad</td>
-					<td><?php echo $payment->transactions[0]->item_list->items[0]->quantity ?></td>
+					<td><?php echo $result->transactions[0]->item_list->items[0]->quantity ?></td>
 				</tr>
 				<tr>
 					<td>Total</td>
-					<td><?php echo '$' . $payment->transactions[0]->amount->total ?></td>
+					<td><?php echo '$' . $result->transactions[0]->amount->total ?></td>
 				</tr>
 				<tr>
 					<td>Fecha:</td>
@@ -65,7 +65,7 @@
 		</table>
 		<hr>
 		<h3>Archivo JSON</h3>
-		<pre class = "pre-scrollable text-left"><?php echo $payment; ?></pre>
+		<pre class = "pre-scrollable text-left"><?php echo $result; ?></pre>
 		<hr>
 		<a href = "pagos.php" class = "btn btn-paypal-2">Ver otros movimientos</a>
 		<a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>

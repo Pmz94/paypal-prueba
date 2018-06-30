@@ -7,10 +7,17 @@
 	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
 	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
 	<title>Pagos</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap4.css">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.css">
 	<link rel = "stylesheet" href = "asset/css/style.css">
 </head>
+
+<style>
+	#tablaPagos {
+		background-color: white;
+		border-collapse: collapse !important;
+	}
+</style>
 
 <body>
 	<div class = "container text-center">
@@ -61,7 +68,6 @@
 							</thead>
 							<tbody>
 								<tr id = "idTransaccion"></tr>
-								<tr id = "idCarrito"></tr>
 								<tr id = "correo"></tr>
 								<tr id = "idVenta"></tr>
 								<tr id = "producto"></tr>
@@ -107,10 +113,149 @@
 		 </div>-->
 	</div>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap4.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.js"></script>
 	<script src = "asset/js/script.js"></script>
+	<script type = "text/javascript">
+		$(function() {
+			var dataTable = $('#tablaPagos').DataTable({
+				autoWidth: true,
+				searching: false,
+				ordering: false,
+				processing: true,
+				pagingType: "full",
+				lengthMenu: [[10, 15, 20], [10, 15, 20]],
+				serverSide: true,
+				ajax: {
+					url: 'obtenerpagos.php',
+					type: 'POST'
+				},
+				columnDefs: [
+					{
+						targets: [1, 3, 5, 6],
+						orderable: false
+
+					}
+				],
+				language: {
+					info: 'Pag. _PAGE_ de _PAGES_',
+					infoEmpty: 'No hay datos',
+					infoFiltered: '(de los _MAX_ renglones)',
+					lengthMenu: 'Mostrar _MENU_ renglones por pagina',
+					loadingRecords: 'Cargando datos...',
+					processing: 'Procesando...',
+					search: 'Buscar:',
+					zeroRecords: 'No se encontro nada',
+					paginate: {
+						first: '&#171;',
+						last: '&#187;',
+						next: '&#8250;',
+						previous: '&#8249;'
+					}
+				}
+			});
+
+			/*var tablaStats = $('#tablaStats').dataTable({
+				ajax: {
+					url: 'estadisticas.php',
+					type: 'POST'
+				},
+				columns: [
+					{ data: 'mejorComprador' },
+					{ data: 'fechaUltimoPago' },
+					{ data: 'completos' },
+					{ data: 'pendientes' },
+					{ data: 'devueltos' },
+					{ data: 'totalPagos' }
+				]
+			});*/
+
+			$(document).on('click', '.view', function() {
+				var idTransaccion = $(this).attr('id');
+				$.ajax({
+					url: 'vercadapago.php',
+					method: 'POST',
+					data: {idTransaccion: idTransaccion},
+					dataType: 'json',
+					success: function(data) {
+						$('#pagosModal').modal('show');
+
+						$('#idTransaccion').html('<th>ID de Transaccion:</th><td>' + idTransaccion + '</td>');
+						$('#correo').html('<th>Comprador:</th><td>' + data.correo + '</td>');
+						$('#idVenta').html('<th>ID de Venta:</th><td>' + data.idVenta + '</td>');
+						$('#producto').html('<th>Producto:</th><td>' + data.producto + '</td>');
+						$('#precio').html('<th>Precio/Unidad:</th><td>$' + data.precio + '</td>');
+						$('#cantidad').html('<th>Cantidad:</th><td>' + data.cantidad + '</td>');
+						$('#total').html('<th>Total:</th><td>$' + data.total + '</td>');
+						$('#fecha').html('<th>Fecha:</th><td>' + data.fecha + '</td>');
+						$('#hora').html('<th>Hora:</th><td>' + data.hora + '</td>');
+
+						if(data.estado === 'refunded') {
+							$('#estado').html('<th style="background-color:red;color:white;">Estado:</th><td style="background-color:red;color:white;">' + data.estado + '</td>');
+							$('#fechaDev').html('<th style="background-color:red;color:white;">Fecha:</th><td style="background-color:red;color:white;">' + data.fechaDev + '</td>');
+							$('#horaDev').html('<th style="background-color:red;color:white;">Hora:</th><td style="background-color:red;color:white;">' + data.horaDev + '</td>');
+						} else {
+							$('#estado').html('<th>Estado:</th><td>' + data.estado + '</td>');
+							$('#fechaDev').html('');
+							$('#horaDev').html('');
+						}
+
+						$('#payment').text(data.data);
+					}
+				})
+			});
+
+			/*
+			$(document).on('click', '.refund', function() {
+				$('#devolucionModal').modal('show');
+				var idVenta = $(this).attr('id');
+				if($('#modal-btn-si').data('clicked')) {
+					$.ajax({
+						url: 'reembolsarpago.php',
+						method: 'POST',
+						data: { idVenta: idVenta },
+						success: function(data) {
+							alert(data);
+							$('#devolucionModal').modal('hide');
+							dataTable.ajax.reload();
+						}
+					});
+				} else {
+					return false;
+				}
+			});
+			*/
+
+			$(document).on('click', '.refund', function() {
+				var idVenta = $(this).attr('id');
+				if(confirm('Seguro que quieres reembolsar este cargo?')) {
+					$.ajax({
+						url: 'reembolsarpago.php',
+						method: 'POST',
+						data: {idVenta: idVenta},
+						success: function(data) {
+							alert(data);
+							dataTable.ajax.reload();
+							//tablaStats.ajax.reload();
+						}
+					});
+				} else {
+					return false;
+				}
+			});
+
+			/*$('#stats').on('click', function() {
+				$.ajax({
+					type: 'GET',
+					url: 'estadisticas.php',
+					success: function(data) {
+						$('#div1').html(data);
+					}
+				});
+			});*/
+		});
+	</script>
 </body>
 
 </html>
