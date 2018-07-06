@@ -64,7 +64,6 @@ if(isset($_POST['idTransaccion'])) {
 	$output = [];
 	foreach($pago as $row) {
 		$output['idTransaccion'] = $row['idTransaccion'];
-		$output['idCarrito'] = $row['idCarrito'];
 		$output['correo'] = $row['correo'];
 		$output['idVenta'] = $row['idVenta'];
 		//$output['idVenta'] = $payment->transactions[0]->related_resources[0]->sale->id;
