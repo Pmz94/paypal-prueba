@@ -20,7 +20,6 @@ if((bool)$_GET['success'] == false) {
 $paymentId = $_GET['paymentId'];
 $token = $_GET['token'];
 $payerID = $_GET['PayerID'];
-$invoiceNumber = $_SESSION['invoiceNumber'];
 
 $idCarrito = str_replace('EC-', '', $token);
 date_default_timezone_set('America/Hermosillo');
@@ -111,17 +110,16 @@ try {
 	]);
 
 	$query = $db->prepare('
-        INSERT INTO transacciones (idTransaccion, idCarrito, idComprador, idVenta, servicio, pagoTotal, invoiceNumber, fechahora, estado, data)
-        VALUES (:idTransaccion, :idCarrito, :idComprador, :idVenta, :servicio, :pagoTotal, :invoiceNumber, :fechahora, :estado, :data)
+        INSERT INTO transacciones (sistema_pago, idTransaccion, idComprador, idVenta, servicio, pagoTotal, fechahora, estado, data)
+        VALUES (:sistema_pago, :idTransaccion, :idComprador, :idVenta, :servicio, :pagoTotal, :fechahora, :estado, :data)
     ');
 	$query->execute([
+		'sistema_pago' => 'paypal',
 		'idTransaccion' => $paymentId,
-		'idCarrito' => $idCarrito,
 		'idComprador' => $payerID,
 		'idVenta' => $payment->transactions[0]->related_resources[0]->sale->id,
 		'servicio' => $servicio,
 		'pagoTotal' => $payment->transactions[0]->amount->total,
-		'invoiceNumber' => $invoiceNumber,
 		'fechahora' => date('Y-m-d H:i:s'),
 		'estado' => $estado,
 		'data' => $payment

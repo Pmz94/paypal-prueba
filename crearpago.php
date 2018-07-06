@@ -20,7 +20,6 @@ if(!isset($_POST['product'], $_POST['price'])) {
 $product = $_POST['product'];
 $quantity = $_POST['quantity'];
 $price = $_POST['price'];
-
 $total = $price * $quantity;
 
 $payer = new Payer();
@@ -39,14 +38,10 @@ $amount = new Amount();
 $amount->setCurrency('MXN')
 	   ->setTotal($total);
 
-$invoiceNumber = uniqid();
-$_SESSION['invoiceNumber'] = $invoiceNumber;
-
 $transaction = new Transaction();
 $transaction->setAmount($amount)
 			->setItemList($itemlist)
-			->setDescription('Pagando servicio estudiantil')
-			->setInvoiceNumber($invoiceNumber);
+			->setDescription('Pagando servicio estudiantil');
 
 $redirectUrls = new RedirectUrls();
 $redirectUrls->setReturnUrl(APP_PATH . '/pagorealizado.php?success=true')
