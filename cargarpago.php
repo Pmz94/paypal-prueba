@@ -3,11 +3,9 @@
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
-session_start();
-
 require 'app/credentials.php';
 
-if(!isset($_GET['success'], $_GET['paymentId'], $_GET['token'], $_GET['PayerID'])) {
+if(!isset($_GET['success'], $_GET['paymentId'], $_GET['PayerID'])) {
 	die();
 }
 
@@ -18,10 +16,8 @@ if((bool)$_GET['success'] == false) {
 }
 
 $paymentId = $_GET['paymentId'];
-$token = $_GET['token'];
 $payerID = $_GET['PayerID'];
 
-$idCarrito = str_replace('EC-', '', $token);
 date_default_timezone_set('America/Hermosillo');
 $fecha = date('d/m/Y');
 $hora = date('h:i:sa');
@@ -36,60 +32,26 @@ try {
 	$servicio = 0;
 
 	switch($payment->transactions[0]->item_list->items[0]->name) {
-		case 'Inscripcion':
-			$servicio = 1;
-			break;
-		case 'Materia':
-			$servicio = 2;
-			break;
-		case 'Colegiatura':
-			$servicio = 3;
-			break;
-		case 'Idioma':
-			$servicio = 4;
-			break;
-		case 'Credencial':
-			$servicio = 5;
-			break;
-		case 'Examen de Regularizacion':
-			$servicio = 6;
-			break;
-		case 'Materias Sueltas':
-			$servicio = 7;
-			break;
-		case 'Certificado Parcial':
-			$servicio = 8;
-			break;
-		case 'Examen de Pasantía':
-			$servicio = 9;
-			break;
-		case 'Duplicado de Certificado':
-			$servicio = 10;
-			break;
-		case 'Cursos de Verano':
-			$servicio = 11;
-			break;
-		case 'Constancias':
-			$servicio = 12;
-			break;
-		case 'Kárdex':
-			$servicio = 13;
-			break;
-		case 'Folletos Sueltos':
-			$servicio = 14;
-			break;
-		case 'Resello de Credencial':
-			$servicio = 15;
-			break;
+		case 'Inscripcion': $servicio = 1; break;
+		case 'Materia': $servicio = 2; break;
+		case 'Colegiatura': $servicio = 3; break;
+		case 'Idioma': $servicio = 4; break;
+		case 'Credencial': $servicio = 5; break;
+		case 'Examen de Regularizacion': $servicio = 6; break;
+		case 'Materias Sueltas': $servicio = 7; break;
+		case 'Certificado Parcial': $servicio = 8; break;
+		case 'Examen de Pasantía': $servicio = 9; break;
+		case 'Duplicado de Certificado': $servicio = 10; break;
+		case 'Cursos de Verano': $servicio = 11; break;
+		case 'Constancias': $servicio = 12; break;
+		case 'Kárdex': $servicio = 13; break;
+		case 'Folletos Sueltos': $servicio = 14; break;
+		case 'Resello de Credencial': $servicio = 15; break;
 	}
 
 	switch($payment->transactions[0]->related_resources[0]->sale->state) {
-		case 'completed':
-			$estado = 1;
-			break;
-		case 'pending':
-			$estado = 3;
-			break;
+		case 'completed': $estado = 1; break;
+		case 'pending': $estado = 3; break;
 	}
 
 	include 'app/conexion.php';

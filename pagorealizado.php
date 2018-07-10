@@ -7,7 +7,7 @@
 	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
 	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
 	<title>Exito</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.css">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
 	<link rel = "stylesheet" href = "asset/css/style.css">
 </head>
 

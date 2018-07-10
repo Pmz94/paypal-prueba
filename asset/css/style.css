@@ -10,7 +10,11 @@ body {
 	line-height: 1.8;
 }
 
-nav.navbar.navbar-pp {
+.navbar {
+	box-shadow: 0 3px 15px -5px #555555;
+}
+
+.bg-pp {
 	background-color: whitesmoke;
 	color: white;
 }
@@ -24,7 +28,7 @@ a.nav-link:hover {
 }
 
 .navbar-text {
-	color: white;
+	color: #1e2021;
 }
 
 table > tbody {
@@ -51,14 +55,6 @@ table > tbody {
 	.UIpagos {
 		padding: 5% 0 0 0;
 	}
-}
-
-.box {
-	background: whitesmoke;
-	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0 5px 20px -5px #555555;
-	width: 360px;
 }
 
 .box-pagos {

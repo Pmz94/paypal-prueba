@@ -4,7 +4,7 @@ function getcss() {
     echo '
         <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
         <link rel = "stylesheet" href = "https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap4.css">
+        <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.css">
     ';
 }
 
