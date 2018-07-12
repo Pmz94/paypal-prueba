@@ -14,7 +14,7 @@
 
 <style>
 	img.logo {
-		height: 30px;
+		height: 40px;
 	}
 
 	.box {
@@ -106,9 +106,6 @@
 						<h2><strong>Paga algo</strong></h2>
 						<hr>
 						<form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
-							<!--<div class = "form-group">
-								<input class = "form-control" type = "text" name = "product" placeholder = "Producto" required>
-							</div>-->
 							<div class = "form-group">
 								<select id = "product" class = "form-control" name = "product">
 									<option disabled = "disabled" selected = "selected">Servicio</option>
@@ -138,27 +135,27 @@
 							<h6>Total: $<span id = "total">0</span></h6>
 							<hr>
 							<div>
-								<h6><input id = "check" type = "checkbox" required> No soy un robot</h6>
+								<input id = "check" type = "checkbox" required> <label for = "check">No soy un robot</label>
 							</div>
 							<hr>
 							<div id = "botones">
 								<input id = "paypal-php-button" class = "btn btn-paypal" type = "submit" value = "PayPal">
 								<div id = "paypal-button-container"></div>
 								<a id = "banwire-button" class = "btn btn-banwire">BanWire</a>
-							</div>
-							<div class = "row">
-								<div class = "col">
-									<hr>
+								<div class = "row">
+									<div class = "col">
+										<hr>
+									</div>
+									<div>o</div>
+									<div class = "col">
+										<hr>
+									</div>
 								</div>
-								<div>o</div>
-								<div class = "col">
-									<hr>
-								</div>
-							</div>
-							<div>
-								<a href = "pagos.php" class = "btn btn-paypal-2">Ver movimientos</a>
 							</div>
 						</form>
+						<div>
+							<a href = "pagos.php" class = "btn btn-paypal-2">Ver movimientos</a>
+						</div>
 					</div>
 
 					<br>
@@ -183,7 +180,7 @@
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
-	<script src = "https://www.paypalobjects.com/api/checkout.js"></script>
+	<script src = "https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
 	<script src = "https://sw.banwire.com/checkout.js"></script>
 	<script src = "asset/js/script.js"></script>
 	<script type = "text/javascript">
@@ -200,6 +197,9 @@
 				calcular();
 			});
 			$('[name="quantity"]').keyup(function() {
+				calcular();
+			});
+			$('[name="quantity"]').change(function() {
 				calcular();
 			});
 
@@ -242,7 +242,7 @@
 				return isValid() ? actions.enable() : actions.disable();
 			}
 
-			// Render the PayPal button
+			// PayPal
 			paypal.Button.render({
 				// Set your environment
 				env: 'sandbox', // sandbox | production
@@ -252,7 +252,7 @@
 					size: 'responsive',    // small | medium | large | responsive
 					color: 'gold',      // gold | blue | silver | black
 					shape: 'pill',     // pill | rect
-					label: 'pay',
+					label: 'paypal',
 					tagline: false
 				},
 				// PayPal Client IDs
@@ -314,6 +314,7 @@
 					return actions.payment.get().then(function(data) {
 						// Display the payment details and a confirmation button
 						$('#product').prop('disabled', true);
+						$('[name="price"]').prop('disabled', true);
 						$('[name="quantity"]').prop('disabled', true);
 						$('#check').prop('disabled', true);
 
@@ -337,6 +338,20 @@
 
 							// Execute the payment
 							return actions.payment.execute().then(function() {
+								$.ajax({
+									type: 'POST',
+									url: 'recibir.php',
+									dataType: 'json',
+									data: {
+										payment: JSON.stringify(data)
+									},
+									success: function(data, status, xhr) {
+										alert("Data: " + data);
+									},
+									error: function(xhr, status, error) {
+										alert('no se pudo mandar el ajax');
+									}
+								});
 								// Show a thank-you note
 								$('#confirm').hide();
 								$('#thanksname').text(shipping.recipient_name);
@@ -396,13 +411,6 @@
 							country: 'MEX', //País del comprador (3 dígitos de acuerdo al formato ISO)
 							zip: '14145' //Código de postal del comprador
 						},
-						// ship: {
-						// 	addr: 'Direccion 440', //Dirección de envío
-						// 	city: 'Mexico', //Ciudad de envío
-						// 	state: 'DF', //Estado de envío (2 dígitos de acuerdo al formato ISO)
-						// 	country: 'MEX', //País de envío (3 dígitos de acuerdo al formato ISO)
-						// 	zip: '14145' //Código de postal del envío
-						// },
 						// Cierre automático de la ventana. Por defecto es indefinido y no cerrará la ventana. (el valor es en segundos. valor minimo requerido 60 segundos.)
 						time: 900, // Ejemplo de cierre de ventana automáticamente en 15 minutos
 						// Opciones de pago, por defecto es "all". Puede incluir varias opciones separadas por comas
@@ -412,7 +420,27 @@
 						notifyUrl: 'https://fc8e6cb1.ngrok.io/PayPalPrueba/recibir.php', // URL donde se van a enviar todas las notificaciones por HTTP POST de manera asoncrónica
 						successPage: 'https://fc8e6cb1.ngrok.io/PayPalPrueba/pagos.php', // Handler en caso de exito en el pago
 						onSuccess: function(data) {
-							alert('¡Gracias por tu pago!')
+							alert('¡Gracias por tu pago!');
+							$.ajax({
+								type: POST,
+								url: 'noti.json',
+								data: {
+									id: data.id,
+									event: data.event,
+									status: data.status,
+									auth_code: data.auth_code,
+									reference: data.reference,
+									total: data.total,
+									hash: data.hash,
+									plan: data.plan
+								},
+								success: function(data, status) {
+									alert("Data: " + data);
+								},
+								error: function() {
+									alert('no se pudo mandar el ajax');
+								}
+							});
 						},
 						pendingPage: 'http://yahoo.com', // Pago pendiente OXXO
 						onPending: function(data) {

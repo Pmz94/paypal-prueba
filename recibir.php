@@ -6,6 +6,10 @@
  * Time: 03:05 PM
  */
 
+//header('Content-Type: json');
+//$test = utf8_encode($_POST['payment']); // Don't forget the encoding
+//$payment = json_decode($test);
+
 $id = $_POST['id'];
 $event = $_POST['event'];
 $status = $_POST['status'];
