@@ -9,22 +9,12 @@ $query = $db->prepare('
 $query->execute();
 
 $result = $query->fetchAll(\PDO::FETCH_ASSOC);
-$data = [];
 $count = $query->rowCount();
-
-foreach($result as $row) {
-	$sub_array = [];
-	$sub_array[] = $row['idServicio'];
-	$sub_array[] = $row['nomServicio'];
-	$sub_array[] = $row['importe'];
-
-	$data[] = $sub_array;
-}
 
 $output = [
 	'recordsTotal' => $count,
 	'recordsFiltered' => $count,
-	'data' => $data,
+	'data' => $result,
 ];
 
-echo json_encode($output, JSON_PRETTY_PRINT);
+echo json_encode($output);
