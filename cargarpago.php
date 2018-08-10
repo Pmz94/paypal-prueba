@@ -54,7 +54,7 @@ try {
 		case 'pending': $estado = 3; break;
 	}
 
-	include 'app/conexion.php';
+	$db = include_once 'app/conexion.php';
 
 	$query2 = $db->prepare('
 		INSERT INTO compradores (idComprador, correo, nombre, apellido, telefono)

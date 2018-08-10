@@ -1,45 +1,19 @@
 <?php
 
-include 'app/credentials.php';
-
-$db = include_once 'app/conexion.php';
-$allpayments = $db->prepare('
-    SELECT * FROM transacciones
+$db = require_once 'app/conexion.php';
+$query = $db->prepare('
+	SELECT *
+	FROM servicios
 ');
-$allpayments->execute();
-$todastransacciones = $allpayments->rowCount();
 
-$query = '';
-$output = [];
-$query = '
-    SELECT *
-    FROM transacciones t
-    	JOIN compradores c USING (idComprador)
-    	JOIN servicios s ON t.servicio = s.idServicio
-    	JOIN estadosdepago e ON t.estado = e.id 
-';
+$query->execute();
 
-if(isset($_POST['order'])) {
-	$query .= '
-        ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' 
-    ';
-} else {
-	$query .= '
-        ORDER BY t.fechahora DESC 
-    ';
-}
 
-if($_POST['length'] != -1) {
-	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-}
-
-$payments = $db->prepare($query);
-$payments->execute();
-$transacciones = $payments->fetchAll(\PDO::FETCH_ASSOC);
+$result = $query->fetchAll(\PDO::FETCH_ASSOC);
 $data = [];
-$filtered_rows = $payments->rowCount();
+$filtered_rows = $query->rowCount();
 
-foreach($transacciones as $row) {
+foreach($result as $row) {
 	$sub_array = [];
 	$sub_array[] = date_format(date_create($row['fechahora']), 'd/m/Y');
 	$sub_array[] = date_format(date_create($row['fechahora']), 'h:ia');

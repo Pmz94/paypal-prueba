@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang = "es">
+<html lang="es">
 
 <head>
-	<meta charset = "UTF-8">
-	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
-	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" type="image/x-icon" href="asset/img/favicon.ico">
 	<title>Exito</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
-	<link rel = "stylesheet" href = "asset/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+	<link rel="stylesheet" href="asset/css/style.css">
 </head>
 
-<div class = "container">
+<div class="container">
 	<?php require 'cargarpago.php' ?>
 </div>
 
 <body>
-	<div class = "container text-center">
-		<div class = "row">
-			<div class = "col"></div>
-			<div class = "col-6">
+	<div class="container text-center">
+		<div class="row">
+			<div class="col"></div>
+			<div class="col-6">
 				<h1><strong>Pago realizado</strong></h1>
-				<table class = "table table-striped table-bordered table-sm">
+				<table class="table table-striped table-bordered table-sm">
 					<thead>
 						<tr>
-							<th colspan = "2">Recibo</th>
+							<th colspan="2">Recibo</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -67,14 +67,14 @@
 					</tbody>
 				</table>
 			</div>
-			<div class = "col"></div>
+			<div class="col"></div>
 		</div>
 		<hr>
 		<h3>Archivo JSON</h3>
-		<pre class = "pre-scrollable text-left"><?php echo $payment; ?></pre>
+		<pre class="pre-scrollable text-left"><?php echo $payment; ?></pre>
 		<hr>
-		<a href = "pagos.php" class = "btn btn-paypal-2">Ver otros movimientos</a>
-		<a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>
+		<a href="pagos.php" class="btn btn-paypal-2">Ver otros movimientos</a>
+		<a href="index.html" class="btn btn-paypal-2">Regresar al inicio</a>
 		<br>
 		<br>
 	</div>

@@ -5,7 +5,6 @@ use PayPal\Api\Refund;
 use PayPal\Api\RefundRequest;
 use PayPal\Api\Sale;
 
-include 'app/conexion.php';
 require 'app/credentials.php';
 
 if(isset($_POST['idVenta'])) {
@@ -41,6 +40,8 @@ if(isset($_POST['idVenta'])) {
 
 	//conservar la transaccion y cambiar el estado a 'devuelta'
 	date_default_timezone_set('America/Hermosillo');
+
+	$db = include_once 'app/conexion.php';
 
 	$query = $db->prepare('
         UPDATE transacciones

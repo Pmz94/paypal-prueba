@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang = "es">
+<html lang="es">
 
 <head>
-	<meta charset = "UTF-8">
-	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
-	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" type="image/x-icon" href="asset/img/favicon.ico">
 	<title>PayPalPrueba</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.css">
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css">
-	<link rel = "stylesheet" href = "asset/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css">
+	<link rel="stylesheet" href="asset/css/style.css">
 </head>
 
 <style>
@@ -77,99 +77,99 @@
 </style>
 
 <body>
-	<nav class = "navbar navbar-light bg-pp navbar-expand-lg">
-		<div class = "container">
-			<a href = "https://pmz94.github.io" class = "navbar-brand">
-				<img src = "https://pmz94.github.io/pagpersonal/asset/img/navbar/benny.png" alt = "Benny" title = "Volver a la pagina principal" class = "benny-logo">
+	<nav class="navbar navbar-light bg-pp navbar-expand-lg">
+		<div class="container">
+			<a href="https://pmz94.github.io" class="navbar-brand">
+				<img src="https://pmz94.github.io/pagpersonal/asset/img/navbar/benny.png" alt="Benny" title="Volver a la pagina principal" class="benny-logo">
 			</a>
-			<button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
-				<span class = "navbar-toggler-icon"></span>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class = "collapse navbar-collapse" id = "navbarNav">
-				<ul class = "navbar-nav">
-					<li class = "nav-item active">
-						<img class = "nav-link logo" src = "asset/img/paypal-logo.png">
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<img class="nav-link logo" src="asset/img/paypal-logo.png">
 					</li>
-					<li class = "nav-item">
-						<img class = "nav-link logo" src = "asset/img/banwire-logo.png">
+					<li class="nav-item">
+						<img class="nav-link logo" src="asset/img/banwire-logo.png">
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div class = "container text-center">
-		<div class = "row justify-content-center">
-			<div class = "col-auto">
-				<div class = "UI">
-					<div class = "box">
+	<div class="container text-center">
+		<div class="row justify-content-center">
+			<div class="col-auto">
+				<div class="UI">
+					<div class="box">
 						<h2><strong>Paga algo</strong></h2>
 						<hr>
-						<form id = "form" action = "crearpago.php" method = "POST" autocomplete = "off">
-							<div class = "form-group">
-								<select id = "product" class = "form-control" name = "product">
-									<option disabled = "disabled" selected = "selected">Servicio</option>
-									<option data-price = "440">Inscripcion</option>
-									<option data-price = "350">Materia</option>
-									<option data-price = "440">Colegiatura</option>
-									<option data-price = "350">Idioma</option>
-									<option data-price = "120">Credencial</option>
-									<option data-price = "200">Examen de Regularización</option>
-									<option data-price = "350">Materias Sueltas</option>
-									<option data-price = "270">Certificado Parcial</option>
-									<option data-price = "270">Examen de Pasantía</option>
-									<option data-price = "290">Duplicado de Certificado</option>
-									<option data-price = "650">Cursos de Verano</option>
-									<option data-price = "70">Constancias</option>
-									<option data-price = "70">Kárdex</option>
-									<option data-price = "60">Folletos Sueltos</option>
-									<option data-price = "20">Resello de Credencial</option>
+						<form id="form" action="crearpago.php" method="POST" autocomplete="off">
+							<div class="form-group">
+								<select id="product" class="form-control" name="product">
+									<option disabled="disabled" selected="selected">Servicio</option>
+									<option data-price="440">Inscripcion</option>
+									<option data-price="350">Materia</option>
+									<option data-price="440">Colegiatura</option>
+									<option data-price="350">Idioma</option>
+									<option data-price="120">Credencial</option>
+									<option data-price="200">Examen de Regularización</option>
+									<option data-price="350">Materias Sueltas</option>
+									<option data-price="270">Certificado Parcial</option>
+									<option data-price="270">Examen de Pasantía</option>
+									<option data-price="290">Duplicado de Certificado</option>
+									<option data-price="650">Cursos de Verano</option>
+									<option data-price="70">Constancias</option>
+									<option data-price="70">Kárdex</option>
+									<option data-price="60">Folletos Sueltos</option>
+									<option data-price="20">Resello de Credencial</option>
 								</select>
 							</div>
-							<div class = "form-group">
-								<input class = "form-control" type = "number" name = "price" placeholder = "Precio/Unidad" min = "1" readonly required>
+							<div class="form-group">
+								<input class="form-control" type="number" name="price" placeholder="Precio/Unidad" min="1" readonly required>
 							</div>
-							<div class = "form-group">
-								<input class = "form-control" type = "number" name = "quantity" placeholder = "Cantidad" min = "1" max = "50" required>
+							<div class="form-group">
+								<input class="form-control" type="number" name="quantity" placeholder="Cantidad" min="1" max="50" required>
 							</div>
-							<h6>Total: $<span id = "total">0</span></h6>
+							<h6>Total: $<span id="total">0</span></h6>
 							<hr>
 							<div>
-								<input id = "check" type = "checkbox" required> <label for = "check">No soy un robot</label>
+								<input id="check" type="checkbox" required> <label for="check">No soy un robot</label>
 							</div>
 							<hr>
-							<div id = "botones">
-								<input id = "paypal-php-button" class = "btn btn-paypal" type = "submit" value = "PayPal">
-								<div id = "paypal-button-container"></div>
-								<a id = "banwire-button" class = "btn btn-banwire">BanWire</a>
-								<div class = "row">
-									<div class = "col">
+							<div id="botones">
+								<input id="paypal-php-button" class="btn btn-paypal" type="submit" value="PayPal">
+								<div id="paypal-button-container"></div>
+								<a id="banwire-button" class="btn btn-banwire">BanWire</a>
+								<div class="row">
+									<div class="col">
 										<hr>
 									</div>
 									<div>o</div>
-									<div class = "col">
+									<div class="col">
 										<hr>
 									</div>
 								</div>
 							</div>
 						</form>
 						<div>
-							<a href = "pagos.php" class = "btn btn-paypal-2">Ver movimientos</a>
+							<a href="pagos.php" class="btn btn-paypal-2">Ver movimientos</a>
 						</div>
 					</div>
 
 					<br>
-					<div id = "recibo" class = "box hidden">
-						<div id = "confirm" class = "hidden">
+					<div id="recibo" class="box hidden">
+						<div id="confirm" class="hidden">
 							<div>Enviar a:</div>
-							<div><span id = "recipient"></span>, <span id = "line1"></span>, <span id = "zip"></span></div>
-							<div><span id = "city"></span>, <span id = "state"></span>, <span id = "country"></span></div>
-							<button id = "confirmButton" class = "btn btn-paypal-2">Culminar pago</button>
+							<div><span id="recipient"></span>, <span id="line1"></span>, <span id="zip"></span></div>
+							<div><span id="city"></span>, <span id="state"></span>, <span id="country"></span></div>
+							<button id="confirmButton" class="btn btn-paypal-2">Culminar pago</button>
 						</div>
 
-						<div id = "thanks" class = "hidden">
-							<div>Gracias <span id = "thanksname"></span></div>
-							<div>ID: <span id = "idTransaccion"></span></div>
+						<div id="thanks" class="hidden">
+							<div>Gracias <span id="thanksname"></span></div>
+							<div>ID: <span id="idTransaccion"></span></div>
 						</div>
 					</div>
 
@@ -177,13 +177,13 @@
 			</div>
 		</div>
 	</div>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
-	<script src = "https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
-	<script src = "https://sw.banwire.com/checkout.js"></script>
-	<script src = "asset/js/script.js"></script>
-	<script type = "text/javascript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
+	<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
+	<script src="https://sw.banwire.com/checkout.js"></script>
+	<script src="asset/js/script.js"></script>
+	<script type="text/javascript">
 		$(function() {
 			function calcular() {
 				var precio = $('#product option:selected').data('price');

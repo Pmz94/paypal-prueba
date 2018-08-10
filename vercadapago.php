@@ -2,12 +2,13 @@
 
 use PayPal\Api\Payment;
 
-include 'app/conexion.php';
 include 'app/credentials.php';
 
 if(isset($_POST['idTransaccion'])) {
 
 	$idTransaccion = $_POST['idTransaccion'];
+
+	$db = include_once 'app/conexion.php';
 
 	$query = $db->prepare('
         SELECT *

@@ -36,7 +36,7 @@ $json = json_encode($data, JSON_PRETTY_PRINT);
 
 file_put_contents('C:\Users\CSWebPmz\Desktop\noti.json', $json);
 
-include 'app/conexion.php';
+$db = include_once 'app/conexion.php';
 
 $query = $db->prepare('
 	INSERT INTO transacciones (sistema_pago, idTransaccion, idVenta, pagoTotal, fechahora, estado, fechahoraAct, devuelto, fechahoraDev, data)

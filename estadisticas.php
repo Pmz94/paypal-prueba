@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang = "es">
+<html lang="es">
 
 <head>
-	<meta charset = "UTF-8">
-	<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-	<meta http-equiv = "X-UA-Compatible" content = "ie=edge">
-	<link rel = "shortcut icon" type = "image/x-icon" href = "asset/img/favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" type="image/x-icon" href="asset/img/favicon.ico">
 	<title>Estadisticas de pagos</title>
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.css">
-	<link rel = "stylesheet" href = "asset/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.css">
+	<link rel="stylesheet" href="asset/css/style.css">
 </head>
 
 <?php
 
-include 'app/conexion.php';
+$db = include_once 'app/conexion.php';
 
 $query = $db->prepare('
 	SELECT
@@ -84,12 +84,12 @@ foreach($estadisticas as $row) {
 ?>
 
 <body>
-	<div class = "container text-center">
-		<div class = "UIpagos">
-			<div class = "box-pagos">
+	<div class="container text-center">
+		<div class="UIpagos">
+			<div class="box-pagos">
 				<h2><strong>Mejores Compradores</strong></h2>
 				<hr>
-				<table id = "tablaStats" class = "table table-striped table-bordered table-sm table-hover">
+				<table id="tablaStats" class="table table-striped table-bordered table-sm table-hover">
 					<thead>
 						<tr>
 							<th>Comprador</th>
@@ -114,7 +114,7 @@ foreach($estadisticas as $row) {
 					</tbody>
 				</table>
 				<hr>
-				<table class = "table table-striped table-bordered table-sm table-hover">
+				<table class="table table-striped table-bordered table-sm table-hover">
 					<thead>
 						<tr>
 							<th>Comprador</th>
@@ -141,18 +141,18 @@ foreach($estadisticas as $row) {
 					</tbody>
 				</table>
 				<hr>
-				<a href = "pagos.php" class = "btn btn-paypal-2">Ver Pagos</a>
-				<a href = "index.html" class = "btn btn-paypal-2">Regresar al inicio</a>
+				<a href="pagos.php" class="btn btn-paypal-2">Ver Pagos</a>
+				<a href="index.html" class="btn btn-paypal-2">Regresar al inicio</a>
 				<br>
 			</div>
 		</div>
 	</div>
 	<br>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.js"></script>
-	<script src = "asset/js/script.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.js"></script>
+	<script src="asset/js/script.js"></script>
 </body>
 
 </html>
