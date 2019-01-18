@@ -11,7 +11,7 @@ use PayPal\Api\Payment;
 
 require 'app/credentials.php';
 
-if(!isset($_POST['product'], $_POST['price'])) {
+if(!isset($_POST['product'], $_POST['price'], $_POST['quantity'])) {
 	die();
 }
 
@@ -59,6 +59,8 @@ try {
 }
 
 $approvalUrl = $payment->getApprovalLink();
+
+echo $approvalUrl;
 /*
 var_dump($payment->getPayer());
 var_dump($payment->getLinks());
@@ -69,4 +71,4 @@ echo $payment->getPayer() . '<br>';
 echo $payment->getPayee() . '<br>';
 echo $payment->getCreateTime() . '<br>';
 */
-header('Location: ' . $approvalUrl);
+//header('Location: ' . $approvalUrl);

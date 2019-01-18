@@ -4,7 +4,8 @@ include 'app/credentials.php';
 
 $db = include_once 'app/conexion.php';
 $allpayments = $db->prepare('
-    SELECT * FROM transacciones
+    SELECT *
+    FROM transacciones
 ');
 $allpayments->execute();
 $todastransacciones = $allpayments->rowCount();
@@ -14,9 +15,12 @@ $output = [];
 $query = '
     SELECT *
     FROM transacciones t
-    	JOIN compradores c USING (idComprador)
-    	JOIN servicios s ON t.servicio = s.idServicio
-    	JOIN estadosdepago e ON t.estado = e.id 
+    LEFT JOIN compradores c
+        USING (idComprador)
+    LEFT JOIN servicios s
+        ON t.servicio = s.idServicio
+    LEFT JOIN estadosdepago e
+        ON t.estado = e.id 
 ';
 
 if(isset($_POST['order'])) {
