@@ -36,18 +36,16 @@ $json = json_encode($data, JSON_PRETTY_PRINT);
 
 file_put_contents('C:\Users\CSWebPmz\Desktop\noti.json', $json);
 
-$db = include_once 'app/conexion.php';
+$servicios = include_once '../config/servicios.php';
 
-$query = $db->prepare('
-	INSERT INTO transacciones (sistema_pago, idTransaccion, idVenta, pagoTotal, fechahora, estado, fechahoraAct, devuelto, fechahoraDev, data)
-		VALUES
-	(:sistema_pago, :idTransaccion, :idVenta, :pagoTotal, :fechahora, :estado, :fechahoraAct, :devuelto, :fechahoraDev, :data)
+$query = $servicios->db->prepare('
+	INSERT INTO transacciones (sistema_pago, id_transaccion, id_venta, pago_total, fechahora, id_estado, fechahoraAct, devuelto, fechahora_cancelado)
+	VALUES
+		(:sistema_pago, :idTransaccion, :idVenta, :pagoTotal, NOW(), :estado, :fechahoraAct, :devuelto, :fechahoraDev)
 ');
 
 $query->execute([
 	'sistema_pago' => 'banwire',
 	'idTransaccion' => $id,
-	'pagoTotal' => $total,
-	'fechahora' => date('Y-m-d H:i:s'),
-	'data' => $json
+	'pagoTotal' => $total
 ]);

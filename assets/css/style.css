@@ -2,6 +2,10 @@
 	height: 30px;
 }
 
+img.logo {
+	height: 40px;
+}
+
 body {
 	color: #1e2021;
 	font-family: 'PayPal Sans Big', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -10,8 +14,18 @@ body {
 	line-height: 1.8;
 }
 
+@media (min-width: 1472px) {
+	.container {
+		max-width: 1344px;
+	}
+}
+
 .navbar {
 	box-shadow: 0 3px 15px -5px #555555;
+}
+
+.navbar-text {
+	color: #1e2021;
 }
 
 .bg-pp {
@@ -25,10 +39,6 @@ a.nav-link {
 
 a.nav-link:hover {
 	background-color: #003087;
-}
-
-.navbar-text {
-	color: #1e2021;
 }
 
 table > tbody {
@@ -57,11 +67,12 @@ table > tbody {
 	}
 }
 
-.box-pagos {
+.box {
 	background: whitesmoke;
 	border-radius: 10px;
 	box-shadow: 0 5px 20px -5px #555555;
-	padding: 10px;
+	padding: 30px;
+	min-width: 380px;
 }
 
 .form-control {
@@ -82,7 +93,7 @@ table > tbody {
 
 .form-control:focus {
 	color: #000000;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	box-shadow: none;
 	border: 1px solid #0070ba;
 	border-image: initial;
@@ -90,10 +101,9 @@ table > tbody {
 }
 
 .input-group-text {
-	background: #0070ba;
-	color: #FFFFFF;
+	/*background: #0070ba;*/
+	/*color: #ffffff;*/
 	border: 1px solid #9da3a6;
-	font-family: 'PayPal Sans Small', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 pre {
@@ -120,6 +130,11 @@ pre {
 	box-shadow: none;
 }
 
+.btn.btn-paypal-2:disabled {
+	transition: none;
+	background-color: #7cc6de;
+}
+
 .btn-paypal-2:hover {
 	color: #ffffff;
 	background-color: #003087;
@@ -140,5 +155,10 @@ pre {
 }
 
 table.table {
-	background-color: #FFFFFF;
+	background-color: #ffffff;
+}
+
+.page-link:focus {
+	box-shadow: none;
+	color: #003087;
 }

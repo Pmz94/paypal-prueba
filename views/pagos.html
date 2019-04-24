@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+	<title>Pagos</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+	<nav class="navbar navbar-light bg-pp navbar-expand-lg">
+		<div class="container">
+			<a href="https://pmz94.github.io" class="navbar-brand">
+				<img src="https://pmz94.github.io/pagpersonal/assets/img/navbar/benny.png" alt="Benny" title="Volver a la pagina principal" class="benny-logo">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item active">
+						<img src="../assets/img/paypal-logo.png" alt="PayPal" class="nav-link logo">
+					</li>
+					<!--<li class="nav-item">-->
+					<!--<img class="nav-link logo" src="../assets/img/banwire-logo.png">-->
+					<!--</li>-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<section class="container text-center">
+		<div class="UIpagos">
+			<div class="box">
+				<h1><b>Pagos realizados</b></h1>
+				<hr>
+				<div class="table-responsive">
+					<table id="tablaPagos" class="table table-striped table-bordered table-sm table-hover">
+						<thead>
+							<tr>
+								<th>Transaccion</th>
+								<th>Comprador</th>
+								<th>Venta</th>
+								<th>Estado</th>
+								<th>Fecha y hora</th>
+								<th>Producto</th>
+								<th>Total</th>
+								<th>Opciones</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<hr>
+				<a href="estadisticas.html" class="btn btn-paypal-2">Estadisticas</a>
+				<a href="../index.html" class="btn btn-paypal-2">Regresar al inicio</a>
+			</div>
+		</div>
+
+		<!--Modal de detalles de pago-->
+		<div class="modal fade" id="pagosModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Detalles de pago</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered table-striped table-sm">
+							<thead>
+								<tr>
+									<th colspan="2">Recibo</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="idTransaccion"></tr>
+								<tr id="correo"></tr>
+								<tr id="idVenta"></tr>
+								<tr id="producto"></tr>
+								<tr id="precio"></tr>
+								<tr id="cantidad"></tr>
+								<tr id="total"></tr>
+								<tr id="fecha"></tr>
+								<tr id="hora"></tr>
+								<tr id="estado"></tr>
+								<tr id="fechaDev"></tr>
+								<tr id="horaDev"></tr>
+							</tbody>
+						</table>
+						<hr>
+						<pre id="payment" class="pre-scrollable text-left"></pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-paypal-2" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.js"></script>
+	<script src="../assets/js/script.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			let dataTable = $('#tablaPagos').DataTable({
+				// destroy: true,
+				autoWidth: true,
+				searching: false,
+				ordering: false,
+				processing: true,
+				pagingType: 'full',
+				lengthChange: false,
+				// lengthMenu: [[10, 15, 20], [10, 15, 20]],
+				// serverSide: true,
+				ajax: {
+					url: '../actions/obtenerpagos.php',
+					type: 'POST',
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.log(jqXHR);
+						showToast('Error al mostrar transacciones', 'Hubo un error', 'error');
+					}
+				},
+				columns: [
+					{
+						data: null,
+						render: function(data, type, full) {
+							return data.id_transaccion;
+						}
+					},
+					{ data: 'comprador' },
+					{ data: 'id_venta' },
+					{ data: 'estado' },
+					{
+						data: null,
+						render: function(data, type, full) {
+							// console.log(data);
+							let fechahora = new Date(data.fechahora);
+							fechahora = fechahora.getDate() + '/' + (fechahora.getMonth() + 1) + '/' + fechahora.getFullYear() + ' ' + fechahora.getHours() + ':' + fechahora.getMinutes();
+							return fechahora;
+						}
+					},
+					{ data: 'producto' },
+					{
+						data: null,
+						render: function(data, type, full) {
+							return '$' + data.pago_total;
+						}
+					},
+					{ data: null },
+				],
+				columnDefs: [
+					{
+						targets: [7],
+						data: null,
+						render: function(data, type, full) {
+							let container = $('<div></div>');
+							let ver = $('<button class="btn btn-paypal-2 btn-sm view"><i class="fas fa-info"></i></button>');
+							if(ver) container.append(ver);
+
+							let borrar = $('<button class="btn btn-paypal-2 btn-sm refund"><i class="fas fa-ban"></i></button>');
+							if(data.devuelto == 1) borrar.prop('disabled', true);
+							if(borrar) {
+								borrar.attr('data-id', data.id_transaccion);
+								borrar.attr('data-sale', data.id_venta);
+								container.append(borrar);
+							}
+							return $(container).html();
+						}
+					}
+				],
+				language: {
+					info: 'Pag. _PAGE_ de _PAGES_',
+					infoEmpty: 'No hay datos',
+					infoFiltered: '(de los _MAX_ renglones)',
+					lengthMenu: 'Mostrar _MENU_ renglones por pagina',
+					loadingRecords: 'Cargando datos...',
+					processing: 'Procesando...',
+					search: 'Buscar:',
+					zeroRecords: 'No se encontro nada',
+					paginate: {
+						first: '<i class="fas fa-angle-double-left"></i>',
+						last: '<i class="fas fa-angle-double-right"></i>',
+						next: '<i class="fas fa-angle-right"></i>',
+						previous: '<i class="fas fa-angle-left"></i>'
+					}
+				}
+			});
+
+			$('#tablaPagos tbody').on('click', '.view', function() {
+				let data = dataTable.row($(this).parents('tr')).data();
+				console.log(data);
+				// $.ajax({
+				// 	url: '../actions/verpago.php',
+				// 	method: 'POST',
+				// 	data: {
+				// 		id: data.id,
+				// 		id_transaccion: data.id_transaccion
+				// 	},
+				// 	dataType: 'json'
+				// }).done(function(data) {
+				// 	$('#pagosModal').modal('show');
+				//
+				// 	$('#idTransaccion').html('<th>ID de Transaccion:</th><td>' + idTransaccion + '</td>');
+				// 	$('#correo').html('<th>Comprador:</th><td>' + data.correo + '</td>');
+				// 	$('#idVenta').html('<th>ID de Venta:</th><td>' + data.idVenta + '</td>');
+				// 	$('#producto').html('<th>Producto:</th><td>' + data.producto + '</td>');
+				// 	$('#precio').html('<th>Precio/Unidad:</th><td>$' + data.precio + '</td>');
+				// 	$('#cantidad').html('<th>Cantidad:</th><td>' + data.cantidad + '</td>');
+				// 	$('#total').html('<th>Total:</th><td>$' + data.total + '</td>');
+				// 	$('#fecha').html('<th>Fecha:</th><td>' + data.fecha + '</td>');
+				// 	$('#hora').html('<th>Hora:</th><td>' + data.hora + '</td>');
+				//
+				// 	if(data.estado === 'refunded') {
+				// 		$('#estado').html('<th style="background-color:red;color:white;">Estado:</th><td style="background-color:red;color:white;">' + data.estado + '</td>');
+				// 		$('#fechaDev').html('<th style="background-color:red;color:white;">Fecha:</th><td style="background-color:red;color:white;">' + data.fechaDev + '</td>');
+				// 		$('#horaDev').html('<th style="background-color:red;color:white;">Hora:</th><td style="background-color:red;color:white;">' + data.horaDev + '</td>');
+				// 	} else {
+				// 		$('#estado').html('<th>Estado:</th><td>' + data.estado + '</td>');
+				// 		$('#fechaDev').html('');
+				// 		$('#horaDev').html('');
+				// 	}
+				//
+				// 	$('#payment').text(data.data);
+				// }).fail(function(jqXHR) {
+				// 	console.log(jqXHR);
+				// 	showToast('Error al ver la transaccion', '', 'error');
+				// });
+			});
+
+			$('#tablaPagos tbody').on('click', '.refund', function() {
+				let id_venta = $(this).data('sale');
+				if(confirm('Seguro que quieres cancelar esta transaccion?')) {
+					$.ajax({
+						url: '../actions/cancelarpago.php',
+						method: 'POST',
+						data: { id_venta: id_venta }
+					}).done(function(data) {
+						console.log(data);
+						showToast('Pago cancelado', 'Pago cancelado', 'success');
+						dataTable.ajax.reload();
+					}).fail(function(jqXHR) {
+						console.log(jqXHR);
+						showToast('Error al cancelar la transaccion', '', 'error');
+					});
+				} else {
+					showToast('Que bueno!', 'Sigue comprando');
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
