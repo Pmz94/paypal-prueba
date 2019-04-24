@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 t.fechahora,
                 p.nombre producto,
                 COALESCE((t.pago_total / t.cantidad), 0) AS precio,
-                t.cantidad,
+                COALESCE(t.cantidad, 0) AS cantidad,
                 t.pago_total,
                 CONCAT(c.nombre, ' ', c.apellido) comprador,
                 c.correo,
