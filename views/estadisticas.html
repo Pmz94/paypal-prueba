@@ -13,23 +13,16 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-light bg-pp navbar-expand-lg">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container">
-			<a href="https://pmz94.github.io" class="navbar-brand">
-				<img src="https://pmz94.github.io/pagpersonal/assets/img/navbar/benny.png" alt="Benny" title="Volver a la pagina principal" class="benny-logo">
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<img src="../assets/img/paypal-logo.png" alt="PayPal" class="nav-link logo">
-					</li>
-					<!--<li class="nav-item">-->
-					<!--<img class="nav-link logo" src="../assets/img/banwire-logo.png">-->
-					<!--</li>-->
-				</ul>
+			<div class="navbar-brand">
+				<a href="https://pmz94.github.io">
+					<img src="https://pmz94.github.io/pagpersonal/assets/img/navbar/benny.png" alt="Benny" title="Volver a la pagina principal" class="benny-logo">
+				</a>
+				&nbsp;
+				<a href="https://developer.paypal.com/" target="_blank">
+					<img src="../assets/img/paypal-logo.png" alt="PayPal" class="logo">
+				</a>
 			</div>
 		</div>
 	</nav>
@@ -39,34 +32,38 @@
 			<div class="box">
 				<h2><b>Mejores Compradores</b></h2>
 				<hr>
-				<table id="stats" class="table table-striped table-bordered table-sm table-hover">
-					<thead>
-						<tr>
-							<th>Comprador</th>
-							<th>Ultimo pago</th>
-							<th>Completos</th>
-							<th>Pendientes</th>
-							<th>Devueltos</th>
-							<th>Total Pagos</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+				<div class="table-responsive">
+					<table id="stats" class="table table-striped table-bordered table-sm table-hover">
+						<thead>
+							<tr>
+								<th>Comprador</th>
+								<th>Ultimo pago</th>
+								<th>Completos</th>
+								<th>Pendientes</th>
+								<th>Devueltos</th>
+								<th>Total Pagos</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 				<hr>
-				<table id="buyer" class="table table-striped table-bordered table-sm table-hover">
-					<thead>
-						<tr>
-							<th>Comprador</th>
-							<th>Pago min</th>
-							<th>Pago max</th>
-							<th>x&#x0304;</th>
-							<th>&sigma;</th>
-							<th>Total Gastado</th>
-							<th>Total Devuelto</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
+				<div class="table-responsive">
+					<table id="buyer" class="table table-striped table-bordered table-sm table-hover">
+						<thead>
+							<tr>
+								<th>Comprador</th>
+								<th>Pago min</th>
+								<th>Pago max</th>
+								<th>x&#x0304;</th>
+								<th>&sigma;</th>
+								<th>Total Gastado</th>
+								<th>Total Devuelto</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
 				<hr>
 				<a href="pagos.html" class="btn btn-paypal-2">Ver Pagos</a>
 				<a href="../index.html" class="btn btn-paypal-2">Regresar al inicio</a>

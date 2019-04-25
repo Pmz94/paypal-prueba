@@ -3,7 +3,7 @@
 }
 
 img.logo {
-	height: 40px;
+	height: 30px;
 }
 
 body {
@@ -28,9 +28,8 @@ body {
 	color: #1e2021;
 }
 
-.bg-pp {
-	background-color: whitesmoke;
-	color: white;
+.navbar-brand a:hover {
+	text-decoration: none;
 }
 
 a.nav-link {
@@ -73,6 +72,13 @@ table > tbody {
 	box-shadow: 0 5px 20px -5px #555555;
 	padding: 30px;
 	min-width: 380px;
+}
+
+@media only screen and (max-width: 400px) {
+	.box {
+		padding: 15px;
+		min-width: 345px;
+	}
 }
 
 .form-control {
