@@ -26,11 +26,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 		$payment = $payment->execute($execute, $servicios->paypal);
 
-		switch(strtolower($payment->transactions[0]->related_resources[0]->sale->state)) {
-			case 'completed': $id_estado = 1; break;
-			case 'pending': $id_estado = 3; break;
-		}
-
 		$new_buyer = "
 			INSERT INTO compradores(clave, correo, nombre, apellido, telefono)
 			SELECT *
