@@ -91,8 +91,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			'producto' => ['name' => 'Producto', 'value' => $payment->transactions[0]->item_list->items[0]->name],
 			'precio_unidad' => ['name' => 'Precio/Unidad', 'value' => '$'.$payment->transactions[0]->item_list->items[0]->price],
 			'cantidad' => ['name' => 'Cantidad', 'value' => $payment->transactions[0]->item_list->items[0]->quantity],
-			'subtotal' => ['name' => 'Subtotal', 'value' => '$'.$payment->transactions[0]->amount->details->subtotal ?? '$'.$payment->transactions[0]->amount->total],
-			'envio' => ['name' => 'Envio', 'value' => '$'.$payment->transactions[0]->amount->details->shipping ?? '$0'],
 			'total' => ['name' => 'Total', 'value' => '$'.$payment->transactions[0]->amount->total],
 			'fecha' => ['name' => 'Fecha', 'value' => date('d/m/Y')],
 			'hora' => ['name' => 'Hora', 'value' => date('H:i:sa')]
