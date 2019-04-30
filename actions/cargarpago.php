@@ -59,18 +59,19 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 		$new_buyer->execute($values);
 
 		$query = "
-            INSERT INTO transacciones(id_transaccion, clave_comprador, id_venta, id_producto, cantidad, pago_total, fechahora, id_estado)
+            INSERT INTO transacciones(id_transaccion, id_venta, id_comprador, clave_comprador, id_producto, cantidad, subtotal, envio, fechahora, id_estado)
             VALUES
-                (:id_transaccion, :clave_comprador, :id_venta, :id_producto, :cantidad, :pago_total, NOW(), :id_estado);
+                (:id_transaccion, :id_venta, (SELECT id FROM compradores WHERE UPPER(clave) = :clave_comprador), :clave_comprador, :id_producto, :cantidad, :subtotal, :envio, NOW(), (SELECT id FROM estadosdepago WHERE LOWER(estado) = :estado));
         ";
 		$values2 = [
 			'id_transaccion' => $paymentId,
-			'clave_comprador' => $payerID,
+			'clave_comprador' => strtoupper($payerID),
 			'id_venta' => $payment->transactions[0]->related_resources[0]->sale->id,
 			'id_producto' => $payment->transactions[0]->item_list->items[0]->sku,
 			'cantidad' => $payment->transactions[0]->item_list->items[0]->quantity,
-			'pago_total' => $payment->transactions[0]->amount->total,
-			'id_estado' => $id_estado
+			'subtotal' => $payment->transactions[0]->amount->details->subtotal ?? $payment->transactions[0]->amount->total,
+			'envio' => $payment->transactions[0]->amount->details->shipping ?? 0,
+			'estado' => strtolower($payment->transactions[0]->related_resources[0]->sale->state)
 		];
 		$query = $servicios->db->prepare($query);
 		$query->execute($values2);
@@ -90,9 +91,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			'producto' => ['name' => 'Producto', 'value' => $payment->transactions[0]->item_list->items[0]->name],
 			'precio_unidad' => ['name' => 'Precio/Unidad', 'value' => '$'.intval($payment->transactions[0]->item_list->items[0]->price)],
 			'cantidad' => ['name' => 'Cantidad', 'value' => intval($payment->transactions[0]->item_list->items[0]->quantity)],
+			'subtotal' => ['name' => 'Subtotal', 'value' => intval($payment->transactions[0]->amount->details->subtotal)],
+			'envio' => ['name' => 'Envio', 'value' => intval($payment->transactions[0]->amount->details->shipping)],
 			'total' => ['name' => 'Total', 'value' => '$'.intval($payment->transactions[0]->amount->total)],
 			'fecha' => ['name' => 'Fecha', 'value' => date('d/m/Y')],
-			'hora' => ['name' => 'Hora', 'value' => date('H:i:s')]
+			'hora' => ['name' => 'Hora', 'value' => date('H:i:sa')]
 		]);
 
 		$redirectView = BASE_URI . '/views/pagorealizado.html?recibo=' . $pago . '&token=' . $token;

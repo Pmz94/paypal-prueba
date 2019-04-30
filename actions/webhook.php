@@ -39,13 +39,12 @@ file_put_contents('C:\Users\CSWebPmz\Desktop\noti.json', $json);
 $servicios = include_once '../config/servicios.php';
 
 $query = $servicios->db->prepare('
-	INSERT INTO transacciones (sistema_pago, id_transaccion, id_venta, pago_total, fechahora, id_estado, fechahoraAct, devuelto, fechahora_cancelado)
+	INSERT INTO transacciones (id_transaccion, id_venta, subtotal, fechahora, id_estado, fechahoraAct, devuelto, fechahora_cancelado)
 	VALUES
-		(:sistema_pago, :idTransaccion, :idVenta, :pagoTotal, NOW(), :estado, :fechahoraAct, :devuelto, :fechahoraDev)
+		(:id_transaccion, :id_venta, :subtotal, NOW(), (SELECT id FROM estadosdepago WHERE LOWER(estado) = :estado), :fechahoraAct, :devuelto, :fechahoraDev)
 ');
 
 $query->execute([
-	'sistema_pago' => 'banwire',
-	'idTransaccion' => $id,
-	'pagoTotal' => $total
+	'id_transaccion' => $id,
+	'subtotal' => $total
 ]);

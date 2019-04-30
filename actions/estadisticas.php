@@ -11,12 +11,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				COALESCE(comp.completos, 0) completos,
 				COALESCE(pend.pendientes, 0) pendientes,
 				COALESCE(dev.devoluciones, 0) devueltos,
-				COUNT(t.pago_total) total_pagos,
-				MIN(t.pago_total) pago_min,
-				MAX(t.pago_total) pago_max,
-				ROUND(AVG(t.pago_total), 2) gastos_prom,
-				ROUND(STD(t.pago_total), 2) desvest_gastos,
-				COALESCE((SUM(t.pago_total) - total_devuelto), SUM(t.pago_total)) total_gastado,
+				COUNT(t.subtotal) total_pagos,
+				MIN(t.subtotal) pago_min,
+				MAX(t.subtotal) pago_max,
+				ROUND(AVG(t.subtotal), 2) gastos_prom,
+				ROUND(STD(t.subtotal), 2) desvest_gastos,
+				COALESCE((SUM(t.subtotal) - total_devuelto), SUM(t.subtotal)) total_gastado,
 				COALESCE(dev.total_devuelto, 0) total_devuelto
 			FROM transacciones t
 			LEFT JOIN compradores c
@@ -45,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				SELECT
 					clave_comprador,
 					SUM(devuelto) devoluciones,
-					SUM(pago_total) total_devuelto
+					SUM(subtotal) total_devuelto
 				FROM transacciones
 				WHERE devuelto = 1
 				GROUP BY clave_comprador

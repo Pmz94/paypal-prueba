@@ -59,25 +59,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}*/
 		$output = [];
 		foreach($pago as $row) {
-			$output['idTransaccion'] = $row['idTransaccion'];
-			$output['correo'] = $row['correo'];
-			$output['idVenta'] = $row['idVenta'];
-			//$output['idVenta'] = $payment->transactions[0]->related_resources[0]->sale->id;
+			$output['idTransaccion'] = $payment->id;
+			$output['idVenta'] = $payment->transactions[0]->related_resources[0]->sale->id;
+			$output['correo'] = $payment->payer->payer_info->email;
+			$output['id_producto'] = intval($payment->transactions[0]->item_list->items[0]->sku);
 			$output['producto'] = $payment->transactions[0]->item_list->items[0]->name;
-			$output['precio'] = $payment->transactions[0]->item_list->items[0]->price;
-			$output['cantidad'] = $payment->transactions[0]->item_list->items[0]->quantity;
-			$output['total'] = $payment->transactions[0]->amount->total;
-			$output['fecha'] = date_format(date_create($row['fechahora']), 'd/m/Y');
-			$output['hora'] = date_format(date_create($row['fechahora']), 'h:ia');
+			$output['precio'] = intval($payment->transactions[0]->item_list->items[0]->price);
+			$output['cantidad'] = intval($payment->transactions[0]->item_list->items[0]->quantity);
+			$output['subtotal'] = intval($payment->transactions[0]->amount->details->subtotal);
+			$output['envio'] = intval($payment->transactions[0]->amount->details->shipping);
+			$output['total'] = intval($payment->transactions[0]->amount->total);
+			$output['fecha'] = date('d/m/Y', $row['fechahora']);
+			$output['hora'] = date('h:ia', $row['fechahora']);
 			$output['estado'] = $payment->transactions[0]->related_resources[0]->sale->state;
-			$output['fechaDev'] = date_format(date_create($row['fechahoraDev']), 'd/m/Y');
-			$output['horaDev'] = date_format(date_create($row['fechahoraDev']), 'h:ia');
-			$output['data'] = '' . $payment;
+			$output['fechaDev'] = date('d/m/Y', $row['fechahoraDev']);
+			$output['horaDev'] = date('h:ia', $row['fechahoraDev']);
 		}
 		echo json_encode($output);
 
 	} catch(Exception $e) {
-		echo '<h1>Algo malio sal</h1><hr>';
-		die($e);
+		$output = [
+			'status' => false,
+			'code' => $e->getCode(),
+			'message' => $e->getMessage()
+		];
+		header('HTTP/1.1 400 Exception');
+		echo json_encode($output, JSON_PRETTY_PRINT);
 	}
 }
