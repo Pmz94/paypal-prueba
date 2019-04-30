@@ -82,7 +82,7 @@
 			// $('#json').text(JSON.stringify(json, null, '\t'));
 
 			let row = '';
-			$.each(json, function(i, val) {
+			$.each(json, (i, val) => {
 				row += `<tr><th>${val.name}</th><td>${val.value}</td></tr>`
 			});
 			$('#recibo tbody').append(row);

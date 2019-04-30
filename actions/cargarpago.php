@@ -89,11 +89,11 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			'nombre_comprador' => ['name' => 'Comprador', 'value' => $nombre_comprador],
 			'email_comprador' => ['name' => 'Correo', 'value' => $payment->payer->payer_info->email],
 			'producto' => ['name' => 'Producto', 'value' => $payment->transactions[0]->item_list->items[0]->name],
-			'precio_unidad' => ['name' => 'Precio/Unidad', 'value' => '$'.intval($payment->transactions[0]->item_list->items[0]->price)],
-			'cantidad' => ['name' => 'Cantidad', 'value' => intval($payment->transactions[0]->item_list->items[0]->quantity)],
-			'subtotal' => ['name' => 'Subtotal', 'value' => intval($payment->transactions[0]->amount->details->subtotal)],
-			'envio' => ['name' => 'Envio', 'value' => intval($payment->transactions[0]->amount->details->shipping)],
-			'total' => ['name' => 'Total', 'value' => '$'.intval($payment->transactions[0]->amount->total)],
+			'precio_unidad' => ['name' => 'Precio/Unidad', 'value' => '$'.$payment->transactions[0]->item_list->items[0]->price],
+			'cantidad' => ['name' => 'Cantidad', 'value' => $payment->transactions[0]->item_list->items[0]->quantity],
+			'subtotal' => ['name' => 'Subtotal', 'value' => '$'.$payment->transactions[0]->amount->details->subtotal ?? '$'.$payment->transactions[0]->amount->total],
+			'envio' => ['name' => 'Envio', 'value' => '$'.$payment->transactions[0]->amount->details->shipping ?? '$0'],
+			'total' => ['name' => 'Total', 'value' => '$'.$payment->transactions[0]->amount->total],
 			'fecha' => ['name' => 'Fecha', 'value' => date('d/m/Y')],
 			'hora' => ['name' => 'Hora', 'value' => date('H:i:sa')]
 		]);

@@ -121,7 +121,7 @@
 				ajax: {
 					url: '../actions/obtenerpagos.php',
 					type: 'POST',
-					error: function(jqXHR, textStatus, errorThrown) {
+					error: (jqXHR, textStatus, errorThrown) => {
 						console.log(jqXHR);
 						showToast('Error al mostrar transacciones', 'Hubo un error', 'error');
 					}
@@ -129,15 +129,13 @@
 				columns: [
 					{
 						data: null,
-						render: function(data, type, full) {
-							return data.id_transaccion;
-						}
+						render: (data, type, full) => data.id_transaccion,
 					},
 					{ data: 'comprador' },
 					{ data: 'estado' },
 					{
 						data: null,
-						render: function(data, type, full) {
+						render: (data, type, full) => {
 							// console.log(data);
 							let fechahora = new Date(data.fechahora);
 							fechahora = fechahora.getDate() + '/' + (fechahora.getMonth() + 1) + '/' + fechahora.getFullYear() + ' ' + fechahora.getHours() + ':' + fechahora.getMinutes();
@@ -148,9 +146,7 @@
 					{ data: 'cantidad' },
 					{
 						data: null,
-						render: function(data, type, full) {
-							return '$' + data.subtotal;
-						}
+						render: (data, type, full) => '$' + data.subtotal
 					},
 					{ data: null },
 				],
@@ -158,7 +154,7 @@
 					{
 						targets: [-1],
 						data: null,
-						render: function(data, type, full) {
+						render: (data, type, full) => {
 							let container = $('<div></div>');
 							let ver = $('<button class="btn btn-paypal-2 btn-sm view"><i class="fas fa-info"></i></button>');
 							if(ver) container.append(ver);
