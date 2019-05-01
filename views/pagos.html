@@ -51,8 +51,9 @@
 					</table>
 				</div>
 				<hr>
-				<a href="estadisticas.html" class="btn btn-paypal-2">Estadisticas</a>
-				<a href="../index.html" class="btn btn-paypal-2">Regresar al inicio</a>
+				<a href="productos.html" class="btn btn-paypal">Productos</a>
+				<a href="estadisticas.html" class="btn btn-paypal">Estadisticas</a>
+				<a href="../index.html" class="btn btn-paypal">Regresar al inicio</a>
 			</div>
 		</div>
 
@@ -92,7 +93,7 @@
 						<pre id="payment" class="pre-scrollable text-left"></pre>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-paypal-2" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-paypal" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 			</div>
@@ -156,10 +157,10 @@
 						data: null,
 						render: (data, type, full) => {
 							let container = $('<div></div>');
-							let ver = $('<button class="btn btn-paypal-2 btn-sm view"><i class="fas fa-info"></i></button>');
+							let ver = $('<button class="btn btn-paypal btn-sm view"><i class="fas fa-info"></i></button>');
 							if(ver) container.append(ver);
 
-							let borrar = $('<button class="btn btn-paypal-2 btn-sm refund"><i class="fas fa-ban"></i></button>');
+							let borrar = $('<button class="btn btn-paypal red btn-sm refund"><i class="fas fa-ban"></i></button>');
 							if(data.devuelto == 1) borrar.prop('disabled', true);
 							if(borrar) {
 								borrar.attr('data-id', data.id_transaccion);
@@ -170,22 +171,7 @@
 						}
 					}
 				],
-				language: {
-					info: 'Pag. _PAGE_ de _PAGES_',
-					infoEmpty: 'No hay datos',
-					infoFiltered: '(de los _MAX_ renglones)',
-					lengthMenu: 'Mostrar _MENU_ renglones por pagina',
-					loadingRecords: 'Cargando datos...',
-					processing: 'Procesando...',
-					search: 'Buscar:',
-					zeroRecords: 'No se encontro nada',
-					paginate: {
-						first: '<i class="fas fa-angle-double-left"></i>',
-						last: '<i class="fas fa-angle-double-right"></i>',
-						next: '<i class="fas fa-angle-right"></i>',
-						previous: '<i class="fas fa-angle-left"></i>'
-					}
-				}
+				language: dt_idioma
 			});
 
 			$('#tablaPagos tbody').on('click', '.view', function() {

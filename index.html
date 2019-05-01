@@ -13,7 +13,7 @@
 </head>
 
 <style>
-	.btn.btn-paypal {
+	.btn.btn-paypal-buy {
 		color: #111111;
 		background-color: #ffc439;
 		border-color: transparent;
@@ -24,11 +24,11 @@
 		border-radius: 18px;
 	}
 
-	.btn.btn-paypal:hover {
+	.btn.btn-paypal-buy:hover {
 		box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.05);
 	}
 
-	.btn.btn-paypal:focus {
+	.btn.btn-paypal-buy:focus {
 		box-shadow: -1px -1px 18px 1px rgba(0, 0, 0, 0.25) inset;
 	}
 
@@ -97,7 +97,7 @@
 						</div>
 						<hr>
 						<div id="botones">
-							<button id="paypal-php" class="btn btn-paypal">Pagar</button>
+							<button id="paypal-php" class="btn btn-paypal-buy">Pagar</button>
 							<!--<div id="paypal-button-container"></div>-->
 							<!--<a id="banwire-button" class="btn btn-banwire">BanWire</a>-->
 							<div class="row">
@@ -111,7 +111,7 @@
 							</div>
 						</div>
 						<div>
-							<a href="views/pagos.html" class="btn btn-paypal-2">Ver movimientos</a>
+							<a href="views/pagos.html" class="btn btn-paypal">Ver movimientos</a>
 						</div>
 					</div>
 					<!--<br>-->
@@ -120,7 +120,7 @@
 					<!--		<div>Enviar a:</div>-->
 					<!--		<div><span id="recipient"></span>, <span id="line1"></span>, <span id="zip"></span></div>-->
 					<!--		<div><span id="city"></span>, <span id="state"></span>, <span id="country"></span></div>-->
-					<!--		<button id="confirmButton" class="btn btn-paypal-2">Culminar pago</button>-->
+					<!--		<button id="confirmButton" class="btn btn-paypal-buy-2">Culminar pago</button>-->
 					<!--	</div>-->
 					<!--	<div id="thanks">-->
 					<!--		<div>Gracias <span id="thanksname"></span></div>-->
@@ -189,9 +189,10 @@
 
 			function getProductos() {
 				$.ajax({
-					url: 'actions/obtenerproductos.php',
+					url: 'actions/productos.php',
 					method: 'POST',
-					dataType: 'json'
+					dataType: 'json',
+					data: { cmd: 'ver' }
 				}).done(function(data) {
 					let productos = data.data;
 					$producto.append('<option disabled selected>Producto</option>');

@@ -32,6 +32,36 @@ function showToast(heading, text = null, type = null) {
 	});
 }
 
+let dt_idioma = {
+	info: 'Pag. _PAGE_ de _PAGES_',
+	infoEmpty: 'No hay datos',
+	infoFiltered: '(de los _MAX_ renglones)',
+	lengthMenu: 'Mostrar _MENU_ renglones por pagina',
+	loadingRecords: 'Cargando datos...',
+	processing: 'Procesando...',
+	search: 'Buscar:',
+	zeroRecords: 'No se encontro nada',
+	paginate: {
+		first: '<i class="fas fa-angle-double-left"></i>',
+		last: '<i class="fas fa-angle-double-right"></i>',
+		next: '<i class="fas fa-angle-right"></i>',
+		previous: '<i class="fas fa-angle-left"></i>'
+	}
+};
+
+function getUrlParam(param) {
+	let pageURL = window.location.search.substring(1);
+	let URLVariables = pageURL.split('&');
+
+	for(let i = 0; i < URLVariables.length; i++) {
+		let paramName = URLVariables[i].split('=');
+
+		if(paramName[0] === param) {
+			return paramName[1] === undefined ? true : decodeURIComponent(paramName[1]);
+		}
+	}
+}
+
 function uniqid(prefix, more_entropy) {
 	// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 	// +    revised by: Kankrelune (http://www.webfaktory.info/)

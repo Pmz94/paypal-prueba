@@ -42,8 +42,8 @@
 							<tbody></tbody>
 						</table>
 						<hr>
-						<a href="pagos.html" class="btn btn-paypal-2">Ver otros movimientos</a>
-						<a href="../index.html" class="btn btn-paypal-2">Regresar al inicio</a>
+						<a href="pagos.html" class="btn btn-paypal">Ver otros movimientos</a>
+						<a href="../index.html" class="btn btn-paypal">Regresar al inicio</a>
 					</div>
 				</div>
 			</div>
@@ -59,22 +59,8 @@
 	<script src="../assets/js/script.js"></script>
 	<script type="text/javascript">
 		$(function() {
-
-			function getUrlParam(sParam) {
-				let sPageURL = window.location.search.substring(1);
-				let sURLVariables = sPageURL.split('&');
-
-				for(let i = 0; i < sURLVariables.length; i++) {
-					let sParamName = sURLVariables[i].split('=');
-
-					if(sParamName[0] === sParam) {
-						return sParamName[1] === undefined ? true : decodeURIComponent(sParamName[1]);
-					}
-				}
-			}
-
 			let token = getUrlParam('token');
-			if(!token) $('section').empty().append('<h1>Acceso incorrecto</h1><br><a href="../index.html" class="btn btn-paypal-2">Regresar al inicio</a>');
+			if(!token) $('section').empty().append('<h1>Acceso incorrecto</h1><br><a href="../index.html" class="btn btn-paypal">Regresar al inicio</a>');
 
 			let string = getUrlParam('recibo');
 			let json = JSON.parse(string);
@@ -82,9 +68,7 @@
 			// $('#json').text(JSON.stringify(json, null, '\t'));
 
 			let row = '';
-			$.each(json, (i, val) => {
-				row += `<tr><th>${val.name}</th><td>${val.value}</td></tr>`
-			});
+			$.each(json, (i, val) => row += `<tr><th>${val.name}</th><td>${val.value}</td></tr>`);
 			$('#recibo tbody').append(row);
 		});
 	</script>

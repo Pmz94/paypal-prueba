@@ -122,7 +122,7 @@ pre {
 	border-radius: 1.5rem;
 }
 
-.btn.btn-paypal-2 {
+.btn.btn-paypal {
 	color: #ffffff;
 	background-color: #0070ba;
 	border-color: transparent;
@@ -136,24 +136,32 @@ pre {
 	box-shadow: none;
 }
 
-.btn.btn-paypal-2:disabled {
+.btn.btn-paypal:disabled {
 	transition: none;
 	background-color: #7cc6de;
 }
 
-.btn-paypal-2:hover {
+.btn-paypal:hover {
 	color: #ffffff;
 	background-color: #003087;
 }
 
-.btn-paypal-2:focus {
+.btn-paypal:focus {
 	color: #ffffff;
 	background-color: #003087;
 	text-decoration: underline;
 	box-shadow: none;
 }
 
-.btn-paypal-2.btn-sm, .btn-group-sm > .btn {
+.btn.btn-paypal.red {
+	background-color: #ba0000;
+}
+
+.btn-paypal.red:hover {
+	background-color: #710000;
+}
+
+.btn-paypal.btn-sm, .btn-paypal.red.btn-sm, .btn-group-sm > .btn {
 	padding: 0.25rem 0.5rem;
 	font-size: 0.7672rem;
 	line-height: 1.2;
