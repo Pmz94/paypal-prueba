@@ -187,8 +187,8 @@
 				}).done(function(data) {
 					let productos = data.data;
 					$producto.append('<option disabled selected>Producto</option>');
-					$.each(productos, function(i, producto) {
-						$producto.append(`<option value="${producto.id}" data-price="${producto.precio}">${producto.nombre}</option>`);
+					$.each(productos, (i, producto) => {
+						$producto.append(`<option value="${producto.id}" data-price="${producto.precio}">${producto.nombre} - $${producto.precio}</option>`);
 					});
 				}).fail(function(jqXHR) {
 					console.log(jqXHR);
