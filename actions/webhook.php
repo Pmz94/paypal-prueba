@@ -34,7 +34,7 @@ $data[] = $arreglo;
 
 $json = json_encode($data, JSON_PRETTY_PRINT);
 
-file_put_contents('C:\Users\CSWebPmz\Desktop\noti.json', $json);
+// file_put_contents('C:\Users\CSWebPmz\Desktop\noti.json', $json);
 
 $servicios = include_once '../config/servicios.php';
 
