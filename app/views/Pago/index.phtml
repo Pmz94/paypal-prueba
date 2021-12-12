@@ -1,0 +1,27 @@
+<div class="UIpagos">
+	<div class="box">
+		<h1><b>Pago realizado</b></h1>
+		<table id="recibo" class="table table-striped table-bordered table-sm">
+			<thead>
+				<tr>
+					<th colspan="2">Recibo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($pago as $val) { ?>
+					<tr><th><?php echo $val['name'] ?></th><td><?php echo $val['value'] ?></td></tr>
+				<?php } ?>
+			</tbody>
+		</table>
+		<hr>
+		<a href="Pagos" class="btn btn-paypal">Ver otros movimientos</a>
+		<a href="Index" class="btn btn-paypal">Regresar al inicio</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		let ok = '<?php echo $ok ?>';
+		if(!ok) $('div.box').empty().append('<h1><?php echo $mensaje ?></h1><br><a href="Index" class="btn btn-paypal">Regresar al inicio</a>');
+	});
+</script>

@@ -1,5 +1,10 @@
 {
-    "require": {
-        "paypal/rest-api-sdk-php": "1.14.0"
-    }
+	"name": "pmz94/paypal-prueba",
+	"description": "Aplicacion que usa el API de PayPal",
+	"homepage": "https://pmz94.github.io",
+	"license": "MIT",
+	"require": {
+		"paypal/rest-api-sdk-php": "1.14.0",
+		"paypal/paypal-checkout-sdk": "1.0.1"
+	}
 }

@@ -1,0 +1,209 @@
+<div class="UIpagos">
+	<div class="box">
+		<h1><b>Catalogo de productos</b></h1>
+		<hr>
+		<button id="btnNuevo" class="btn btn-paypal">Nuevo producto</button>
+		<div class="table-responsive">
+			<table id="tabla" class="table table-striped table-bordered table-sm table-hover">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Precio</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<hr>
+		<a href="Pagos" class="btn btn-paypal">Pagos</a>
+		<a href="Estadisticas" class="btn btn-paypal">Estadisticas</a>
+		<a href="Index" class="btn btn-paypal">Inicio</a>
+	</div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="modal-productos" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="hidden" id="id">
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label for="nombre">Nombre</label>
+						<input type="text" id="nombre" class="form-control" autocomplete="off">
+					</div>
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label for="precio">Precio</label>
+						<input type="number" id="precio" class="form-control" min="0" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-paypal red" data-dismiss="modal">Cancelar</button>
+				<button id="crear" class="btn btn-paypal">Crear</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+
+		$('#btnNuevo').on('click', () => {
+			let $modal = $('#modal-productos').clone().removeAttr('id');
+			$modal.find('.modal-title').html('Nuevo producto');
+			modalEvents($modal);
+			$modal.modal({
+				backdrop: 'static',
+				keyboard: false,
+				focus: true,
+				show: true
+			});
+
+			function modalEvents($modal) {
+				$modal.find('.modal-footer #crear').on('click', function() {
+					let nombre = $modal.find('.modal-body #nombre').val();
+					let precio = $modal.find('.modal-body #precio').val();
+
+					$.ajax({
+						url: 'Productos/index',
+						method: 'POST',
+						data: {
+							cmd: 'crear',
+							nombre: nombre.trim(),
+							precio: parseFloat(precio)
+						}
+					}).done(data => {
+						showToast(data.data, 'Listo', 'success');
+					}).fail(jqXHR => {
+						console.log(jqXHR);
+					}).always(() => {
+						$modal.modal('hide');
+						dataTable.ajax.reload();
+					});
+				});
+			}
+		});
+
+		let dataTable = $('#tabla').DataTable({
+			destroy: true,
+			processing: true,
+			serverSide: false,
+			autoWidth: true,
+			searching: false,
+			ordering: false,
+			pagingType: 'full',
+			pageLength: 6,
+			lengthChange: false,
+			// lengthMenu: [[10, 15, 20], [10, 15, 20]],
+			ajax: {
+				url: 'Productos/index',
+				type: 'POST',
+				data: { cmd: 'ver' },
+				error: (jqXHR, textStatus, errorThrown) => {
+					console.log(jqXHR);
+					showToast('Error al mostrar productos', null, 'error');
+				}
+			},
+			columns: [
+				{ data: 'nombre' },
+				{
+					data: null,
+					render: (data) => '$' + data.precio
+				},
+				{ data: null },
+			],
+			columnDefs: [
+				{
+					targets: [-1],
+					data: null,
+					render: (data, type, full) => {
+						let container = $('<div></div>');
+
+						let ver = $('<button class="btn btn-paypal btn-sm edit"><i class="fas fa-pen"></i></button>');
+						if(ver) container.append(ver);
+
+						let borrar = $('<button class="btn btn-paypal red btn-sm delete"><i class="fas fa-minus-circle"></i></button>');
+						if(borrar) container.append(borrar);
+
+						return $(container).html();
+					}
+				}
+			],
+			language: dt_idioma
+		});
+
+		$('#tabla tbody').on('click', '.edit', function() {
+			let data = dataTable.row($(this).parents('tr')).data();
+			let id_producto = parseInt(data.id);
+
+			// Instancia de la ventana
+			let $modalEdit = $('#modal-productos').clone().removeAttr('id');
+			$modalEdit.find('.modal-title').html('Modificar producto');
+			$modalEdit.find('#id').val(id_producto);
+			$modalEdit.find('#nombre').val(data.nombre);
+			$modalEdit.find('#precio').val(parseInt(data.precio));
+			modalEvents($modalEdit);
+			$modalEdit.modal({
+				backdrop: 'static',
+				keyboard: false,
+				focus: true,
+				show: true
+			});
+
+			function modalEvents($modal) {
+				$modal.find('.modal-footer #crear').on('click', function() {
+					let id = $modal.find('.modal-body #id').val();
+					let nombre = $modal.find('.modal-body #nombre').val();
+					let precio = $modal.find('.modal-body #precio').val();
+
+					$.ajax({
+						url: 'Productos/index',
+						method: 'POST',
+						data: {
+							cmd: 'editar',
+							id: id,
+							nombre: nombre.trim(),
+							precio: parseFloat(precio)
+						}
+					}).done(data => {
+						showToast(data.data, 'Listo', 'success');
+					}).fail(jqXHR => {
+						console.log(jqXHR);
+					}).always(() => {
+						$modal.modal('hide');
+						dataTable.ajax.reload();
+					});
+				});
+			}
+		});
+
+		$('#tabla tbody').on('click', '.delete', function() {
+			let data = dataTable.row($(this).parents('tr')).data();
+			let id_producto = parseInt(data.id);
+			if(confirm('Seguro que quieres borrar este producto?')) {
+				$.ajax({
+					url: 'Productos/index',
+					method: 'POST',
+					dataType: 'json',
+					data: {
+						cmd: 'borrar',
+						id_producto: id_producto
+					}
+				}).done(data => {
+					showToast(data.data, 'Eliminado', 'success');
+					dataTable.ajax.reload();
+				}).fail(jqXHR => {
+					console.log(jqXHR);
+					showToast('Error al borrar el producto', null, 'error');
+				});
+			} else showToast('Que bueno!', 'Sigue manejando este producto');
+		});
+	});
+</script>

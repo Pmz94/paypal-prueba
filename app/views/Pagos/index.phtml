@@ -1,0 +1,208 @@
+<div class="UIpagos">
+	<div class="box">
+		<h1><b>Pagos realizados</b></h1>
+		<hr>
+		<div class="table-responsive">
+			<table id="tablaPagos" class="table table-striped table-bordered table-sm table-hover">
+				<thead>
+					<tr>
+						<th>Transaccion</th>
+						<th>Comprador</th>
+						<th>Estado</th>
+						<th>Fecha y hora</th>
+						<th>Producto</th>
+						<th>Cantidad</th>
+						<th>Total</th>
+						<th>Opciones</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<hr>
+		<a href="Productos" class="btn btn-paypal">Productos</a>
+		<a href="Estadisticas" class="btn btn-paypal">Estadisticas</a>
+		<a href="Index" class="btn btn-paypal">Regresar al inicio</a>
+	</div>
+</div>
+
+<!--Modal de detalles de pago-->
+<div class="modal fade" id="pagosModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Detalles de pago</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered table-striped table-sm">
+					<thead>
+						<tr>
+							<th colspan="2">Recibo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="idTransaccion"></tr>
+						<tr id="correo"></tr>
+						<tr id="idVenta"></tr>
+						<tr id="producto"></tr>
+						<tr id="precio"></tr>
+						<tr id="cantidad"></tr>
+						<tr id="total"></tr>
+						<tr id="fecha"></tr>
+						<tr id="hora"></tr>
+						<tr id="estado"></tr>
+						<tr id="fechaDev"></tr>
+						<tr id="horaDev"></tr>
+					</tbody>
+				</table>
+				<hr>
+				<pre id="payment" class="pre-scrollable text-left"></pre>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-paypal" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		let dataTable = $('#tablaPagos').DataTable({
+			// destroy: true,
+			// autoWidth: false,
+			searching: false,
+			ordering: false,
+			processing: true,
+			pagingType: 'full',
+			lengthChange: false,
+			// lengthMenu: [[10, 15, 20], [10, 15, 20]],
+			// serverSide: true,
+			ajax: {
+				url: 'Pagos/obtenerPagos',
+				type: 'POST',
+				error: (jqXHR, textStatus, errorThrown) => {
+					console.log(jqXHR);
+					showToast('Error al mostrar transacciones', null, 'error');
+				}
+			},
+			columns: [
+				{ data: 'id_transaccion' },
+				{ data: 'comprador' },
+				{ data: 'estado' },
+				{
+					data: null,
+					render: (data, type, full) => {
+						// console.log(data);
+						let fechahora = new Date(data.fechahora);
+						fechahora = fechahora.getDate() + '/' + (fechahora.getMonth() + 1) + '/' + fechahora.getFullYear() + ' ' + fechahora.getHours() + ':' + fechahora.getMinutes();
+						return fechahora;
+					}
+				},
+				{ data: 'producto' },
+				{ data: 'cantidad' },
+				{
+					data: null,
+					render: (data, type, full) => '$' + data.subtotal
+				},
+				{ data: null },
+			],
+			columnDefs: [
+				{
+					targets: [-1],
+					data: null,
+					render: (data, type, full) => {
+						let container = $('<div></div>');
+						let ver = $('<button class="btn btn-paypal btn-sm view"><i class="fas fa-info"></i></button>');
+						if(ver) container.append(ver);
+
+						let borrar = $('<button class="btn btn-paypal red btn-sm refund"><i class="fas fa-ban"></i></button>');
+						if(data.devuelto == 1) borrar.prop('disabled', true);
+						if(borrar) {
+							borrar.attr('data-id', data.id_transaccion);
+							borrar.attr('data-sale', data.id_venta);
+							container.append(borrar);
+						}
+						return $(container).html();
+					}
+				}
+			],
+			language: dt_idioma
+		});
+
+		$('#tablaPagos tbody').on('click', '.view', function() {
+			let data = dataTable.row($(this).parents('tr')).data();
+			$.ajax({
+				url: 'Pagos/verPago',
+				method: 'POST',
+				data: {
+					id: data.id,
+					id_transaccion: data.id_transaccion
+				},
+				dataType: 'json'
+			}).done(function(data) {
+				let pago = data.data;
+				$('#pagosModal').modal('show');
+
+				$('#idTransaccion').html('<th>ID de Transaccion:</th><td>' + pago.id_transaccion + '</td>');
+				$('#correo').html('<th>Comprador:</th><td>' + pago.correo + '</td>');
+				$('#idVenta').html('<th>ID de Venta:</th><td>' + pago.id_venta + '</td>');
+				$('#producto').html('<th>Producto:</th><td>' + pago.producto + '</td>');
+				$('#precio').html('<th>Precio/Unidad:</th><td>$' + pago.precio + '</td>');
+				$('#cantidad').html('<th>Cantidad:</th><td>' + pago.cantidad + '</td>');
+				$('#total').html('<th>Total:</th><td>$' + pago.total + '</td>');
+				$('#fecha').html('<th>Fecha:</th><td>' + pago.fecha + '</td>');
+				$('#hora').html('<th>Hora:</th><td>' + pago.hora + '</td>');
+
+				if(pago.devuelto) {
+					$('#estado').html('<th style="background-color:red;color:white;">Estado:</th><td style="background-color:red;color:white;">' + pago.estado + '</td>');
+					$('#fechaDev').html('<th style="background-color:red;color:white;">Fecha:</th><td style="background-color:red;color:white;">' + pago.fechaDev + '</td>');
+					$('#horaDev').html('<th style="background-color:red;color:white;">Hora:</th><td style="background-color:red;color:white;">' + pago.horaDev + '</td>');
+				} else {
+					$('#estado').html('<th>Estado:</th><td>' + pago.estado + '</td>');
+					$('#fechaDev').html('');
+					$('#horaDev').html('');
+				}
+
+				$('#payment').text(JSON.stringify(pago, null, 4));
+			}).fail(function(jqXHR) {
+				console.log(jqXHR);
+				showToast('Error al ver la transaccion', '', 'error');
+			});
+		});
+
+		$('#tablaPagos tbody').on('click', '.refund', function() {
+			let id_venta = $(this).data('sale');
+			if(confirm('Seguro que quieres cancelar esta transaccion?')) {
+				$.ajax({
+					url: 'Pagos/cancelarPago',
+					method: 'POST',
+					data: { id_venta: id_venta }
+				}).done(function(data) {
+					console.log(data);
+					showToast('Pago cancelado', 'Pago cancelado', 'success');
+					dataTable.ajax.reload();
+				}).fail(function(jqXHR) {
+					console.log(jqXHR);
+					let responseText = '';
+					if(jqXHR.responseText) {
+						if(isJson(jqXHR.responseText)) {
+							responseText = JSON.parse(jqXHR.responseText);
+							if(responseText.hasOwnProperty('message')) {
+								responseText = responseText.message;
+							} else {
+								responseText = JSON.stringify(responseText);
+							}
+						} else {
+							responseText = jqXHR.responseText;
+						}
+					}
+					showToast(responseText, 'Error al cancelar la transaccion', 'error');
+				});
+			} else {
+				showToast('Sigue comprando', 'Que bueno!');
+			}
+		});
+	});
+</script>

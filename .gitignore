@@ -1,9 +1,4 @@
-vendor
-composer.lock
-composer.phar
 .idea
-
-config/conf.php
-cache/*
-files/*
-logs/*
+vendor
+app/config/config.php
+composer.lock
