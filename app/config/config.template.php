@@ -11,7 +11,7 @@ return new Phalcon\Config(array(
 		'schema' => 'public',
 	),
 	'application' => array(
-		'baseUri' => 'http://localhost/phalcon-paypal',
+		'baseUri' => 'http://localhost/paypal-prueba',
 		'funcionesDir' => APP_PATH . '/funciones/',
 		'pluginsDir' => APP_PATH . '/plugins/',
 
