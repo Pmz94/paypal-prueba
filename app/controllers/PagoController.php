@@ -10,7 +10,6 @@ namespace Controllers;
 
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
-use PayPal\Api\VerifyWebhookSignature;
 
 class PagoController extends ControllerBase {
 
@@ -157,93 +156,5 @@ class PagoController extends ControllerBase {
 			'mensaje' => $mensaje,
 			'pago' => $pago
 		]);
-	}
-
-	public function webhookpaypalAction() {
-		$webhook = $cargoPagado = $result = [];
-		try {
-			$json = file_get_contents('php://input');
-
-			$apiContext = $this->paypal;
-			$webhookId  = $this->config->paypal_credentials->webhook_id;
-
-			// Obtener parametros para verificar webhook
-			$headers = getallheaders();
-			$headers = array_change_key_case($headers, CASE_UPPER);
-			$signatureVerification = new VerifyWebhookSignature();
-			$signatureVerification->setAuthAlgo($headers['PAYPAL-AUTH-ALGO']);
-			$signatureVerification->setTransmissionId($headers['PAYPAL-TRANSMISSION-ID']);
-			$signatureVerification->setCertUrl($headers['PAYPAL-CERT-URL']);
-			$signatureVerification->setWebhookId($webhookId);
-			$signatureVerification->setTransmissionSig($headers['PAYPAL-TRANSMISSION-SIG']);
-			$signatureVerification->setTransmissionTime($headers['PAYPAL-TRANSMISSION-TIME']);
-			$signatureVerification->setRequestBody($json);
-			//$request = clone $signatureVerification;
-
-			// Verificar webhook
-			$output = $signatureVerification->post($apiContext);
-
-			//En caso de que no sea autentico
-			if(strtoupper($output->getVerificationStatus()) == 'FAILURE') {
-				return false;
-			}
-
-			$webhook = json_decode($json);
-			date_default_timezone_set('America/Hermosillo');
-			$evento = $webhook->event_type;
-			$idTransaccion = $webhook->resource->parent_payment;
-
-			// Obtener el json de la transaccion que se hizo
-			$payment = Payment::get($idTransaccion, $apiContext);
-
-			//Arreglo con parametros para BD
-			$paymentArr = json_decode($payment, false);
-			$cargoPagado = [];
-			$cargoPagado['idTransaccion'] = $idTransaccion; //ID de transaccion
-			$cargoPagado['idVenta'] = $webhook->resource->id; //ID de venta
-			$cargoPagado['productos'] = $paymentArr->transactions[0]->item_list->items; //Arreglo de productos
-			$cargoPagado['total'] = $webhook->resource->amount->total; //Total que se pago
-			$cargoPagado['comision'] = $webhook->resource->transaction_fee->value; //Comision que cobra paypal
-			$cargoPagado['estado'] = $webhook->resource->state; //Estado de pago
-			$cargoPagado['fechahora'] = date('Y-m-d H:i:s'); //hora actual
-			$cargoPagado['horaPaypal'] = $webhook->resource->update_time; //hora de paypal de la Venta
-			$cargoPagado['evento'] = $evento;
-
-			//Realizar accion dependiendo del evento que haya tenido el pago
-			switch($evento) {
-				case 'PAYMENT.SALE.COMPLETED':
-					file_put_contents('C:/temp/'.$cargoPagado['estado'].'.json', json_encode($cargoPagado, JSON_PRETTY_PRINT));
-					break;
-				case 'PAYMENT.SALE.PENDING':
-					file_put_contents('C:/temp/'.$cargoPagado['estado'].'.json', json_encode($cargoPagado, JSON_PRETTY_PRINT));
-					break;
-				case 'PAYMENT.SALE.REFUNDED' || 'PAYMENT.SALE.REVERSED':
-					$cargoPagado['idDevolucion'] = $webhook->resource->id; //ID de devolucion
-					$cargoPagado['idVenta'] = $webhook->resource->sale_id; //ID de venta
-					file_put_contents('C:/temp/'.$cargoPagado['estado'].'.json', json_encode($cargoPagado, JSON_PRETTY_PRINT));
-					break;
-				case 'PAYMENT.SALE.DENIED':
-					file_put_contents('C:/temp/'.$cargoPagado['estado'].'.json', json_encode($cargoPagado, JSON_PRETTY_PRINT));
-					break;
-			}
-
-			// PETICION A LA API PARA CONCLUIR EL PAGO
-			$urlApi = $this->config->rest->products->SIIE;
-			$urlRoute = $this->config->rest->routes;
-			$route = $urlRoute->cobranza_caja->paypal_response;
-			$result = ApiREST::CurlRequest('POST', $urlApi, $route, $cargoPagado, false);
-			if($result['status'] == 'success') {
-				return true;
-			}
-
-			// si se recibio error o exception
-			if($result['status'] == 'error' || $result['status'] == 'exception' || null == $result || false == $result) {
-				$msg = $result['message'] == '' ? true : false;
-				$result = FuncionesGenerales::error_handler($result, $msg);
-			}
-			return false;
-		} catch (\Exception $e) {
-			return false;
-		}
 	}
 }

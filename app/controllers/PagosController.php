@@ -166,9 +166,7 @@ class PagosController extends ControllerBase {
                     WHERE t.id_transaccion = :id_transaccion
                     LIMIT 1
 				";
-
 				$values = ['id_transaccion' => $id_transaccion];
-
 				$dataType = ['id_transaccion' => \Phalcon\Db\Column::BIND_PARAM_STR];
 
 				$result = $this->db->query($query, $values, $dataType);
@@ -178,35 +176,6 @@ class PagosController extends ControllerBase {
 
 				$payment = Payment::get($id_transaccion, $apiContext);
 
-				/*$data = $payment;
-				//no asociativo
-				$manage = json_decode($data);
-				echo $manage->transactions[0]->related_resources[0]->sale->id . '<br>';
-				//asociativo
-				$manage = json_decode($data, true);
-				echo $manage['transactions'][0]['related_resources'][0]['sale']['id'] . '<br>';
-				//para recorrer los datos de un json
-				foreach($manage as $idx => $obj) {
-					if($idx == 'transactions') {
-						foreach($obj as $idx2 => $obj2) {
-							foreach($obj2 as $idx3 => $obj3) {
-								if($idx3 == 'related_resources') {
-									foreach($obj3 as $idx4 => $obj4) {
-										foreach($obj4 as $idx5 => $obj5) {
-											if($idx5 == 'sale') {
-												foreach($obj5 as $idx6 => $obj6) {
-													if($idx6 == 'id') {
-														echo $obj6;
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}*/
 				$output = [];
 				foreach($pago as $row) {
 					$output['id_transaccion'] = $payment->id;

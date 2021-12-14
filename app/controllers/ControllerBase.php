@@ -22,5 +22,4 @@ class ControllerBase extends Controller {
 		}
 		return $this->response->send();
 	}
-
 }
