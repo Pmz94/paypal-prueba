@@ -13,8 +13,23 @@ use PayPal\Api\VerifyWebhookSignature;
 
 class WebhookController extends ControllerBase {
 
+	public $apiContext;
+	public $webhookId;
+
+	public function initialize() {
+		$this->apiContext = $this->paypal;
+		$this->webhookId = $this->config->paypal_credentials->webhook_id;
+	}
+
 	public function indexAction() {
+		// Obtener parametros para verificar webhook
 		$json = file_get_contents('php://input');
+		$headers = $this->request->getHeaders();
+
+		$verificationStatus = $this->verificar($headers, $json);
+		// En caso de que no sea autentico
+		// if($verificationStatus === 'FAILURE') {}
+
 		$webhook = json_decode($json);
 
 		$this->response->setStatusCode(200, 'OK')->sendHeaders();
@@ -22,35 +37,51 @@ class WebhookController extends ControllerBase {
 			'status' => true,
 			'code' => 200,
 			'message' => 'Webhook recibido',
+			'verificado' => $verificationStatus,
 			'webhook' => $webhook ?: []
 		], JSON_PRETTY_PRINT);
 		return $this->response->send();
 	}
 
+	private function verificar($headers, $json): string {
+		$headers = array_change_key_case($headers, CASE_UPPER);
+		// Validar headers necesarios
+		$headersRequired = [
+			'PAYPAL-AUTH-ALGO',
+			'PAYPAL-TRANSMISSION-ID',
+			'PAYPAL-CERT-URL',
+			'PAYPAL-TRANSMISSION-SIG',
+			'PAYPAL-TRANSMISSION-TIME'
+		];
+		foreach($headersRequired as $headerNeeded) {
+			if(!isset($headers[$headerNeeded])) {
+				return 'FAILURE';
+			}
+		}
+
+		// Verificar webhook
+		$signatureVerification = new VerifyWebhookSignature();
+		$signatureVerification->setAuthAlgo($headers['PAYPAL-AUTH-ALGO']);
+		$signatureVerification->setTransmissionId($headers['PAYPAL-TRANSMISSION-ID']);
+		$signatureVerification->setCertUrl($headers['PAYPAL-CERT-URL']);
+		$signatureVerification->setWebhookId($this->webhookId);
+		$signatureVerification->setTransmissionSig($headers['PAYPAL-TRANSMISSION-SIG']);
+		$signatureVerification->setTransmissionTime($headers['PAYPAL-TRANSMISSION-TIME']);
+		$signatureVerification->setRequestBody($json);
+		$output = $signatureVerification->post($this->apiContext);
+		$status = $output->getVerificationStatus();
+		return strtoupper($status);
+	}
+
 	private function webhook() {
 		try {
+			// Obtener body y headers
 			$json = file_get_contents('php://input');
-
-			$apiContext = $this->paypal;
-			$webhookId = $this->config->paypal_credentials->webhook_id;
-
-			// Obtener parametros para verificar webhook
-			$headers = getallheaders();
-			$headers = array_change_key_case($headers, CASE_UPPER);
-			$signatureVerification = new VerifyWebhookSignature();
-			$signatureVerification->setAuthAlgo($headers['PAYPAL-AUTH-ALGO']);
-			$signatureVerification->setTransmissionId($headers['PAYPAL-TRANSMISSION-ID']);
-			$signatureVerification->setCertUrl($headers['PAYPAL-CERT-URL']);
-			$signatureVerification->setWebhookId($webhookId);
-			$signatureVerification->setTransmissionSig($headers['PAYPAL-TRANSMISSION-SIG']);
-			$signatureVerification->setTransmissionTime($headers['PAYPAL-TRANSMISSION-TIME']);
-			$signatureVerification->setRequestBody($json);
-
+			$headers = $this->request->getHeaders();
 			// Verificar webhook
-			$output = $signatureVerification->post($apiContext);
-
+			$verificationStatus = $this->verificar($headers, $json);
 			// En caso de que no sea autentico
-			if(strtoupper($output->getVerificationStatus()) === 'FAILURE') {
+			if($verificationStatus === 'FAILURE') {
 				throw new \Exception('Webhook invalido', 400);
 			}
 
@@ -60,7 +91,7 @@ class WebhookController extends ControllerBase {
 			$idTransaccion = $webhook->resource->parent_payment;
 
 			// Obtener el json de la transaccion que se hizo
-			$payment = Payment::get($idTransaccion, $apiContext);
+			$payment = Payment::get($idTransaccion, $this->apiContext);
 
 			// Arreglo con parametros para BD
 			$paymentArr = json_decode($payment, false);
