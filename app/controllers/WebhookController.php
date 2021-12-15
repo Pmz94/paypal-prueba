@@ -25,11 +25,6 @@ class WebhookController extends ControllerBase {
 		// Obtener parametros para verificar webhook
 		$json = file_get_contents('php://input');
 		$headers = $this->request->getHeaders();
-
-		$verificationStatus = $this->verificar($headers, $json);
-		// En caso de que no sea autentico
-		// if($verificationStatus === 'FAILURE') {}
-
 		$webhook = json_decode($json);
 
 		$this->response->setStatusCode(200, 'OK')->sendHeaders();
@@ -37,58 +32,53 @@ class WebhookController extends ControllerBase {
 			'status' => true,
 			'code' => 200,
 			'message' => 'Webhook recibido',
-			'verificado' => $verificationStatus,
 			'webhook' => $webhook ?: []
 		], JSON_PRETTY_PRINT);
 		return $this->response->send();
 	}
 
-	private function verificar($headers, $json): string {
-		$headers = array_change_key_case($headers, CASE_UPPER);
-		// Validar headers necesarios
-		$headersRequired = [
-			'PAYPAL-AUTH-ALGO',
-			'PAYPAL-TRANSMISSION-ID',
-			'PAYPAL-CERT-URL',
-			'PAYPAL-TRANSMISSION-SIG',
-			'PAYPAL-TRANSMISSION-TIME'
-		];
-		foreach($headersRequired as $headerNeeded) {
-			if(!isset($headers[$headerNeeded])) {
-				return 'FAILURE';
-			}
-		}
-
-		// Verificar webhook
-		$signatureVerification = new VerifyWebhookSignature();
-		$signatureVerification->setAuthAlgo($headers['PAYPAL-AUTH-ALGO']);
-		$signatureVerification->setTransmissionId($headers['PAYPAL-TRANSMISSION-ID']);
-		$signatureVerification->setCertUrl($headers['PAYPAL-CERT-URL']);
-		$signatureVerification->setWebhookId($this->webhookId);
-		$signatureVerification->setTransmissionSig($headers['PAYPAL-TRANSMISSION-SIG']);
-		$signatureVerification->setTransmissionTime($headers['PAYPAL-TRANSMISSION-TIME']);
-		$signatureVerification->setRequestBody($json);
-		$output = $signatureVerification->post($this->apiContext);
-		$status = $output->getVerificationStatus();
-		return strtoupper($status);
-	}
-
 	private function webhook() {
 		try {
 			// Obtener body y headers
-			$json = file_get_contents('php://input');
 			$headers = $this->request->getHeaders();
+			$json = file_get_contents('php://input');
+
+			// Validar headers necesarios
+			$headers = array_change_key_case($headers, CASE_UPPER);
+			$headersRequired = [
+				'PAYPAL-AUTH-ALGO',
+				'PAYPAL-TRANSMISSION-ID',
+				'PAYPAL-CERT-URL',
+				'PAYPAL-TRANSMISSION-SIG',
+				'PAYPAL-TRANSMISSION-TIME'
+			];
+			foreach($headersRequired as $headerNeeded) {
+				if(!isset($headers[$headerNeeded])) {
+					throw new \Exception("Falta el header ${headerNeeded}", 400);
+				}
+			}
+
 			// Verificar webhook
-			$verificationStatus = $this->verificar($headers, $json);
+			$signatureVerification = new VerifyWebhookSignature();
+			$signatureVerification->setAuthAlgo($headers['PAYPAL-AUTH-ALGO']);
+			$signatureVerification->setTransmissionId($headers['PAYPAL-TRANSMISSION-ID']);
+			$signatureVerification->setCertUrl($headers['PAYPAL-CERT-URL']);
+			$signatureVerification->setWebhookId($this->webhookId);
+			$signatureVerification->setTransmissionSig($headers['PAYPAL-TRANSMISSION-SIG']);
+			$signatureVerification->setTransmissionTime($headers['PAYPAL-TRANSMISSION-TIME']);
+			$signatureVerification->setRequestBody($json);
+			$output = $signatureVerification->post($this->apiContext);
+			$verificationStatus = $output->getVerificationStatus();
+
 			// En caso de que no sea autentico
-			if($verificationStatus === 'FAILURE') {
+			if(strtoupper($verificationStatus) === 'FAILURE') {
 				throw new \Exception('Webhook invalido', 400);
 			}
 
-			$webhook = json_decode($json);
+			$webhook_event = json_decode($json);
+			$evento = $webhook_event->event_type;
+			$idTransaccion = $webhook_event->resource->parent_payment;
 			date_default_timezone_set('America/Hermosillo');
-			$evento = $webhook->event_type;
-			$idTransaccion = $webhook->resource->parent_payment;
 
 			// Obtener el json de la transaccion que se hizo
 			$payment = Payment::get($idTransaccion, $this->apiContext);
@@ -97,32 +87,46 @@ class WebhookController extends ControllerBase {
 			$paymentArr = json_decode($payment, false);
 			$cargoPagado = [];
 			$cargoPagado['idTransaccion'] = $idTransaccion; //ID de transaccion
-			$cargoPagado['idVenta'] = $webhook->resource->id; //ID de venta
+			$cargoPagado['idVenta'] = $webhook_event->resource->id; //ID de venta
 			$cargoPagado['productos'] = $paymentArr->transactions[0]->item_list->items; //Arreglo de productos
-			$cargoPagado['total'] = $webhook->resource->amount->total; //Total que se pago
-			$cargoPagado['comision'] = $webhook->resource->transaction_fee->value; //Comision que cobra paypal
-			$cargoPagado['estado'] = $webhook->resource->state; //Estado de pago
+			$cargoPagado['total'] = $webhook_event->resource->amount->total; //Total que se pago
+			$cargoPagado['comision'] = $webhook_event->resource->transaction_fee->value; //Comision que cobra paypal
+			$cargoPagado['estado'] = $webhook_event->resource->state; //Estado de pago
 			$cargoPagado['fechahora'] = date('Y-m-d H:i:s'); //hora actual
-			$cargoPagado['horaPaypal'] = $webhook->resource->update_time; //hora de paypal de la Venta
+			$cargoPagado['horaPaypal'] = $webhook_event->resource->update_time; //hora de paypal de la Venta
 			$cargoPagado['evento'] = $evento;
 
 			// Realizar accion dependiendo del evento que haya tenido el pago
 			switch($evento) {
+				case 'PAYMENT.SALE.PENDING':
+				case 'PAYMENT.SALE.DENIED':
 				case 'PAYMENT.SALE.COMPLETED':
 					break;
-				case 'PAYMENT.SALE.PENDING':
-					break;
-				case 'PAYMENT.SALE.DENIED':
-					break;
-				case 'PAYMENT.SALE.REFUNDED' || 'PAYMENT.SALE.REVERSED':
-					$cargoPagado['idDevolucion'] = $webhook->resource->id; //ID de devolucion
-					$cargoPagado['idVenta'] = $webhook->resource->sale_id; //ID de venta
+				case 'PAYMENT.SALE.REFUNDED':
+				case 'PAYMENT.SALE.REVERSED':
+					$cargoPagado['idDevolucion'] = $webhook_event->resource->id; //ID de devolucion
+					$cargoPagado['idVenta'] = $webhook_event->resource->sale_id; //ID de venta
 					break;
 			}
 
 			file_put_contents('./tmp/' . $cargoPagado['estado'] . '.json', json_encode($cargoPagado, JSON_PRETTY_PRINT));
 
-			// PETICION A LA API PARA CONCLUIR EL PAGO
+			// Agregar evento de webhook a la BD
+			$query = "
+                INSERT INTO webhooks(id_webhook, fechahora, tipo_evento, id_transaccion)
+				VALUES (
+					:id_webhook,
+					NOW(),
+					:id_venta,
+					:id_transaccion
+				);
+			";
+			$values = [
+				'id_webhook' => $webhook_event->id,
+				'id_venta' => $webhook_event->resource->id,
+				'id_transaccion' => $idTransaccion
+			];
+			$this->db->execute($query, $values);
 
 			$this->response->setStatusCode(200, 'OK')->sendHeaders();
 			$this->response->setJsonContent([
@@ -131,7 +135,7 @@ class WebhookController extends ControllerBase {
 				'message' => 'Webhook recibido'
 			], JSON_PRETTY_PRINT);
 		} catch(\Exception $e) {
-			$this->response->setStatusCode($e->getCode(), 'Exception')->sendHeaders();
+			$this->response->setStatusCode($e->getCode())->sendHeaders();
 			$this->response->setJsonContent([
 				'status' => false,
 				'code' => $e->getCode(),
