@@ -18,13 +18,13 @@ class ApiREST {
 
 	/**
 	 * Funcion CURL Core, hace una peticion CURL directo a la API
-	 * @param $method                   string  (GET, POST, PUT, DELETE)
-	 * @param $url                      string  url
-	 * @param null $params array   parametros
-	 * @param bool|false $files bool    Si dentro de los parametos incluye una ruta de un archivo a leer
-	 * @return bool|mixed|string
+	 * @param string|null $method (GET, POST, PUT, DELETE)
+	 * @param string|null $url url
+	 * @param array|null $params parametros
+	 * @param bool $files Si dentro de los parametos incluye una ruta de un archivo a leer
+	 * @return array
 	 */
-	public static function CurlCore($method = null, $url = null, $params = null, $files = false) {
+	private static function CurlCore(string $method = null, string $url = null, array $params = null, bool $files = false): array {
 		// VALIDAMOS METODO RECIBIDO
 		if($method !== null && !in_array(strtoupper($method), array('GET', 'POST', 'PUT', 'DELETE', 'HEAD'))) {
 			return ['statusCode' => 405, 'content' => ['code' => -1]];
@@ -106,15 +106,15 @@ class ApiREST {
 	/**
 	 * Funcion CURL REQUEST, hace una peticion CURL a traves de la funcion CurlCore y regresa un ARRAY
 	 * @param $method                   string  (GET, POST, PUT, DELETE)
-	 * @param $urlProductName           string  API o portal
-	 * @param $modelPath                string  Route a utilizar
+	 * @param $urlProductName           string|null  API o portal
+	 * @param $modelPath                string|null  Route a utilizar
 	 * @param null $params array   parametros
-	 * @param $controlador              string  Controlador quien realizo la petición y asi obtener el diccionario
+	 * @param $controlador              string|null  Controlador quien realizo la petición y asi obtener el diccionario
 	 *                                          correspondiente
 	 * @param bool|false $files bool    Si dentro de los parametos incluye una ruta de un archivo a leer
-	 * @return bool|mixed|string
+	 * @return array
 	 */
-	public static function CurlRequest($method, $urlProductName = null, $modelPath = null, $params = null, $controlador = null, $files = false) {
+	public static function CurlRequest(string $method, string $urlProductName = null, string $modelPath = null, $params = null, string $controlador = null, $files = false): array {
 		try {
 			// VALIDAMOS SI RECIBIMOS EL URL
 			if($urlProductName === null || $modelPath === null) {
@@ -134,15 +134,15 @@ class ApiREST {
 	 * Funcion CURL REQUEST RESPONSE, hace una peticion CURL a traves de la funcion CurlCore y regresa un RESPONSE para
 	 *      una llamada AJAX
 	 * @param $method                   string  (GET, POST, PUT, DELETE)
-	 * @param $urlProductName           string  API
-	 * @param $modelPath                string  Route a utilizar
+	 * @param $urlProductName           string|null  API
+	 * @param $modelPath                string|null  Route a utilizar
 	 * @param null $params array   parametros
-	 * @param $controlador              string  Controlador quien realizo la petición y asi obtener el diccionario
+	 * @param $controlador              string|null  Controlador quien realizo la petición y asi obtener el diccionario
 	 *                                          correspondiente
 	 * @param bool|false $files bool    Si dentro de los parametos incluye una ruta de un archivo a leer
-	 * @return bool|mixed|string
+	 * @return array|\Phalcon\Http\Response
 	 */
-	public static function CurlRequestResponse($method, $urlProductName = null, $modelPath = null, $params = null, $controlador = null, $files = false) {
+	public static function CurlRequestResponse(string $method, string $urlProductName = null, string $modelPath = null, $params = null, string $controlador = null, bool $files = false) {
 		$responseToSend = new \Phalcon\Http\Response();
 		try {
 			// VALIDAMOS SI RECIBIMOS EL URL
@@ -182,7 +182,7 @@ class ApiREST {
 	/*
 	 * @return boolean
 	 */
-	private static function isJson($string) {
+	private static function isJson($string): bool {
 		json_decode($string);
 		return (json_last_error() == JSON_ERROR_NONE);
 	}
@@ -195,12 +195,12 @@ class ApiREST {
 	 * 2) "-" será reemplazado por "_"
 	 * 3) Se convertirá a mayusculas
 	 */
-	private static function getHeaders(array $data, $modelPath) {
-		if(array_key_exists("query", $data)) {
-			$data = $data["query"];
+	private static function getHeaders(array $data, $modelPath): array {
+		if(array_key_exists('query', $data)) {
+			$data = $data['query'];
 		}
-		if(array_key_exists("body", $data)) {
-			$data = $data["body"];
+		if(array_key_exists('body', $data)) {
+			$data = $data['body'];
 		}
 
 		// TIME
@@ -222,10 +222,10 @@ class ApiREST {
 			]);
 		}
 
-		return array(
+		return [
 			"API-ID" => ClientConfig::getId(),
 			"API-HASH" => hash_hmac('sha256', $message, ClientConfig::getPrivateKey()),
 			"API-TIME" => $time
-		);
+		];
 	}
 }

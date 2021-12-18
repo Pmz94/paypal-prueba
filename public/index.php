@@ -12,9 +12,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Phalcon\Mvc\Application();
 
-$app->setDI($di);
-
 try {
+	$app->setDI($di);
 
 	$response = $app->handle();
 

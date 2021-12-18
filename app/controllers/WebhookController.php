@@ -114,12 +114,7 @@ class WebhookController extends ControllerBase {
 			// Agregar evento de webhook a la BD
 			$query = "
                 INSERT INTO webhooks(id_webhook, fechahora, tipo_evento, id_transaccion)
-				VALUES (
-					:id_webhook,
-					NOW(),
-					:id_venta,
-					:id_transaccion
-				);
+				VALUES (:id_webhook, NOW(), :id_venta, :id_transaccion);
 			";
 			$values = [
 				'id_webhook' => $webhook_event->id,

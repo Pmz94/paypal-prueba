@@ -1,7 +1,7 @@
 <?php
 
-return new Phalcon\Config(array(
-	'database' => array(
+return new Phalcon\Config([
+	'database' => [
 		'adapter' => 'Mysql',
 		'host' => 'localhost',
 		'port' => 3306,
@@ -9,8 +9,8 @@ return new Phalcon\Config(array(
 		'password' => '',
 		'dbname' => 'paypalprueba',
 		'schema' => 'public',
-	),
-	'application' => array(
+	],
+	'application' => [
 		'baseUri' => 'http://localhost/paypal-prueba',
 		'funcionesDir' => APP_PATH . '/funciones/',
 		'pluginsDir' => APP_PATH . '/plugins/',
@@ -20,17 +20,17 @@ return new Phalcon\Config(array(
 		'viewsDir' => APP_PATH . '/views/',
 
 		'defaultLanguage' => 'es',
-	),
-	'paypal_credentials' => array(
+	],
+	'paypal_credentials' => [
 		'client_id' => '',
 		'secret' => '',
-		'settings' => array(
+		'webhook_id' => '',
+		'settings' => [
 			'mode' => 'sandbox',
 			'http.ConnectionTimeOut' => 60,
 			'log.LogEnabled' => false,
 			'log.FileName' => APP_PATH . '/logs/paypal.log',
 			'log.LogLevel' => 'FINE'
-		),
-		'webhook_id' => ''
-	),
-));
+		]
+	]
+]);

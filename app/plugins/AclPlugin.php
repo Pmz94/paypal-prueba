@@ -8,6 +8,7 @@ use Phalcon\Mvc\User\Plugin;
 use Phalcon\Http\Response;
 use Phalcon\Acl\Adapter\Memory as AclList;
 use Phalcon\Acl;
+use Phalcon\Acl\Resource as AclResource;
 use Funciones\ApiREST;
 
 class AclPlugin extends Plugin {
@@ -24,18 +25,18 @@ class AclPlugin extends Plugin {
 
 		// Handle 404 exceptions
 		if($exception instanceof DispatchException) {
-			$dispatcher->forward(array(
+			$dispatcher->forward([
 				'controller' => 'Index',
 				'action' => 'route404'
-			));
+			]);
 			return false;
 		}
 
 		// Handle other exceptions
-		$dispatcher->forward(array(
+		$dispatcher->forward([
 			'controller' => 'Index',
 			'action' => 'route404'
-		));
+		]);
 		return false;
 	}
 
@@ -61,7 +62,13 @@ class AclPlugin extends Plugin {
 		//$headers =  $this->request->getHeaders();
 		if(!$allowed) {
 			if($LoginUser) {
-				if($this->request->getHeader("x-load-module") == null || $this->request->getHeader("x-load-module") == '' || $this->request->getHeader("x-load-module") == false) {
+				if(
+					$this->request->getHeader('x-load-module') == null
+					||
+					$this->request->getHeader('x-load-module') == ''
+					||
+					$this->request->getHeader('x-load-module') == false
+				) {
 					$response = new \Phalcon\Http\Response();
 					$response->setContent('MAIN_ERROR_FORBIDDEN_REQUEST');
 					$response->setStatusCode(403, 'Forbidden');
@@ -69,7 +76,7 @@ class AclPlugin extends Plugin {
 					exit;
 				} else {
 					//Si no tiene acceso mostramos un mensaje y lo redireccionamos a la vista de error
-					$dispatcher->forward(array(
+					$dispatcher->forward([
 						'controller' => 'Error',
 						'action' => 'index',
 						'params' => [
@@ -78,7 +85,7 @@ class AclPlugin extends Plugin {
 							'controller' => $controller,
 							'action' => $action
 						]
-					));
+					]);
 					return false;
 				}
 			} else {
@@ -97,51 +104,45 @@ class AclPlugin extends Plugin {
 		return $allowed;
 	}
 
-	public function createACL($roleKey = '', $LoginUser = '') {
+	public function createACL($roleKey, $LoginUser): AclList {
 		$urlApi = $this->getDI()->get('rest')->products->CEEDYE;
 		$urlRoute = $this->getDI()->get('rest')->routes;
+
 		$acl = new AclList();
 		// Default action is deny access
 		$acl->setDefaultAction(Acl::DENY);
 
 		// Public area resources (frontend)
-		$publicResources = [
-
-		];
-
+		$publicResources = [];
 		foreach($publicResources as $resourceName => $actions) {
-			$acl->addResource(new \Phalcon\Acl\Resource($resourceName), $actions);
+			$acl->addResource(new AclResource($resourceName), $actions);
 		}
 
-		//OBTENER LOS RECURSOS QUE SON PUBLICOS DE LA BASE DE DATOS
-		$route = $urlRoute->aclresourcespublic->show;
-		$result = ApiREST::CurlRequest('GET', $urlApi, $route);
+		// OBTENER LOS RECURSOS QUE SON PUBLICOS DE LA BASE DE DATOS
+		$result = ApiREST::CurlRequest('GET', $urlApi, $urlRoute->aclresourcespublic->show);
 		if($result['statusCode'] >= 200 && $result['statusCode'] < 400 && is_array($result['content']) && count($result['content']) > 0) {
 			$publicResourcesBD = $result['content'];
 			foreach($publicResourcesBD as $publicResourceBD) {
 				$resource = $publicResourceBD['module'] . '/' . $publicResourceBD['controller'];
-				$acl->addResource(new \Phalcon\Acl\Resource($resource), $publicResourceBD['action']);
+				$acl->addResource(new AclResource($resource), $publicResourceBD['action']);
 			}
 		}
 		unset($result);
 
-		//OBTENER LOS RECURSOS QUE SON PRIVADOS ES DECIR QUE REQUIEREN PRIVILEGIOS
-		$route = $urlRoute->aclresources->show;
-		$result = ApiREST::CurlRequest('GET', $urlApi, $route);
+		// OBTENER LOS RECURSOS QUE SON PRIVADOS ES DECIR QUE REQUIEREN PRIVILEGIOS
+		$result = ApiREST::CurlRequest('GET', $urlApi, $urlRoute->aclresources->show);
 		if($result['statusCode'] >= 200 && $result['statusCode'] < 400 && is_array($result['content']) && count($result['content']) > 0) {
 			$privateResources = $result['content'];
 			foreach($privateResources as $privateResource) {
 				$resource = $privateResource['module'] . '/' . $privateResource['controller'];
-				$acl->addResource(new \Phalcon\Acl\Resource($resource), $privateResource['action']);
+				$acl->addResource(new AclResource($resource), $privateResource['action']);
 			}
 		}
 		unset($result);
 
-		//AGREAGAMOS LOS TIPOS DE USUARIO PARA POSTERIORMENTE AGREGARLE LOS RECURSOS A LOS QUE PUEDE ACCEDER
-		if($roleKey != '') {
-			$route = $urlRoute->aclplugin->show;
-			$parametros = array('key' => $roleKey);
-			$result = ApiREST::CurlRequest('GET', $urlApi, $route, $parametros);
+		// AGREAGAMOS LOS TIPOS DE USUARIO PARA POSTERIORMENTE AGREGARLE LOS RECURSOS A LOS QUE PUEDE ACCEDER
+		if($roleKey) {
+			$result = ApiREST::CurlRequest('GET', $urlApi, $urlRoute->aclplugin->show, ['key' => $roleKey]);
 			if($result['statusCode'] >= 200 && $result['statusCode'] < 400 && is_array($result['content']) && count($result['content']) > 0) {
 				$roleInfo = $result['content'];
 				foreach($roleInfo as $actualRole) {
@@ -167,10 +168,8 @@ class AclPlugin extends Plugin {
 			}
 			unset($result);
 
-			if($acl->isRole($roleKey) && ($LoginUser && $LoginUser != '')) {
-				$route = $urlRoute->aclresourcesusers->show;
-				$parametros = array('users_username' => $LoginUser);
-				$result = ApiREST::CurlRequest('GET', $urlApi, $route, $parametros);
+			if($acl->isRole($roleKey) && $LoginUser) {
+				$result = ApiREST::CurlRequest('GET', $urlApi, $urlRoute->aclresourcesusers->show, ['users_username' => $LoginUser]);
 				if($result['statusCode'] >= 200 && $result['statusCode'] < 400 && is_array($result['content']) && count($result['content']) > 0) {
 					$resourcesUser = $result['content'];
 					foreach($resourcesUser as $resourceData) {

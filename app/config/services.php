@@ -17,11 +17,11 @@ $di->set('view', function() use ($config) {
 
 $di->set('dispatcher', function() use ($di) {
 	$eventsManager = new Phalcon\Events\Manager();
-	//Instanciar el plugin de seguridad
-	//	$security = new \Plugins\AclPlugin($di);
+	// Instanciar el plugin de seguridad
+	// $security = new \Plugins\AclPlugin($di);
 
-	//Enviar todos los eventos producidos en el Dispatcher al plugin Security
-	//	$eventsManager->attach('dispatch', $security);
+	// Enviar todos los eventos producidos en el Dispatcher al plugin Security
+	// $eventsManager->attach('dispatch', $security);
 
 	$dispatcher = new Phalcon\Mvc\Dispatcher();
 	$dispatcher->setDefaultNamespace('Controllers');
@@ -84,7 +84,7 @@ $di->set('paypal', function() use ($config) {
 	$clientId = $config->paypal_credentials->client_id;
 	$secret = $config->paypal_credentials->secret;
 	$settings[] = $config->paypal_credentials->settings;
-	$webhookId  = $config->paypal_credentials->webhook_id;
+	$webhookId = $config->paypal_credentials->webhook_id;
 	$apiContext = new PayPal\Rest\ApiContext(new PayPal\Auth\OAuthTokenCredential($clientId, $secret));
 	$apiContext->setConfig($settings);
 	return $apiContext;
